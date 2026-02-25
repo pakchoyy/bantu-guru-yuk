@@ -1,345 +1,180 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Bantu Guru V40 PRO MAX</title>
-
-<style>
+<title>Bantu Guru V45</title><style>
 
 body{
-font-family:system-ui;
+font-family:Arial;
 margin:0;
 background:#eef2ff;
 }
 
 .header{
-
 background:linear-gradient(135deg,#5b5bff,#8f5bff);
 color:white;
-padding:35px;
+padding:20px;
 text-align:center;
-border-radius:0 0 30px 30px;
-
 }
 
 .container{
-
+max-width:900px;
+margin:auto;
 padding:20px;
-
 }
 
 .card{
-
 background:white;
 padding:20px;
-border-radius:20px;
+border-radius:15px;
 margin-bottom:20px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-
 }
 
-select,input,textarea{
-
+input,select,button{
 width:100%;
 padding:12px;
 margin-top:10px;
 border-radius:10px;
 border:1px solid #ccc;
-font-size:16px;
-
 }
 
 button{
-
-width:100%;
-padding:14px;
-margin-top:12px;
-border:none;
-border-radius:12px;
-font-size:16px;
-font-weight:bold;
-
-}
-
-.generate{
-
 background:#6c5ce7;
 color:white;
-
+border:none;
+font-weight:bold;
 }
 
-.copy{
-
-background:#00b894;
-color:white;
-
+canvas{
+width:100%;
+background:white;
 }
 
 .download{
-
 background:#0984e3;
-color:white;
-
 }
 
-.ai{
-
-background:#dfe6e9;
-
-}
-
-img{
-
-width:100%;
-margin-top:15px;
-border-radius:12px;
-
-}
-
-.watermark{
-
-text-align:center;
-margin-top:10px;
-opacity:0.5;
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="header">
-
-<h2>Bantu Guru V40 PRO MAX</h2>
-
-<div>Preview Instan • A4 Fix • by Pak.Choyy</div>
-
-</div>
-
-
-<div class="container">
-
-
-<div class="card">
-
-<select id="media">
-
-<option>Poster Edukasi</option>
-<option>LKPD</option>
-<option>Infografis</option>
-
-</select>
-
-
-<select id="kelas">
-
-<option>Kelas 1</option>
+</style></head>
+<body><div class="header"><h2>Bantu Guru V45</h2>
+<div>Identitas hanya untuk LKPD • by Pak.Choyy</div></div><div class="container"><div class="card"><select id="jenis"><option value="LKPD">LKPD</option>
+<option value="Poster">Poster</option>
+<option value="Infografis">Infografis</option></select><input id="materi" placeholder="contoh: penjumlahan 1-50"><select id="kelas"><option>Kelas 1</option>
 <option selected>Kelas 2</option>
-<option>Kelas 3</option>
+<option>Kelas 3</option></select><select id="jumlah"><option value="5">5 Soal</option>
+<option value="10">10 Soal</option>
+<option value="15">15 Soal</option></select><button onclick="generate()">GENERATE
 
-</select>
+</button></div><div class="card"><canvas id="canvas" width="2480" height="3508"></canvas>
 
+<button class="download" onclick="downloadCanvas()">DOWNLOAD
 
-<input id="materi" placeholder="contoh: siklus hujan">
+</button></div></div><script>
 
+function generate(){
 
-<select id="style">
+let jenis=jenis.value;
 
-<option>3D Clay</option>
-<option>Cartoon</option>
-<option>Flat</option>
+let materi=materi.value;
 
-</select>
+let kelas=kelas.value;
 
-
-<button class="generate" onclick="generatePrompt()">
-
-Generate Prompt
-
-</button>
+let jumlah=parseInt(jumlah.value);
 
 
-<textarea id="prompt"></textarea>
+let canvas=document.getElementById("canvas");
+
+let ctx=canvas.getContext("2d");
 
 
-<button class="copy" onclick="copyPrompt()">
+ctx.fillStyle="white";
 
-Copy Prompt
-
-</button>
+ctx.fillRect(0,0,2480,3508);
 
 
-<button class="ai" onclick="openChatGPT()">
-
-Generate via ChatGPT
-
-</button>
+ctx.fillStyle="black";
 
 
-<button class="ai" onclick="openGemini()">
+ctx.font="bold 100px Arial";
 
-Generate via Gemini
-
-</button>
+ctx.fillText(jenis,1000,200);
 
 
-<button class="ai" onclick="openBing()">
-
-Generate via Bing
-
-</button>
+ctx.font="60px Arial";
 
 
-</div>
+ctx.fillText("Materi: "+materi,100,350);
 
 
-
-<div class="card">
-
-<h3>Preview A4</h3>
-
-<img id="preview" src="https://placehold.co/2480x3508/png?text=A4+Preview">
+if(jenis=="LKPD"){
 
 
-<div class="watermark">
+ctx.fillText("Kelas: "+kelas,100,450);
 
-by Pak.Choyy
+ctx.fillText("Nama: ____________",100,600);
 
-</div>
-
-
-<button class="download" onclick="downloadImage()">
-
-Download HD
-
-</button>
+ctx.fillText("Tanggal: ____________",100,700);
 
 
-</div>
+ctx.fillText("Jawablah:",100,900);
 
 
+for(let i=1;i<=jumlah;i++){
 
-</div>
+ctx.fillText(i+". ______________________________",100,900+i*150);
 
-
-
-<script>
-
-
-let imageURL="";
+}
 
 
-
-function generatePrompt(){
-
-
-let media=document.getElementById("media").value;
-
-let kelas=document.getElementById("kelas").value;
-
-let materi=document.getElementById("materi").value;
-
-let style=document.getElementById("style").value;
-
+}
 
 
 let prompt=
 
-`Create A4 ${media} for ${kelas} about "${materi}", illustration style ${style}, colorful, Indonesian language, kids friendly, clean layout, high quality`;
+"ilustrasi pendidikan anak SD tentang "+materi+
+", cartoon, white background";
 
 
-document.getElementById("prompt").value=prompt;
-
-
-
-imageURL=
-
+let url=
 "https://image.pollinations.ai/prompt/"+
-
 encodeURIComponent(prompt);
 
 
-document.getElementById("preview").src=imageURL;
+let img=new Image();
+
+img.crossOrigin="anonymous";
+
+
+img.onload=function(){
+
+ctx.drawImage(img,1400,300,900,900);
+
+ctx.fillStyle="rgba(0,0,0,0.3)";
+ctx.font="50px Arial";
+ctx.fillText("by Pak.Choyy",1800,3400);
+
+};
+
+
+img.src=url;
 
 
 }
 
 
 
-function copyPrompt(){
+function downloadCanvas(){
 
-let p=document.getElementById("prompt");
+let canvas=document.getElementById("canvas");
 
-p.select();
+let link=document.createElement("a");
 
-document.execCommand("copy");
+link.download="PakChoyy.png";
 
-alert("Prompt berhasil disalin");
+link.href=canvas.toDataURL();
 
-}
-
-
-
-function openChatGPT(){
-
-window.open("https://chat.openai.com");
+link.click();
 
 }
 
-
-
-function openGemini(){
-
-window.open("https://gemini.google.com");
-
-}
-
-
-
-function openBing(){
-
-window.open("https://www.bing.com/images/create");
-
-}
-
-
-
-async function downloadImage(){
-
-
-if(!imageURL){
-
-alert("Generate dulu");
-
-return;
-
-}
-
-
-let res=await fetch(imageURL);
-
-let blob=await res.blob();
-
-
-let a=document.createElement("a");
-
-a.href=URL.createObjectURL(blob);
-
-a.download="PakChoyy-A4.png";
-
-a.click();
-
-
-}
-
-
-</script>
-
-
-
-</body>
+</script></body>
 </html>

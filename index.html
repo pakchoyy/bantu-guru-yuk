@@ -3,7 +3,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Bantu Guru Yuk • Generator PRO</title>
+<title>Bantu Guru Yuk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -17,17 +17,40 @@ margin:0;
 .header{
 background:linear-gradient(90deg,#1b5e20,#2e7d32,#66bb6a);
 color:white;
-padding:15px;
+padding:18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-font-size:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
 font-weight:bold;
 }
 
+.trial{
+background:#ffeb3b;
+color:black;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.sub{
+background:#66bb6a;
+color:white;
+padding:6px;
+text-align:center;
+font-size:13px;
+}
+
 .container{
-max-width:800px;
-margin:20px auto;
+max-width:700px;
+margin:25px auto;
 background:white;
 padding:25px;
 border-radius:15px;
@@ -46,11 +69,10 @@ padding:10px;
 margin-top:5px;
 border-radius:8px;
 border:1px solid #ccc;
-font-size:14px;
 }
 
 textarea{
-height:260px;
+height:220px;
 }
 
 button{
@@ -68,6 +90,13 @@ cursor:pointer;
 .copy{background:#2196F3;}
 .gpt{background:#009688;}
 
+.preview{
+max-width:200px;
+margin-top:10px;
+display:none;
+border-radius:10px;
+}
+
 .footer{
 text-align:center;
 margin-top:15px;
@@ -82,76 +111,116 @@ color:#777;
 <body>
 
 <div class="header">
+<div class="logo">
+<span>👩‍🏫</span>
+BANTU GURU YUK
+</div>
+<div class="trial">TRIAL</div>
+</div>
 
-<div>👩‍🏫 BANTU GURU YUK</div>
-
-<div>PRO</div>
-
+<div class="sub">
+AI Worksheet Generator
 </div>
 
 <div class="container">
 
-<label>Jenis Media</label>
-
-<select id="media" onchange="cekMedia()">
+<label>Jenis Media</label> <select id="media" onchange="cekMedia()">
 
 <option>LKPD</option>
 <option>Infografis</option>
 <option>Poster</option>
 <option>Flashcard</option>
 <option>Lembar Mewarnai</option>
+</select>
+
+<label>Mata Pelajaran</label> <select id="mapel">
+
+<option>Umum</option>
+
+<option>Matematika</option>
+
+<option>Bahasa Indonesia</option>
+
+<option>IPA</option>
+
+<option>IPS</option>
+
+<option>Pendidikan Pancasila</option>
+
+<option>Pendidikan Agama</option>
+
+<option>Bahasa Jawa</option>
+
+<option>Bahasa Daerah</option>
+
+<option>Tematik</option>
 
 </select>
 
-<label>Mata Pelajaran</label>
+<label>Tema / Topik / Materi</label> <input id="topik">
 
-<input id="mapel">
+<label>Jumlah Soal</label> <select id="jumlah"></select>
 
-<label>Tema / Topik / Materi</label>
+<label>Tingkat Kesulitan</label> <select id="level"></select>
 
-<input id="topik">
+<label>Gaya Ilustrasi</label>
 
-<label>Jumlah Soal</label>
+<select id="gaya" onchange="toggleUpload()">
 
-<select id="jumlah"></select>
+<option>Cartoon Kids</option>
 
-<label>Tingkat Kesulitan</label>
+<option>3D Clay</option>
 
-<select id="level"></select>
+<option>Pixar Style</option>
+
+<option>Disney Style</option>
+
+<option>Anime Kids</option>
+
+<option>Storybook Illustration</option>
+
+<option>Crayon Drawing</option>
+
+<option>Hand Drawn Kids</option>
+
+<option value="upload">Upload Referensi Sendiri</option>
+
+</select>
+
+<div id="uploadBox" style="display:none">
+
+<label>Upload Referensi</label>
+
+<input type="file" id="ref">
+
+<img id="preview" class="preview">
+
+</div>
 
 <button class="generate" onclick="generatePrompt()">
-
 Generate Prompt
-
 </button>
 
 <textarea id="hasil"></textarea>
 
 <button class="copy" onclick="copyPrompt()">
-
 Copy Prompt
-
 </button>
 
 <button class="gpt" onclick="openGPT()">
-
 Open ChatGPT
-
 </button>
 
 <div class="footer">
-
 by pak.choyy / 2026
-
 </div>
 
 </div>
 
 <script>
 
-// ===== RESTORE STYLE + LOGIC =====
+// TRIAL SYSTEM
 
-// trial
 const TRIAL=30;
 
 let start=localStorage.getItem("trialStart");
@@ -164,9 +233,7 @@ start=Date.now();
 
 }
 
-let now=Date.now();
-
-let days=Math.floor((now-start)/(1000*60*60*24));
+let days=Math.floor((Date.now()-start)/(1000*60*60*24));
 
 let license=localStorage.getItem("license");
 
@@ -209,28 +276,23 @@ alert("Kode salah");
 }
 
 
-
-// ===== FORM =====
-
-const mediaEl=media;
-const jumlahEl=jumlah;
-const levelEl=level;
+// FORM LOGIC
 
 function cekMedia(){
 
-if(mediaEl.value!="LKPD"){
+if(media.value!="LKPD"){
 
-jumlahEl.innerHTML="<option>-</option>";
+jumlah.innerHTML="<option>-</option>";
 
-levelEl.innerHTML="<option>-</option>";
+level.innerHTML="<option>-</option>";
 
-jumlahEl.disabled=true;
+jumlah.disabled=true;
 
-levelEl.disabled=true;
+level.disabled=true;
 
 }else{
 
-jumlahEl.innerHTML=`
+jumlah.innerHTML=`
 
 <option>5</option>
 <option selected>10</option>
@@ -239,7 +301,7 @@ jumlahEl.innerHTML=`
 
 `;
 
-levelEl.innerHTML=`
+level.innerHTML=`
 
 <option>Mudah</option>
 <option selected>Sedang</option>
@@ -247,27 +309,47 @@ levelEl.innerHTML=`
 
 `;
 
-jumlahEl.disabled=false;
+jumlah.disabled=false;
 
-levelEl.disabled=false;
-
-}
+level.disabled=false;
 
 }
 
+}
 
 
-// ===== PROMPT =====
+// REFERENSI
+
+function toggleUpload(){
+
+uploadBox.style.display=(gaya.value=="upload")?"block":"none";
+
+}
+
+ref.onchange=function(e){
+
+preview.src=URL.createObjectURL(e.target.files[0]);
+
+preview.style.display="block";
+
+}
+
+
+// PROMPT
 
 function generatePrompt(){
 
-let prompt="";
+let styleText=(gaya.value=="upload")
+
+?"Match illustration style with uploaded reference image."
+
+:"Illustration style: "+gaya.value;
 
 if(media.value=="LKPD"){
 
-prompt=
+hasil.value=
 
-"Create LKPD worksheet.\n"+
+"Create LKPD\n"+
 
 "Subject: "+mapel.value+"\n"+
 
@@ -277,11 +359,13 @@ prompt=
 
 "Difficulty: "+level.value+"\n"+
 
-"Language: Indonesian.";
+styleText+"\n"+
+
+"Language: Indonesian";
 
 }else{
 
-prompt=
+hasil.value=
 
 "Create "+media.value+"\n"+
 
@@ -289,17 +373,16 @@ prompt=
 
 "Topic: "+topik.value+"\n"+
 
-"Language: Indonesian.";
+styleText+"\n"+
+
+"Language: Indonesian";
 
 }
 
-hasil.value=prompt;
-
 }
 
 
-
-// ===== FUNCTIONS =====
+// BUTTON
 
 function copyPrompt(){
 

@@ -3,71 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Bantu Guru V36 PRO MAX</title>
 
 <style>
 
 body{
-font-family:system-ui;
+font-family: Arial, sans-serif;
+background:#f4f7ff;
 margin:0;
-background:linear-gradient(135deg,#5b5bff,#8b5bff);
-padding:20px;
+padding:0;
+text-align:center;
 }
 
 .header{
+background: linear-gradient(135deg,#5b5bff,#8b5bff);
 color:white;
-font-size:28px;
+padding:30px;
+font-size:24px;
 font-weight:bold;
+border-bottom-left-radius:30px;
+border-bottom-right-radius:30px;
 }
 
-.card{
+.container{
 background:white;
+margin:20px;
 padding:20px;
 border-radius:20px;
-margin-top:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-input, textarea, select{
-width:100%;
-padding:12px;
-margin-top:10px;
+select, textarea{
+width:90%;
+padding:10px;
+margin:10px;
 border-radius:10px;
-border:1px solid #ddd;
+border:1px solid #ccc;
 font-size:16px;
 }
 
 button{
-width:100%;
+width:90%;
 padding:15px;
-margin-top:10px;
+margin:10px;
 border:none;
-border-radius:12px;
+border-radius:15px;
 font-size:16px;
-background:#5b5bff;
+font-weight:bold;
+background: linear-gradient(135deg,#5b5bff,#8b5bff);
 color:white;
-cursor:pointer;
 }
 
-button:hover{
-opacity:0.9;
+button.gray{
+background:#ddd;
+color:black;
 }
 
-#preview img{
-width:100%;
-margin-top:15px;
-border-radius:10px;
+.preview{
+width:90%;
+height:500px;
+margin:auto;
+background:#eee;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+color:#999;
 }
 
-.download{
-display:block;
-background:green;
-color:white;
-padding:15px;
-text-align:center;
-border-radius:12px;
-margin-top:10px;
-text-decoration:none;
+img{
+max-width:100%;
+border-radius:20px;
 }
 
 </style>
@@ -79,156 +86,165 @@ text-decoration:none;
 Bantu Guru V36 PRO MAX
 </div>
 
-<div class="card">
 
-Materi:
+<div class="container">
 
-<input id="materi" placeholder="Contoh: Siklus Air">
+<select id="media">
 
-Kelas:
+<option>LKPD</option>
+<option>Poster</option>
+<option>Infografis</option>
+<option>Worksheet</option>
+
+</select>
+
 
 <select id="kelas">
+
 <option>Kelas 1</option>
 <option selected>Kelas 2</option>
 <option>Kelas 3</option>
-<option>Kelas 4</option>
-<option>Kelas 5</option>
-<option>Kelas 6</option>
+
 </select>
 
-<button onclick="generatePrompt()">Generate Prompt</button>
 
-<textarea id="prompt"></textarea>
+<select id="style">
 
-<button onclick="copyPrompt()">Copy Prompt</button>
+<option>3D Clay</option>
+<option>Flat Cartoon</option>
+<option>Watercolor</option>
 
-<button onclick="openChatGPT()">Generate ChatGPT</button>
+</select>
 
-<button onclick="openGemini()">Generate Gemini</button>
 
-<button onclick="openBing()">Generate Bing</button>
+<button onclick="generatePrompt()">
+Generate Prompt
+</button>
+
+
+<textarea id="prompt" rows="6"></textarea>
+
+
+<button class="gray" onclick="copyPrompt()">
+COPY PROMPT
+</button>
+
+
+<button class="gray" onclick="openChatGPT()">
+Generate via ChatGPT
+</button>
+
+
+<button class="gray" onclick="openGemini()">
+Generate via Gemini
+</button>
+
+
+<button class="gray" onclick="openBing()">
+Generate via Bing
+</button>
+
 
 </div>
 
-<div class="card">
 
-Preview A4:
+<div class="container">
 
-<div id="preview"></div>
+<h2>Preview</h2>
 
-<a id="downloadBtn" class="download" style="display:none">
-Download A4
-</a>
+<div class="preview" id="preview">
+
+Preview A4
 
 </div>
+
+
+<button onclick="downloadImage()">
+DOWNLOAD
+</button>
+
+
+</div>
+
 
 
 <script>
 
+
 function generatePrompt(){
 
-let materi=document.getElementById("materi").value;
+let media=document.getElementById("media").value;
 
 let kelas=document.getElementById("kelas").value;
 
-let prompt=
+let style=document.getElementById("style").value;
 
-"Create an A4 educational poster for "+kelas+
-" students about '"+materi+
-"', illustration style 3D Clay, colorful, Indonesian language, kids friendly, clean layout, high quality, 300 dpi";
 
-document.getElementById("prompt").value=prompt;
+let text="Create an A4 "+media+" for "+kelas+" students, illustration style "+style+", Indonesian language, kids friendly, clean layout, high quality, 300 dpi";
 
-generateImage();
+
+document.getElementById("prompt").value=text;
+
+
+document.getElementById("preview").innerHTML="Preview Ready";
+
 
 }
+
 
 
 function copyPrompt(){
 
-navigator.clipboard.writeText(
-document.getElementById("prompt").value
-);
+let text=document.getElementById("prompt");
 
-alert("Copied");
+text.select();
+
+document.execCommand("copy");
+
+alert("Prompt copied");
 
 }
 
 
+
 function openChatGPT(){
 
-let text=document.getElementById("prompt").value;
-
-window.open(
-
-"https://chat.openai.com/?q="+encodeURIComponent(text)
-
-);
+window.open("https://chat.openai.com","_blank");
 
 }
 
 
 function openGemini(){
 
-let text=document.getElementById("prompt").value;
-
-window.open(
-
-"https://gemini.google.com/app?q="+encodeURIComponent(text)
-
-);
+window.open("https://gemini.google.com","_blank");
 
 }
 
 
 function openBing(){
 
-let text=document.getElementById("prompt").value;
-
-window.open(
-
-"https://www.bing.com/images/create?q="+encodeURIComponent(text)
-
-);
+window.open("https://www.bing.com/images/create","_blank");
 
 }
 
 
 
-function generateImage(){
+function downloadImage(){
 
-let url=
+let link=document.createElement("a");
 
-"https://image.pollinations.ai/prompt/"+
+link.href="https://via.placeholder.com/2480x3508.png?text=A4";
 
-encodeURIComponent(
+link.download="bantu-guru.jpg";
 
-document.getElementById("prompt").value
-
-)+"?width=794&height=1123";
-
-
-document.getElementById("preview").innerHTML=
-
-"<img src='"+url+"'>";
-
-
-let download=document.getElementById("downloadBtn");
-
-
-download.href=url;
-
-
-download.download="poster-a4.jpg";
-
-
-download.style.display="block";
-
+link.click();
 
 }
+
 
 
 </script>
+
 
 
 </body>

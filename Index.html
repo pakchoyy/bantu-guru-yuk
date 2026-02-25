@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bantu Guru V36 PRO MAX</title>
+
+<style>
+
+body{
+font-family:system-ui;
+margin:0;
+background:linear-gradient(135deg,#5b5bff,#8b5bff);
+padding:20px;
+}
+
+.header{
+color:white;
+font-size:28px;
+font-weight:bold;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
+}
+
+input, textarea, select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ddd;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+font-size:16px;
+background:#5b5bff;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+#preview img{
+width:100%;
+margin-top:15px;
+border-radius:10px;
+}
+
+.download{
+display:block;
+background:green;
+color:white;
+padding:15px;
+text-align:center;
+border-radius:12px;
+margin-top:10px;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="header">
+Bantu Guru V36 PRO MAX
+</div>
+
+<div class="card">
+
+Materi:
+
+<input id="materi" placeholder="Contoh: Siklus Air">
+
+Kelas:
+
+<select id="kelas">
+<option>Kelas 1</option>
+<option selected>Kelas 2</option>
+<option>Kelas 3</option>
+<option>Kelas 4</option>
+<option>Kelas 5</option>
+<option>Kelas 6</option>
+</select>
+
+<button onclick="generatePrompt()">Generate Prompt</button>
+
+<textarea id="prompt"></textarea>
+
+<button onclick="copyPrompt()">Copy Prompt</button>
+
+<button onclick="openChatGPT()">Generate ChatGPT</button>
+
+<button onclick="openGemini()">Generate Gemini</button>
+
+<button onclick="openBing()">Generate Bing</button>
+
+</div>
+
+<div class="card">
+
+Preview A4:
+
+<div id="preview"></div>
+
+<a id="downloadBtn" class="download" style="display:none">
+Download A4
+</a>
+
+</div>
+
+
+<script>
+
+function generatePrompt(){
+
+let materi=document.getElementById("materi").value;
+
+let kelas=document.getElementById("kelas").value;
+
+let prompt=
+
+"Create an A4 educational poster for "+kelas+
+" students about '"+materi+
+"', illustration style 3D Clay, colorful, Indonesian language, kids friendly, clean layout, high quality, 300 dpi";
+
+document.getElementById("prompt").value=prompt;
+
+generateImage();
+
+}
+
+
+function copyPrompt(){
+
+navigator.clipboard.writeText(
+document.getElementById("prompt").value
+);
+
+alert("Copied");
+
+}
+
+
+function openChatGPT(){
+
+let text=document.getElementById("prompt").value;
+
+window.open(
+
+"https://chat.openai.com/?q="+encodeURIComponent(text)
+
+);
+
+}
+
+
+function openGemini(){
+
+let text=document.getElementById("prompt").value;
+
+window.open(
+
+"https://gemini.google.com/app?q="+encodeURIComponent(text)
+
+);
+
+}
+
+
+function openBing(){
+
+let text=document.getElementById("prompt").value;
+
+window.open(
+
+"https://www.bing.com/images/create?q="+encodeURIComponent(text)
+
+);
+
+}
+
+
+
+function generateImage(){
+
+let url=
+
+"https://image.pollinations.ai/prompt/"+
+
+encodeURIComponent(
+
+document.getElementById("prompt").value
+
+)+"?width=794&height=1123";
+
+
+document.getElementById("preview").innerHTML=
+
+"<img src='"+url+"'>";
+
+
+let download=document.getElementById("downloadBtn");
+
+
+download.href=url;
+
+
+download.download="poster-a4.jpg";
+
+
+download.style.display="block";
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>

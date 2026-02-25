@@ -1,26 +1,27 @@
 <!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bantu Guru V45</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bantu Guru V47</title><style>
 
 body{
 font-family:Arial;
+background:#f3f4ff;
 margin:0;
-background:#eef2ff;
 }
 
 .header{
 background:linear-gradient(135deg,#5b5bff,#8f5bff);
 color:white;
-padding:20px;
+padding:25px;
 text-align:center;
+font-size:24px;
+font-weight:bold;
 }
 
 .container{
-max-width:900px;
-margin:auto;
 padding:20px;
+max-width:800px;
+margin:auto;
 }
 
 .card{
@@ -30,56 +31,134 @@ border-radius:15px;
 margin-bottom:20px;
 }
 
-input,select,button{
+input,select,button,textarea{
+
 width:100%;
-padding:12px;
+padding:14px;
 margin-top:10px;
 border-radius:10px;
 border:1px solid #ccc;
+font-size:16px;
+
 }
 
 button{
-background:#6c5ce7;
+background:#5b5bff;
 color:white;
 border:none;
 font-weight:bold;
 }
 
+.copy{
+background:#00a86b;
+}
+
+.ai{
+background:#444;
+}
+
 canvas{
+
 width:100%;
 background:white;
+border-radius:10px;
+
 }
 
 .download{
-background:#0984e3;
+
+background:#007bff;
+
 }
 
 </style></head>
-<body><div class="header"><h2>Bantu Guru V45</h2>
-<div>Identitas hanya untuk LKPD • by Pak.Choyy</div></div><div class="container"><div class="card"><select id="jenis"><option value="LKPD">LKPD</option>
-<option value="Poster">Poster</option>
-<option value="Infografis">Infografis</option></select><input id="materi" placeholder="contoh: penjumlahan 1-50"><select id="kelas"><option>Kelas 1</option>
-<option selected>Kelas 2</option>
-<option>Kelas 3</option></select><select id="jumlah"><option value="5">5 Soal</option>
+<body><div class="header">Bantu Guru V47 • Pak.Choyy
+
+</div><div class="container"><div class="card"><input id="materi" placeholder="contoh: Penjumlahan 1-50"><select id="jumlah"><option value="5">5 Soal</option>
 <option value="10">10 Soal</option>
-<option value="15">15 Soal</option></select><button onclick="generate()">GENERATE
+<option value="15">15 Soal</option></select><button onclick="generatePrompt()">GENERATE PROMPT
 
-</button></div><div class="card"><canvas id="canvas" width="2480" height="3508"></canvas>
+</button><textarea id="prompt" rows="5"></textarea><button class="copy" onclick="copyPrompt()">SALIN PROMPT
 
-<button class="download" onclick="downloadCanvas()">DOWNLOAD
+</button><button class="ai" onclick="openChatGPT()">Generate via ChatGPT
+
+</button><button class="ai" onclick="openGemini()">Generate via Gemini
+
+</button><button class="ai" onclick="openBing()">Generate via Bing
+
+</button></div><div class="card"><button onclick="generateLKPD()">GENERATE LKPD LANGSUNG
+
+</button><canvas id="canvas" width="2480" height="3508"></canvas>
+
+<button class="download" onclick="downloadLKPD()">DOWNLOAD A4
 
 </button></div></div><script>
 
-function generate(){
 
-let jenis=jenis.value;
+function generatePrompt(){
 
-let materi=materi.value;
+let materi=document.getElementById("materi").value;
 
-let kelas=kelas.value;
+let jumlah=document.getElementById("jumlah").value;
 
-let jumlah=parseInt(jumlah.value);
+let text=
 
+"Create an A4 LKPD for Grade 2 students about "+materi+
+
+", total "+jumlah+
+
+" questions, Indonesian language, kids friendly, clean layout, high quality, 300 dpi";
+
+document.getElementById("prompt").value=text;
+
+}
+
+
+
+function copyPrompt(){
+
+let text=document.getElementById("prompt");
+
+text.select();
+
+document.execCommand("copy");
+
+alert("Prompt disalin");
+
+}
+
+
+
+function openChatGPT(){
+
+window.open("https://chat.openai.com");
+
+}
+
+
+
+function openGemini(){
+
+window.open("https://gemini.google.com");
+
+}
+
+
+
+function openBing(){
+
+window.open("https://bing.com/images/create");
+
+}
+
+
+
+function generateLKPD(){
+
+
+let materi=document.getElementById("materi").value;
+
+let jumlah=parseInt(document.getElementById("jumlah").value);
 
 let canvas=document.getElementById("canvas");
 
@@ -94,87 +173,55 @@ ctx.fillRect(0,0,2480,3508);
 ctx.fillStyle="black";
 
 
-ctx.font="bold 100px Arial";
+ctx.font="bold 90px Arial";
 
-ctx.fillText(jenis,1000,200);
+ctx.fillText("LKPD Kelas 2",900,200);
 
 
 ctx.font="60px Arial";
 
+ctx.fillText("Materi: "+materi,200,350);
 
-ctx.fillText("Materi: "+materi,100,350);
+ctx.fillText("Nama: ____________________",200,500);
 
-
-if(jenis=="LKPD"){
-
-
-ctx.fillText("Kelas: "+kelas,100,450);
-
-ctx.fillText("Nama: ____________",100,600);
-
-ctx.fillText("Tanggal: ____________",100,700);
+ctx.fillText("Tanggal: ____________________",200,600);
 
 
-ctx.fillText("Jawablah:",100,900);
+ctx.fillText("Jawablah:",200,800);
 
 
 for(let i=1;i<=jumlah;i++){
 
-ctx.fillText(i+". ______________________________",100,900+i*150);
+ctx.fillText(i+". ________________________________",200,800+i*180);
 
 }
 
 
-}
+ctx.font="40px Arial";
 
+ctx.fillStyle="gray";
 
-let prompt=
-
-"ilustrasi pendidikan anak SD tentang "+materi+
-", cartoon, white background";
-
-
-let url=
-"https://image.pollinations.ai/prompt/"+
-encodeURIComponent(prompt);
-
-
-let img=new Image();
-
-img.crossOrigin="anonymous";
-
-
-img.onload=function(){
-
-ctx.drawImage(img,1400,300,900,900);
-
-ctx.fillStyle="rgba(0,0,0,0.3)";
-ctx.font="50px Arial";
 ctx.fillText("by Pak.Choyy",1800,3400);
 
-};
-
-
-img.src=url;
-
 
 }
 
 
 
-function downloadCanvas(){
+function downloadLKPD(){
 
 let canvas=document.getElementById("canvas");
 
 let link=document.createElement("a");
 
-link.download="PakChoyy.png";
+link.download="LKPD-Kelas2.png";
 
 link.href=canvas.toDataURL();
 
 link.click();
 
 }
+
 
 </script></body>
 </html>

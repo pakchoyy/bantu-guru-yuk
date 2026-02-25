@@ -1,321 +1,274 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Bantu Guru V53 PRO MAX</title>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bantu Guru | by pak.choyy</title><style>
 
 body{
 font-family:system-ui;
 margin:0;
-background:#f4f7ff;
+background:#f0fdf9;
 }
 
 .header{
-background:linear-gradient(135deg,#5b5bff,#8b5bff);
+background:linear-gradient(135deg,#16c79a,#00a8a8);
 color:white;
-padding:40px 20px;
+padding:45px 20px;
 border-bottom-left-radius:30px;
 border-bottom-right-radius:30px;
 text-align:center;
 }
 
+.header h1{
+margin:0;
+font-size:32px;
+}
+
+.by{
+margin-top:5px;
+opacity:0.9;
+}
+
+.badge{
+background:white;
+color:#00a8a8;
+padding:6px 14px;
+border-radius:20px;
+display:inline-block;
+margin-top:10px;
+font-size:13px;
+font-weight:600;
+}
+
 .container{
-padding:20px;
+padding:25px;
+max-width:800px;
+margin:auto;
 }
 
 .card{
 background:white;
-padding:20px;
+padding:22px;
 border-radius:20px;
-margin-bottom:20px;
-box-shadow:0 10px 20px rgba(0,0,0,.05);
+box-shadow:0 5px 18px rgba(0,0,0,0.08);
 }
 
-select,input,textarea{
+label{
+font-weight:600;
+font-size:14px;
+}
+
+select,input{
 width:100%;
-padding:14px;
-margin-top:10px;
-border-radius:10px;
+padding:13px;
+margin-top:6px;
+margin-bottom:14px;
+border-radius:12px;
 border:1px solid #ddd;
-font-size:16px;
+font-size:15px;
 }
 
 button{
 width:100%;
-padding:14px;
-margin-top:12px;
+padding:15px;
 border:none;
-border-radius:12px;
+border-radius:14px;
 font-size:16px;
-font-weight:bold;
+font-weight:600;
 cursor:pointer;
 }
 
 .generate{
-background:linear-gradient(135deg,#5b5bff,#8b5bff);
+background:linear-gradient(135deg,#16c79a,#00a8a8);
 color:white;
 }
 
 .copy{
-background:#00b894;
+background:#10b981;
 color:white;
-}
-
-.ai{
-background:#eee;
-}
-
-.download{
-background:#0984e3;
-color:white;
-}
-
-.preview img{
-width:100%;
-max-width:600px;
-border-radius:20px;
 margin-top:10px;
 }
 
-.hidden{
-display:none;
+textarea{
+width:100%;
+height:260px;
+margin-top:15px;
+border-radius:12px;
+padding:12px;
+font-size:13px;
+border:1px solid #ccc;
 }
 
-</style>
+.footer{
+text-align:center;
+font-size:12px;
+margin-top:25px;
+opacity:0.6;
+}
 
-</head>
+small{
+opacity:0.6;
+}
 
-<body>
+</style></head><body><div class="header"><h1>👨‍🏫 Bantu Guru</h1><div class="by">by pak.choyy</div><div class="badge">
+Prompt Generator Media Ajar SD
+</div></div><div class="container"><div class="card"><label>Jenis Media</label>
 
-<div class="header">
+<select id="media"><option value="lkpd">Worksheet (LKPD)</option>
+<option value="poster">Poster Edukasi</option>
+<option value="flashcard">Flashcard</option>
+<option value="mewarnai">Lembar Mewarnai</option>
+<option value="infografis">Infografis</option>
+<option value="kartu">Kartu Soal</option>
+<option value="bacaan">Bahan Bacaan</option>
+<option value="game">Permainan Edukasi</option></select><label>Kelas</label>
 
-<h1>Bantu Guru V53 PRO MAX</h1>
-
-<p>Kurikulum Merdeka • A4 Fix</p>
-
-</div>
-
-<div class="container">
-
-<div class="card">
-
-<select id="media" onchange="toggleLKPD()">
-
-<option>LKPD</option>
-
-<option>Poster</option>
-
-<option>Infografis</option>
-
-<option>Worksheet</option>
-
-</select>
-
-
-<div id="identitas">
-
-<input placeholder="Nama Sekolah">
-
-<select>
-
-<option>Kelas 1</option>
+<select id="kelas"><option>Kelas 1</option>
 <option selected>Kelas 2</option>
 <option>Kelas 3</option>
 <option>Kelas 4</option>
 <option>Kelas 5</option>
-<option>Kelas 6</option>
+<option>Kelas 6</option></select><small>Sesuai Kurikulum Merdeka</small>
 
-</select>
+<label>Mata Pelajaran</label>
 
-</div>
+<select id="mapel" onchange="contohMateri()"><option value="matematika">Matematika</option>
+<option value="indonesia">Bahasa Indonesia</option>
+<option value="ipas">IPAS</option>
+<option value="pkn">Pendidikan Pancasila</option>
+<option value="pai">Pendidikan Agama Islam</option>
+<option value="inggris">Bahasa Inggris</option></select><label>Materi</label>
 
+<input id="materi" placeholder="contoh: Penjumlahan 1–50"><small>Isi sesuai materi pelajaran</small>
 
-<input id="materi" placeholder="contoh: penjumlahan 1-50">
+<label>Jumlah</label>
 
+<select id="jumlah"><option>5</option>
+<option selected>10</option>
+<option>15</option>
+<option>20</option></select><label>Gaya Ilustrasi</label>
 
-<select id="soal">
+<select id="style"><option>3D Clay</option>
+<option>Cartoon Kids</option>
+<option>Kawaii Cute</option>
+<option>Flat Design</option>
+<option>Pastel Soft</option>
+<option>Watercolor</option>
+<option>Outline Coloring</option>
+<option>Sticker Style</option>
+<option>Vector Clean</option>
+<option>Storybook Illustration</option></select><button class="generate" onclick="generatePrompt()">GENERATE PROMPT
 
-<option>5 Soal</option>
-<option>10 Soal</option>
-<option>15 Soal</option>
-<option>20 Soal</option>
+</button><button class="copy" onclick="copyPrompt()">COPY PROMPT
 
-</select>
+</button><textarea id="hasil"></textarea></div><div class="footer">© pak.choyy
 
+</div></div><script>
 
-<select id="gaya">
+function contohMateri(){
 
-<option>3D Clay</option>
-<option>Flat Cartoon</option>
-<option>Sticker</option>
-<option>Pastel</option>
+let mapel=mapel.value;
+let materi=document.getElementById("materi");
 
-</select>
+if(mapel=="matematika")
+materi.placeholder="contoh: Penjumlahan 1–50";
 
+else if(mapel=="indonesia")
+materi.placeholder="contoh: Membaca kata sederhana";
 
-<button class="generate" onclick="generate()">
+else if(mapel=="ipas")
+materi.placeholder="contoh: Bagian tubuh manusia";
 
-GENERATE
+else if(mapel=="pkn")
+materi.placeholder="contoh: Aturan di rumah";
 
-</button>
+else if(mapel=="pai")
+materi.placeholder="contoh: Rukun Islam";
 
-
-<textarea id="prompt"></textarea>
-
-
-<button class="copy" onclick="copyPrompt()">
-
-SALIN PROMPT
-
-</button>
-
-
-<button class="ai" onclick="chatgpt()">
-
-CHATGPT
-
-</button>
-
-
-<button class="ai" onclick="gemini()">
-
-GEMINI
-
-</button>
-
-
-<button class="ai" onclick="bing()">
-
-BING
-
-</button>
-
-
-</div>
-
-
-<div class="card preview">
-
-<h3>Preview</h3>
-
-<img id="img"
-src="https://via.placeholder.com/800x1131.png?text=A4">
-
-<button class="download" onclick="download()">
-
-DOWNLOAD
-
-</button>
-
-</div>
-
-
-</div>
-
-
-<script>
-
-function toggleLKPD(){
-
-let media=document.getElementById("media").value;
-
-let id=document.getElementById("identitas");
-
-if(media=="LKPD")
-
-id.classList.remove("hidden");
-
-else
-
-id.classList.add("hidden");
+else if(mapel=="inggris")
+materi.placeholder="contoh: Fruits vocabulary";
 
 }
 
 
-function generate(){
 
-let media=document.getElementById("media").value;
+function deskripsiMedia(media){
 
-let materi=document.getElementById("materi").value;
+if(media=="lkpd")
+return "Include student identity and answer space";
 
-let gaya=document.getElementById("gaya").value;
+if(media=="poster")
+return "Focus on visual explanation with minimal text";
+
+if(media=="flashcard")
+return "Card layout, one concept per card";
+
+if(media=="mewarnai")
+return "Black and white outline only, no color";
+
+if(media=="infografis")
+return "Combination of text and illustration";
+
+if(media=="kartu")
+return "Question card layout";
+
+if(media=="bacaan")
+return "Short reading text with illustration";
+
+if(media=="game")
+return "Fun activity or puzzle layout";
+
+}
+
+
+
+function generatePrompt(){
+
+let media=media.value;
+let mediaText=media.options[media.selectedIndex].text;
+
+let kelas=kelas.value;
+
+let materi=materi.value;
+
+let jumlah=jumlah.value;
+
+let style=style.value;
+
 
 
 let prompt=
 
-"Create A4 "+media+
+`Create an A4 ${mediaText} for ${kelas} SD students in Indonesia.
 
-" about "+materi+
+Topic: ${materi}
 
-", illustration "+gaya+
+Requirements:
 
-", Indonesian language, kids friendly, clean layout, 300 dpi";
+– Use Indonesian language
+– Follow Kurikulum Merdeka
+– ${deskripsiMedia(media)}
+– Provide ${jumlah} items
+– Use ${style} illustration style
+– Clean layout
+– Print ready
+– A4 size
+– 300 dpi`;
 
 
-document.getElementById("prompt").value=prompt;
-
-
-document.getElementById("img").src=
-
-"https://image.pollinations.ai/prompt/"+encodeURIComponent(prompt);
+hasil.value=prompt;
 
 }
+
 
 
 function copyPrompt(){
 
-let text=document.getElementById("prompt");
-
-text.select();
+hasil.select();
 
 document.execCommand("copy");
 
-alert("Prompt disalin");
+alert("Prompt berhasil dicopy");
 
 }
 
-
-function chatgpt(){
-
-window.open("https://chat.openai.com");
-
-}
-
-
-function gemini(){
-
-window.open("https://gemini.google.com");
-
-}
-
-
-function bing(){
-
-window.open("https://bing.com/images/create");
-
-}
-
-
-function download(){
-
-let image=document.getElementById("img").src;
-
-let a=document.createElement("a");
-
-a.href=image;
-
-a.download="bantu-guru.png";
-
-a.click();
-
-}
-
-</script>
-
-</body>
-
-</html>
+</script></body></html>

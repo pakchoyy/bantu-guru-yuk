@@ -1,261 +1,189 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bantu Guru | by pak.choyy</title><style>
+<title>Generator LKPD SD v69 Final</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
 
 body{
-font-family:system-ui;
-margin:0;
-background:#f0fdf9;
-}
-
-.header{
-background:linear-gradient(135deg,#16c79a,#00a8a8);
-color:white;
-padding:45px 20px;
-border-bottom-left-radius:30px;
-border-bottom-right-radius:30px;
-text-align:center;
-}
-
-.header h1{
-margin:0;
-font-size:32px;
-}
-
-.by{
-margin-top:5px;
-opacity:0.9;
-}
-
-.badge{
-background:white;
-color:#00a8a8;
-padding:6px 14px;
-border-radius:20px;
-display:inline-block;
-margin-top:10px;
-font-size:13px;
-font-weight:600;
+font-family: Arial, sans-serif;
+background:#f4f6fb;
+padding:20px;
 }
 
 .container{
-padding:25px;
-max-width:800px;
+max-width:700px;
 margin:auto;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
-.card{
-background:white;
-padding:22px;
-border-radius:20px;
-box-shadow:0 5px 18px rgba(0,0,0,0.08);
+h2{
+margin-top:0;
+text-align:center;
 }
 
 label{
-font-weight:600;
-font-size:14px;
-}
-
-select,input{
-width:100%;
-padding:13px;
-margin-top:6px;
-margin-bottom:14px;
-border-radius:12px;
-border:1px solid #ddd;
-font-size:15px;
-}
-
-button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:14px;
-font-size:16px;
-font-weight:600;
-cursor:pointer;
-}
-
-.generate{
-background:linear-gradient(135deg,#16c79a,#00a8a8);
-color:white;
-}
-
-.copy{
-background:#10b981;
-color:white;
+font-weight:bold;
 margin-top:10px;
+display:block;
+}
+
+select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+.output-box{
+position:relative;
+margin-top:15px;
 }
 
 textarea{
 width:100%;
-height:260px;
-margin-top:15px;
-border-radius:12px;
-padding:12px;
-font-size:13px;
+height:220px;
+padding:10px;
+border-radius:8px;
 border:1px solid #ccc;
+resize:none;
 }
+
+.copy-inside{
+position:absolute;
+top:10px;
+right:10px;
+background:#2196F3;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:6px;
+cursor:pointer;
+font-size:12px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+color:white;
+font-size:14px;
+cursor:pointer;
+}
+
+.generate{background:#4CAF50;}
+.gemini{background:#673AB7;}
+.gpt{background:#009688;}
 
 .footer{
 text-align:center;
 font-size:12px;
-margin-top:25px;
-opacity:0.6;
+color:#888;
+margin-top:10px;
 }
 
-small{
-opacity:0.6;
-}
+</style>
 
-</style></head><body><div class="header"><h1>👨‍🏫 Bantu Guru</h1><div class="by">by pak.choyy</div><div class="badge">
-Prompt Generator Media Ajar SD
-</div></div><div class="container"><div class="card"><label>Jenis Media</label>
+</head>
+<body>
 
-<select id="media"><option value="lkpd">Worksheet (LKPD)</option>
-<option value="poster">Poster Edukasi</option>
-<option value="flashcard">Flashcard</option>
-<option value="mewarnai">Lembar Mewarnai</option>
-<option value="infografis">Infografis</option>
-<option value="kartu">Kartu Soal</option>
-<option value="bacaan">Bahan Bacaan</option>
-<option value="game">Permainan Edukasi</option></select><label>Kelas</label>
+<div class="container">
 
-<select id="kelas"><option>Kelas 1</option>
-<option selected>Kelas 2</option>
-<option>Kelas 3</option>
-<option>Kelas 4</option>
-<option>Kelas 5</option>
-<option>Kelas 6</option></select><small>Sesuai Kurikulum Merdeka</small>
+<h2>Generator Prompt LKPD SD</h2>
 
-<label>Mata Pelajaran</label>
+<label>Pilih Media</label>
 
-<select id="mapel" onchange="contohMateri()"><option value="matematika">Matematika</option>
-<option value="indonesia">Bahasa Indonesia</option>
-<option value="ipas">IPAS</option>
-<option value="pkn">Pendidikan Pancasila</option>
-<option value="pai">Pendidikan Agama Islam</option>
-<option value="inggris">Bahasa Inggris</option></select><label>Materi</label>
+<select id="media">
 
-<input id="materi" placeholder="contoh: Penjumlahan 1–50"><small>Isi sesuai materi pelajaran</small>
+<option>Worksheet (LKPD)</option>
+<option>Poster Edukasi</option>
+<option>Flashcard</option>
+<option>Lembar Mewarnai</option>
+<option>Infografis</option>
+<option>Kartu Soal</option>
+<option>Bahan Bacaan</option>
+<option>Permainan Edukasi</option>
 
-<label>Jumlah</label>
+</select>
 
-<select id="jumlah"><option>5</option>
-<option selected>10</option>
-<option>15</option>
-<option>20</option></select><label>Gaya Ilustrasi</label>
+<label>Pilih Materi</label>
 
-<select id="style"><option>3D Clay</option>
-<option>Cartoon Kids</option>
-<option>Kawaii Cute</option>
-<option>Flat Design</option>
-<option>Pastel Soft</option>
-<option>Watercolor</option>
-<option>Outline Coloring</option>
-<option>Sticker Style</option>
-<option>Vector Clean</option>
-<option>Storybook Illustration</option></select><button class="generate" onclick="generatePrompt()">GENERATE PROMPT
+<select id="materi">
 
-</button><button class="copy" onclick="copyPrompt()">COPY PROMPT
+<option>Penjumlahan</option>
+<option>Pengurangan</option>
+<option>Perkalian</option>
+<option>Membaca</option>
+<option>Huruf</option>
+<option>Siklus Air</option>
+<option>Ramadhan</option>
+<option>Hewan</option>
 
-</button><textarea id="hasil"></textarea></div><div class="footer">© pak.choyy
+</select>
 
-</div></div><script>
+<button class="generate" onclick="generatePrompt()">
+Generate Prompt
+</button>
 
-function contohMateri(){
+<div class="output-box">
 
-let mapel=mapel.value;
-let materi=document.getElementById("materi");
+<textarea id="hasil" placeholder="Prompt akan muncul di sini..."></textarea>
 
-if(mapel=="matematika")
-materi.placeholder="contoh: Penjumlahan 1–50";
+<button class="copy-inside" onclick="copyPrompt()">
+Copy
+</button>
 
-else if(mapel=="indonesia")
-materi.placeholder="contoh: Membaca kata sederhana";
+</div>
 
-else if(mapel=="ipas")
-materi.placeholder="contoh: Bagian tubuh manusia";
+<button class="gemini" onclick="openGemini()">
+Buka Gemini
+</button>
 
-else if(mapel=="pkn")
-materi.placeholder="contoh: Aturan di rumah";
+<button class="gpt" onclick="openGPT()">
+Buka ChatGPT
+</button>
 
-else if(mapel=="pai")
-materi.placeholder="contoh: Rukun Islam";
+<div class="footer">
+v69 Final • Generator LKPD SD
+</div>
 
-else if(mapel=="inggris")
-materi.placeholder="contoh: Fruits vocabulary";
+</div>
 
-}
-
-
-
-function deskripsiMedia(media){
-
-if(media=="lkpd")
-return "Include student identity and answer space";
-
-if(media=="poster")
-return "Focus on visual explanation with minimal text";
-
-if(media=="flashcard")
-return "Card layout, one concept per card";
-
-if(media=="mewarnai")
-return "Black and white outline only, no color";
-
-if(media=="infografis")
-return "Combination of text and illustration";
-
-if(media=="kartu")
-return "Question card layout";
-
-if(media=="bacaan")
-return "Short reading text with illustration";
-
-if(media=="game")
-return "Fun activity or puzzle layout";
-
-}
-
-
+<script>
 
 function generatePrompt(){
 
-let media=media.value;
-let mediaText=media.options[media.selectedIndex].text;
+let media = document.getElementById("media").value;
 
-let kelas=kelas.value;
+let materi = document.getElementById("materi").value;
 
-let materi=materi.value;
+let prompt =
 
-let jumlah=jumlah.value;
+"Buatkan " + media + " untuk siswa SD kelas 2 tentang '" + materi + "'. " +
 
-let style=style.value;
+"Gunakan bahasa Indonesia sederhana, ramah anak, mudah dipahami. " +
 
+"Tambahkan ilustrasi gaya ceria, lucu, colorful, kids friendly. " +
 
+"Layout profesional, rapi, siap cetak, ukuran A4 portrait, resolusi tinggi 300 dpi. " +
 
-let prompt=
+"Gaya ilustrasi kartun pendidikan modern. " +
 
-`Create an A4 ${mediaText} for ${kelas} SD students in Indonesia.
+"Tanpa watermark. " +
 
-Topic: ${materi}
-
-Requirements:
-
-– Use Indonesian language
-– Follow Kurikulum Merdeka
-– ${deskripsiMedia(media)}
-– Provide ${jumlah} items
-– Use ${style} illustration style
-– Clean layout
-– Print ready
-– A4 size
-– 300 dpi`;
+"High quality.";
 
 
-hasil.value=prompt;
+document.getElementById("hasil").value = prompt;
 
 }
 
@@ -263,12 +191,34 @@ hasil.value=prompt;
 
 function copyPrompt(){
 
-hasil.select();
+let text = document.getElementById("hasil");
+
+text.select();
 
 document.execCommand("copy");
 
-alert("Prompt berhasil dicopy");
+alert("Prompt berhasil disalin");
 
 }
 
-</script></body></html>
+
+
+function openGemini(){
+
+window.open("https://gemini.google.com","_blank");
+
+}
+
+
+
+function openGPT(){
+
+window.open("https://chat.openai.com","_blank");
+
+}
+
+
+</script>
+
+</body>
+</html>

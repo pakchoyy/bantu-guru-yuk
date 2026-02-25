@@ -3,17 +3,15 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Bantu Guru Yuk • Generator v89 Stabil</title>
+<title>Bantu Guru Yuk • Generator v93 ELITE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
 body{
 font-family:'Segoe UI',sans-serif;
 background:#eef2f7;
 margin:0;
 }
-
 .header{
 background:linear-gradient(90deg,#1b5e20,#2e7d32,#66bb6a);
 color:white;
@@ -24,15 +22,6 @@ align-items:center;
 font-size:20px;
 font-weight:bold;
 }
-
-.trial{
-background:#ffeb3b;
-color:black;
-padding:5px 12px;
-border-radius:20px;
-font-size:12px;
-}
-
 .container{
 max-width:800px;
 margin:20px auto;
@@ -41,13 +30,11 @@ padding:25px;
 border-radius:15px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
-
 label{
 font-weight:bold;
 margin-top:12px;
 display:block;
 }
-
 select,input,textarea{
 width:100%;
 padding:10px;
@@ -56,11 +43,9 @@ border-radius:8px;
 border:1px solid #ccc;
 font-size:14px;
 }
-
 textarea{
 height:260px;
 }
-
 button{
 width:100%;
 padding:12px;
@@ -71,26 +56,22 @@ color:white;
 font-size:15px;
 cursor:pointer;
 }
-
 .generate{background:#4CAF50;}
 .copy{background:#2196F3;}
 .gemini{background:#673ab7;}
 .gpt{background:#009688;}
-
 .preview{
 max-width:200px;
 margin-top:10px;
 display:none;
 border-radius:10px;
 }
-
 .footer{
 text-align:center;
 margin-top:15px;
 font-size:12px;
 color:#777;
 }
-
 </style>
 
 </head>
@@ -98,30 +79,24 @@ color:#777;
 <body>
 
 <div class="header">
-
 <div>👩‍🏫 BANTU GURU YUK</div>
-
-<div class="trial">TRIAL</div>
-
+<div>ELITE</div>
 </div>
 
 <div class="container">
 
-<label>Jenis Media</label>
-
-<select id="media">
+<label>Jenis Media</label> <select id="media">
 
 <option>LKPD</option>
 <option>Infografis</option>
 <option>Poster</option>
 <option>Flashcard</option>
 <option>Lembar Mewarnai</option>
-
+<option>Kartu Soal</option>
+<option>Bahan Bacaan</option>
 </select>
 
-<label>Kelas</label>
-
-<select id="kelas">
+<label>Kelas</label> <select id="kelas">
 
 <option>Umum</option>
 <option>Kelas 1</option>
@@ -130,275 +105,251 @@ color:#777;
 <option>Kelas 4</option>
 <option>Kelas 5</option>
 <option>Kelas 6</option>
-
 </select>
 
-<label>Mata Pelajaran</label>
+<label>Mata Pelajaran</label> <select id="mapel">
 
-<input id="mapel" placeholder="contoh: IPA">
+<option>Umum</option>
+<option>Matematika</option>
+<option>Bahasa Indonesia</option>
+<option>IPA</option>
+<option>IPS</option>
+<option>Pendidikan Pancasila</option>
+<option>Pendidikan Agama</option>
+<option>Bahasa Jawa</option>
+<option>Bahasa Daerah</option>
+<option>Tematik</option>
+</select>
 
-<label>Topik</label>
+<label>Tema / Topik</label> <input id="topik" placeholder="contoh: Ramadan, Pancasila, Penjumlahan">
 
-<input id="topik" placeholder="contoh: Siklus Air">
+<label>Jumlah Soal</label> <select id="jumlah">
 
-<label>Gaya Ilustrasi</label>
+<option>5</option>
+<option selected>10</option>
+<option>15</option>
+<option>20</option>
+</select>
 
-<select id="gaya" onchange="toggleUpload()">
+<label>Tingkat Kesulitan</label> <select id="level">
+
+<option>Mudah</option>
+<option selected>Sedang</option>
+<option>Sulit</option>
+</select>
+
+<label>Gaya Ilustrasi</label> <select id="gaya" onchange="toggleUpload()">
 
 <option>Cartoon Kids</option>
 <option>3D Clay</option>
 <option>Pixar Style</option>
 <option>Disney Style</option>
+<option>Anime Kids</option>
+<option>Storybook Illustration</option>
+<option>Kindergarten Cute Style</option>
+<option>Crayon Drawing</option>
+<option>Hand Drawn Kids</option>
 
-<option value="upload">
-
-Upload Referensi Sendiri
-
-</option>
+<option value="upload">Upload Referensi Sendiri</option>
 
 </select>
 
 <div id="uploadBox" style="display:none">
-
 <label>Upload Referensi</label>
-
-<input type="file" id="ref" accept="image/*">
-
+<input type="file" id="ref">
 <img id="preview" class="preview">
-
 </div>
 
-<button type="button" class="generate" onclick="generatePrompt()">
-
+<button class="generate" onclick="generatePrompt()">
 Generate Prompt
-
 </button>
 
 <textarea id="hasil"></textarea>
 
-<button type="button" class="copy" onclick="copyPrompt()">
-
+<button class="copy" onclick="copyPrompt()">
 Copy Prompt
-
 </button>
 
-<button type="button" class="gemini" onclick="openGemini()">
-
+<button class="gemini" onclick="openGemini()">
 Open Gemini
-
 </button>
 
-<button type="button" class="gpt" onclick="openGPT()">
-
+<button class="gpt" onclick="openGPT()">
 Open ChatGPT
-
 </button>
 
 <div class="footer">
-
-v89 Stabil • No Bug • GitHub Ready
-
+by pak.choyy / 2026
 </div>
 
 </div>
 
 <script>
 
-
-
 function toggleUpload(){
-
-const gaya=document.getElementById("gaya").value;
-
-document.getElementById("uploadBox").style.display=
-
-(gaya==="upload")?"block":"none";
-
+uploadBox.style.display=(gaya.value==="upload")?"block":"none";
 }
 
-
-
-document.getElementById("ref").addEventListener("change",function(e){
-
-const file=e.target.files[0];
-
-if(file){
-
-document.getElementById("preview").src=
-
-URL.createObjectURL(file);
-
-document.getElementById("preview").style.display="block";
-
+ref.onchange=function(e){
+preview.src=URL.createObjectURL(e.target.files[0]);
+preview.style.display="block";
 }
-
-});
-
-
 
 function generatePrompt(){
 
+let media=mediaEl.value;
+let kelas=kelasEl.value;
+let mapel=mapelEl.value;
+let topik=topikEl.value;
+let jumlah=jumlahEl.value;
+let level=levelEl.value;
+let gaya=gayaEl.value;
 
+let styleText=(gaya==="upload")
+?"Match illustration style exactly with uploaded reference image."
+:"Illustration style: "+gaya+".";
 
-const media=document.getElementById("media").value;
-
-const kelas=document.getElementById("kelas").value;
-
-const mapel=document.getElementById("mapel").value;
-
-const topik=document.getElementById("topik").value;
-
-const gaya=document.getElementById("gaya").value;
-
-
-
-let styleText="";
-
-
-
-if(gaya==="upload"){
-
-styleText=`
-
-Match illustration style exactly with uploaded reference image.
-
-Copy colors, characters, and visual appearance.
-
-`;
-
-}else{
-
-styleText=`
-
-Illustration style: ${gaya}.
-
-`;
-
-}
-
-
-
-let identity="";
-
-
+let prompt="";
 
 if(media==="LKPD"){
 
-identity=`
+prompt=`
+Create LKPD worksheet for elementary school.
 
-Include worksheet identity section:
-
-School: ____________________
-
-Student Name: ____________________
-
+Subject: ${mapel}
+Topic: ${topik}
 Class: ${kelas}
 
-Subject: ${mapel}
+Number of questions: ${jumlah}
+Difficulty level: ${level}
 
-Topic: ${topik}
+Include identity section.
 
-`;
+All text must be Indonesian.
 
-}
-
-
-
-const prompt=`
-
-Create a ${media} for elementary school students.
-
-${identity}
-
-Topic: ${topik}
-
-Subject: ${mapel}
-
-
-
-All text inside the image must be in Indonesian language.
-
-Use simple Indonesian suitable for children.
-
-Use clear readable fonts.
-
-Do not overlap text and images.
-
-Keep layout clean and professional.
-
-
+Clear readable font.
 
 ${styleText}
 
+A4 portrait 300 dpi print ready no watermark.
+`;
 
+}
 
-A4 size, portrait, 300 dpi.
+else if(media==="Infografis"){
 
-High quality.
+prompt=`
+Create infographic for elementary school.
 
-Print ready.
+Topic: ${topik}
+Subject: ${mapel}
 
-No watermark.
+Use simple Indonesian.
+
+Include title and explanation.
+
+${styleText}
+
+Professional layout A4 portrait.
+`;
+
+}
+
+else if(media==="Poster"){
+
+prompt=`
+Create educational poster.
+
+Topic: ${topik}
+
+Motivational Indonesian text.
+
+${styleText}
+
+Very attractive for children.
 
 `;
 
+}
 
+else if(media==="Flashcard"){
 
-document.getElementById("hasil").value=prompt;
+prompt=`
+Create flashcard.
 
+Topic: ${topik}
 
+One concept per card.
+
+Large clear Indonesian text.
+
+${styleText}
+
+`;
 
 }
 
+else if(media==="Lembar Mewarnai"){
 
+prompt=`
+Create coloring page.
+
+Topic: ${topik}
+
+Black and white line art.
+
+Thick outline.
+
+No color.
+
+Simple for kids.
+
+${styleText}
+
+A4 print ready.
+`;
+
+}
+
+else{
+
+prompt=`
+Create educational material.
+
+Topic: ${topik}
+
+${styleText}
+
+Indonesian language.
+
+`;
+
+}
+
+hasil.value=prompt;
+
+}
+
+const mediaEl=media;
+const kelasEl=kelas;
+const mapelEl=mapel;
+const topikEl=topik;
+const jumlahEl=jumlah;
+const levelEl=level;
+const gayaEl=gaya;
 
 function copyPrompt(){
-
-const text=document.getElementById("hasil").value;
-
-
-
-navigator.clipboard.writeText(text)
-
-.then(()=>alert("Prompt berhasil disalin"))
-
-.catch(()=>alert("Copy gagal"));
-
+navigator.clipboard.writeText(hasil.value);
+alert("Prompt disalin");
 }
-
-
 
 function openGemini(){
-
-window.open(
-
-"https://gemini.google.com",
-
-"_blank",
-
-"noopener,noreferrer"
-
-);
-
+window.open("https://gemini.google.com","_blank");
 }
-
-
 
 function openGPT(){
-
-window.open(
-
-"https://chat.openai.com",
-
-"_blank",
-
-"noopener,noreferrer"
-
-);
-
+window.open("https://chat.openai.com","_blank");
 }
-
-
 
 </script>
 

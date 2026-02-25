@@ -3,7 +3,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Bantu Guru Yuk • Generator LKPD PRO</title>
+<title>Bantu Guru Yuk • Generator v89 Stabil</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -21,20 +21,20 @@ padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-font-weight:bold;
 font-size:20px;
+font-weight:bold;
 }
 
 .trial{
 background:#ffeb3b;
 color:black;
-padding:5px 10px;
+padding:5px 12px;
 border-radius:20px;
 font-size:12px;
 }
 
 .container{
-max-width:750px;
+max-width:800px;
 margin:20px auto;
 background:white;
 padding:25px;
@@ -44,8 +44,8 @@ box-shadow:0 5px 15px rgba(0,0,0,0.1);
 
 label{
 font-weight:bold;
-display:block;
 margin-top:12px;
+display:block;
 }
 
 select,input,textarea{
@@ -54,16 +54,17 @@ padding:10px;
 margin-top:5px;
 border-radius:8px;
 border:1px solid #ccc;
+font-size:14px;
 }
 
 textarea{
-height:220px;
+height:260px;
 }
 
 button{
 width:100%;
 padding:12px;
-margin-top:12px;
+margin-top:10px;
 border:none;
 border-radius:8px;
 color:white;
@@ -77,10 +78,10 @@ cursor:pointer;
 .gpt{background:#009688;}
 
 .preview{
-margin-top:10px;
 max-width:200px;
-border-radius:10px;
+margin-top:10px;
 display:none;
+border-radius:10px;
 }
 
 .footer{
@@ -106,6 +107,18 @@ color:#777;
 
 <div class="container">
 
+<label>Jenis Media</label>
+
+<select id="media">
+
+<option>LKPD</option>
+<option>Infografis</option>
+<option>Poster</option>
+<option>Flashcard</option>
+<option>Lembar Mewarnai</option>
+
+</select>
+
 <label>Kelas</label>
 
 <select id="kelas">
@@ -122,72 +135,68 @@ color:#777;
 
 <label>Mata Pelajaran</label>
 
-<select id="mapel">
-
-<option>Matematika</option>
-<option>Bahasa Indonesia</option>
-<option>IPA</option>
-<option>IPS</option>
-<option>Pendidikan Agama</option>
-
-</select>
+<input id="mapel" placeholder="contoh: IPA">
 
 <label>Topik</label>
 
-<input id="topik" placeholder="contoh: Siklus Hujan">
+<input id="topik" placeholder="contoh: Siklus Air">
 
 <label>Gaya Ilustrasi</label>
 
-<select id="gaya">
+<select id="gaya" onchange="toggleUpload()">
 
-<option>Kartun Ceria</option>
+<option>Cartoon Kids</option>
 <option>3D Clay</option>
-<option>Gaya Pixar</option>
-<option>Gaya Disney</option>
-<option>Anime Anak</option>
-<option>Watercolor</option>
-<option>Pastel</option>
-<option>Buku Cerita Anak</option>
-<option>Flat Design</option>
-<option>Hitam Putih</option>
+<option>Pixar Style</option>
+<option>Disney Style</option>
+
+<option value="upload">
+
+Upload Referensi Sendiri
+
+</option>
 
 </select>
 
-<label>Upload Gambar Referensi (Opsional)</label>
+<div id="uploadBox" style="display:none">
+
+<label>Upload Referensi</label>
 
 <input type="file" id="ref" accept="image/*">
 
 <img id="preview" class="preview">
 
-<button class="generate" onclick="generatePrompt()">
+</div>
 
-Generate Prompt LKPD
+<button type="button" class="generate" onclick="generatePrompt()">
+
+Generate Prompt
 
 </button>
 
 <textarea id="hasil"></textarea>
 
-<button class="copy" onclick="copyPrompt()">
+<button type="button" class="copy" onclick="copyPrompt()">
 
 Copy Prompt
 
 </button>
 
-<button class="gemini" onclick="openGemini()">
+<button type="button" class="gemini" onclick="openGemini()">
 
-Buka Gemini
+Open Gemini
 
 </button>
 
-<button class="gpt" onclick="openGPT()">
+<button type="button" class="gpt" onclick="openGPT()">
 
-Buka ChatGPT
+Open ChatGPT
 
 </button>
 
 <div class="footer">
 
-© 2026 Bantu Guru Yuk • LKPD Generator PRO
+v89 Stabil • No Bug • GitHub Ready
 
 </div>
 
@@ -196,90 +205,202 @@ Buka ChatGPT
 <script>
 
 
-ref.onchange=function(e){
 
-preview.src=URL.createObjectURL(e.target.files[0]);
+function toggleUpload(){
 
-preview.style.display="block";
+const gaya=document.getElementById("gaya").value;
+
+document.getElementById("uploadBox").style.display=
+
+(gaya==="upload")?"block":"none";
 
 }
+
+
+
+document.getElementById("ref").addEventListener("change",function(e){
+
+const file=e.target.files[0];
+
+if(file){
+
+document.getElementById("preview").src=
+
+URL.createObjectURL(file);
+
+document.getElementById("preview").style.display="block";
+
+}
+
+});
 
 
 
 function generatePrompt(){
 
 
-let kelas=kelas.value;
 
-let mapel=mapel.value;
+const media=document.getElementById("media").value;
 
-let topik=topik.value;
+const kelas=document.getElementById("kelas").value;
 
-let gaya=gaya.value;
+const mapel=document.getElementById("mapel").value;
 
+const topik=document.getElementById("topik").value;
 
-
-let prompt=`
-
-Buatkan LKPD (Lembar Kerja Peserta Didik) untuk siswa Sekolah Dasar.
-
-
-IDENTITAS LKPD:
-
-Sekolah : ____________________
-
-Nama : ____________________
-
-Kelas : ${kelas}
-
-Mata Pelajaran : ${mapel}
-
-Topik : ${topik}
+const gaya=document.getElementById("gaya").value;
 
 
 
-KETENTUAN:
-
-Gunakan Bahasa Indonesia yang sangat sederhana.
-
-Gunakan kalimat ramah anak.
-
-Mudah dipahami siswa.
+let styleText="";
 
 
 
-DESAIN:
+if(gaya==="upload"){
 
-Gunakan font besar, jelas, mudah dibaca.
+styleText=`
 
-Jangan sampai teks menabrak gambar.
+Match illustration style exactly with uploaded reference image.
 
-Pisahkan teks dan ilustrasi dengan rapi.
+Copy colors, characters, and visual appearance.
 
-Layout bersih dan profesional.
+`;
 
+}else{
 
+styleText=`
 
-ILUSTRASI:
+Illustration style: ${gaya}.
 
-Gunakan gaya ${gaya}.
+`;
 
-Ikuti gaya ilustrasi dengan akurat.
-
-Jika ada gambar referensi, tiru gaya tersebut.
-
-Gunakan ilustrasi berwarna, lucu, menarik.
-
-Buat anak senang belajar.
+}
 
 
 
-CETAK:
+let identity="";
 
-Ukuran A4
 
-Portrait
 
-300 dpi
+if(media==="LKPD"){
 
-Si
+identity=`
+
+Include worksheet identity section:
+
+School: ____________________
+
+Student Name: ____________________
+
+Class: ${kelas}
+
+Subject: ${mapel}
+
+Topic: ${topik}
+
+`;
+
+}
+
+
+
+const prompt=`
+
+Create a ${media} for elementary school students.
+
+${identity}
+
+Topic: ${topik}
+
+Subject: ${mapel}
+
+
+
+All text inside the image must be in Indonesian language.
+
+Use simple Indonesian suitable for children.
+
+Use clear readable fonts.
+
+Do not overlap text and images.
+
+Keep layout clean and professional.
+
+
+
+${styleText}
+
+
+
+A4 size, portrait, 300 dpi.
+
+High quality.
+
+Print ready.
+
+No watermark.
+
+`;
+
+
+
+document.getElementById("hasil").value=prompt;
+
+
+
+}
+
+
+
+function copyPrompt(){
+
+const text=document.getElementById("hasil").value;
+
+
+
+navigator.clipboard.writeText(text)
+
+.then(()=>alert("Prompt berhasil disalin"))
+
+.catch(()=>alert("Copy gagal"));
+
+}
+
+
+
+function openGemini(){
+
+window.open(
+
+"https://gemini.google.com",
+
+"_blank",
+
+"noopener,noreferrer"
+
+);
+
+}
+
+
+
+function openGPT(){
+
+window.open(
+
+"https://chat.openai.com",
+
+"_blank",
+
+"noopener,noreferrer"
+
+);
+
+}
+
+
+
+</script>
+
+</body>
+</html>

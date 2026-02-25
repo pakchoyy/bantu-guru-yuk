@@ -3,24 +3,28 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Bantu Guru Yuk • Generator v95.1 PRO</title>
+<title>Bantu Guru Yuk • Generator PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
 body{
 font-family:'Segoe UI',sans-serif;
 background:#eef2f7;
 margin:0;
 }
+
 .header{
 background:linear-gradient(90deg,#1b5e20,#2e7d32,#66bb6a);
 color:white;
 padding:15px;
 display:flex;
 justify-content:space-between;
+align-items:center;
 font-size:20px;
 font-weight:bold;
 }
+
 .container{
 max-width:800px;
 margin:20px auto;
@@ -29,40 +33,48 @@ padding:25px;
 border-radius:15px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
+
 label{
 font-weight:bold;
 margin-top:12px;
 display:block;
 }
+
 select,input,textarea{
 width:100%;
 padding:10px;
 margin-top:5px;
 border-radius:8px;
 border:1px solid #ccc;
+font-size:14px;
 }
+
 textarea{
-height:250px;
+height:260px;
 }
+
 button{
 width:100%;
 padding:12px;
-margin-top:10px;
+margin-top:12px;
 border:none;
 border-radius:8px;
 color:white;
 font-size:15px;
 cursor:pointer;
 }
+
 .generate{background:#4CAF50;}
 .copy{background:#2196F3;}
 .gpt{background:#009688;}
+
 .footer{
 text-align:center;
 margin-top:15px;
 font-size:12px;
 color:#777;
 }
+
 </style>
 
 </head>
@@ -70,60 +82,86 @@ color:#777;
 <body>
 
 <div class="header">
+
 <div>👩‍🏫 BANTU GURU YUK</div>
+
 <div>PRO</div>
+
 </div>
 
 <div class="container">
 
-<label>Jenis Media</label> <select id="media" onchange="cekMedia()">
+<label>Jenis Media</label>
+
+<select id="media" onchange="cekMedia()">
 
 <option>LKPD</option>
 <option>Infografis</option>
 <option>Poster</option>
 <option>Flashcard</option>
 <option>Lembar Mewarnai</option>
+
 </select>
 
-<label>Mata Pelajaran</label> <input id="mapel">
+<label>Mata Pelajaran</label>
 
-<label>Tema / Topik / Materi</label> <input id="topik">
+<input id="mapel">
 
-<label>Jumlah Soal</label> <select id="jumlah"></select>
+<label>Tema / Topik / Materi</label>
 
-<label>Tingkat Kesulitan</label> <select id="level"></select>
+<input id="topik">
+
+<label>Jumlah Soal</label>
+
+<select id="jumlah"></select>
+
+<label>Tingkat Kesulitan</label>
+
+<select id="level"></select>
 
 <button class="generate" onclick="generatePrompt()">
+
 Generate Prompt
+
 </button>
 
 <textarea id="hasil"></textarea>
 
 <button class="copy" onclick="copyPrompt()">
+
 Copy Prompt
+
 </button>
 
 <button class="gpt" onclick="openGPT()">
+
 Open ChatGPT
+
 </button>
 
 <div class="footer">
+
 by pak.choyy / 2026
+
 </div>
 
 </div>
 
 <script>
 
-// ===== TRIAL SYSTEM =====
+// ===== RESTORE STYLE + LOGIC =====
 
+// trial
 const TRIAL=30;
 
 let start=localStorage.getItem("trialStart");
 
 if(!start){
+
 localStorage.setItem("trialStart",Date.now());
+
 start=Date.now();
+
 }
 
 let now=Date.now();
@@ -136,7 +174,7 @@ if(days>TRIAL && license!="active"){
 
 document.body.innerHTML=`
 
-<div style="padding:40px;text-align:center;font-family:sans-serif;">
+<div style="padding:40px;text-align:center">
 
 <h2>Trial Habis</h2>
 
@@ -156,7 +194,7 @@ document.body.innerHTML=`
 
 function aktif(){
 
-if(document.getElementById("kode").value=="PAKCHOY25"){
+if(kode.value=="PAKCHOY25"){
 
 localStorage.setItem("license","active");
 
@@ -171,15 +209,16 @@ alert("Kode salah");
 }
 
 
-// ===== FORM LOGIC =====
+
+// ===== FORM =====
+
+const mediaEl=media;
+const jumlahEl=jumlah;
+const levelEl=level;
 
 function cekMedia(){
 
-let media=mediaEl.value;
-
-topikEl.disabled=false;
-
-if(media!="LKPD"){
+if(mediaEl.value!="LKPD"){
 
 jumlahEl.innerHTML="<option>-</option>";
 
@@ -194,11 +233,8 @@ levelEl.disabled=true;
 jumlahEl.innerHTML=`
 
 <option>5</option>
-
 <option selected>10</option>
-
 <option>15</option>
-
 <option>20</option>
 
 `;
@@ -206,9 +242,7 @@ jumlahEl.innerHTML=`
 levelEl.innerHTML=`
 
 <option>Mudah</option>
-
 <option selected>Sedang</option>
-
 <option>Sulit</option>
 
 `;
@@ -222,69 +256,40 @@ levelEl.disabled=false;
 }
 
 
+
 // ===== PROMPT =====
 
 function generatePrompt(){
 
-let media=mediaEl.value;
-
-let mapel=mapelEl.value;
-
-let topik=topikEl.value;
-
-let jumlah=jumlahEl.value;
-
-let level=levelEl.value;
-
 let prompt="";
 
-if(media=="LKPD"){
+if(media.value=="LKPD"){
 
-prompt=`
+prompt=
 
-Create LKPD worksheet for elementary students.
+"Create LKPD worksheet.\n"+
 
-Subject: ${mapel}
+"Subject: "+mapel.value+"\n"+
 
-Topic: ${topik}
+"Topic: "+topik.value+"\n"+
 
-Number of questions: ${jumlah}
+"Questions: "+jumlah.value+"\n"+
 
-Difficulty level: ${level}
+"Difficulty: "+level.value+"\n"+
 
-All text must be Indonesian.
-
-Clear readable fonts.
-
-A4 portrait.
-
-300 dpi.
-
-Print ready.
-
-`;
+"Language: Indonesian.";
 
 }else{
 
-prompt=`
+prompt=
 
-Create ${media} for elementary students.
+"Create "+media.value+"\n"+
 
-Subject: ${mapel}
+"Subject: "+mapel.value+"\n"+
 
-Topic: ${topik}
+"Topic: "+topik.value+"\n"+
 
-All text must be Indonesian.
-
-Attractive and professional layout.
-
-A4 portrait.
-
-300 dpi.
-
-Print ready.
-
-`;
+"Language: Indonesian.";
 
 }
 
@@ -293,13 +298,8 @@ hasil.value=prompt;
 }
 
 
-// ===== FUNCTIONS =====
 
-const mediaEl=media;
-const mapelEl=mapel;
-const topikEl=topik;
-const jumlahEl=jumlah;
-const levelEl=level;
+// ===== FUNCTIONS =====
 
 function copyPrompt(){
 
@@ -314,9 +314,6 @@ function openGPT(){
 window.open("https://chat.openai.com","_blank");
 
 }
-
-
-// INIT
 
 cekMedia();
 

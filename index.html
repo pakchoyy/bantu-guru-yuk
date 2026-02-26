@@ -1,7 +1,8 @@
 <!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bantu Guru Yuk</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bantu Guru Yuk</title><style>
 
 body{
 font-family:'Segoe UI',sans-serif;
@@ -57,7 +58,7 @@ display:block;
 margin-top:12px;
 }
 
-select,textarea,button{
+select,input,textarea,button{
 width:100%;
 padding:10px;
 margin-top:5px;
@@ -82,7 +83,7 @@ cursor:pointer;
 .gpt{background:#009688;}
 .gemini{background:#673ab7;}
 
-/* INFO BOX */
+/* INFO */
 
 .info{
 margin-top:8px;
@@ -105,23 +106,30 @@ margin-top:30px;
 
 .footer a{
 color:white;
-font-size:20px;
-font-weight:bold;
 text-decoration:none;
+}
+
+.footer a:hover{
+opacity:0.8;
 }
 
 </style></head><body><!-- HEADER --><div class="header"><div>👩‍🏫 BANTU GURU YUK</div><div class="trial-badge">🧪 TRIAL VERSION</div></div><div class="sub">
 AI Worksheet Generator
-</div><!-- FORM --><div class="container"><label>Jenis Media</label>
+</div><div class="container"><label>Jenis Media</label>
 
-<select id="media" onchange="updateMediaInfo()"><option value="LKPD">LKPD</option><option value="Poster">Poster</option><option value="Infografis">Infografis</option><option value="Flashcard">Flashcard</option><option value="Lembar Mewarnai">Lembar Mewarnai</option><option value="Bahan Bacaan">Bahan Bacaan</option></select><div id="mediaInfo" class="info">
-📄 Lembar Kerja Peserta Didik
-</div><label>Mata Pelajaran</label>
+<select id="media" onchange="updateAll()"><option>LKPD</option>
+<option>Poster</option>
+<option>Infografis</option>
+<option>Flashcard</option>
+<option>Lembar Mewarnai</option>
+<option>Bahan Bacaan</option></select><div id="mediaInfo" class="info"></div><label>Mata Pelajaran</label>
 
 <select id="mapel"><option>Umum</option>
-<option>Matematika</option>
 <option>Bahasa Indonesia</option>
-<option>IPAS</option></select><label>Kelas</label>
+<option>Matematika</option>
+<option>IPAS</option>
+<option>Pendidikan Pancasila</option>
+<option>Seni</option></select><label>Kelas</label>
 
 <select id="kelas"><option>Umum</option>
 <option>1</option>
@@ -132,11 +140,18 @@ AI Worksheet Generator
 <option>6</option></select><label>Materi</label>
 
 <textarea id="materi"
-placeholder="Tulis materi dengan jelas"></textarea><label>Jumlah Soal</label>
+placeholder="Tulis materi dengan jelas agar hasil lebih akurat"></textarea><label>Jumlah Soal</label>
 
-<select id="jumlah"><option>10</option>
+<select id="jumlah" onchange="cekJumlah()"><option value="auto">Rekomendasi Pak Choyy</option>
 <option>5</option>
-<option>15</option></select><label>Ukuran</label>
+<option selected>10</option>
+<option>15</option>
+<option value="custom">Isi Sendiri</option></select><input id="jumlahCustom"
+type="number"
+placeholder="Tulis jumlah soal"
+style="display:none">
+
+<label>Ukuran</label>
 
 <select id="ukuran"><option>F4</option>
 <option>A4</option>
@@ -144,70 +159,130 @@ placeholder="Tulis materi dengan jelas"></textarea><label>Jumlah Soal</label>
 <option>A5</option></select><label>Orientasi</label>
 
 <select id="orientasi"><option>Portrait</option>
-<option>Landscape</option></select><label>Gaya</label>
+<option>Landscape</option></select><label>Gaya Ilustrasi</label>
 
 <select id="gaya"><option>Cartoon Kids</option>
 <option>Storybook Illustration</option>
 <option>Flat Vector Kids</option>
-<option>Black and White Outline</option></select><button class="generate" onclick="generatePrompt()">
+<option>Pixar Style</option>
+<option>Black and White Outline</option></select><div id="rekomendasi" class="info"></div><button class="generate" onclick="generatePrompt()">
 Generate Prompt
 </button><textarea id="hasil"></textarea><button class="copy" onclick="copyPrompt()">
 Copy Prompt
 </button><button class="gpt"
 onclick="window.open('https://chat.openai.com')">
-
 Open ChatGPT
+</button>
 
-</button><button class="gemini"
+<button class="gemini"
 onclick="window.open('https://gemini.google.com')">
-
 Open Gemini
+</button>
 
-</button></div><!-- FOOTER --><div class="footer"><a href="https://www.tiktok.com/@pak.choyy" target="_blank">🎵 @pak.choyy
+</div><!-- FOOTER FINAL --><div class="footer"><div style="font-size:12px;">
+Follow me on TikTok
+</div><a href="https://www.tiktok.com/@pak.choyy"
+target="_blank">
 
-</a><div style="font-size:12px">
+<div style="font-size:18px;font-weight:bold;margin-top:4px;">
+❇️ @pak.choyy
+</div></a><div style="font-size:11px;margin-top:3px;">
 Free and Paid Worksheet
-</div></div><!-- SCRIPT --><script>
+</div></div><script>
 
 /* AUTO EXPAND */
 
 materi.oninput=function(){
 
 this.style.height="auto";
-
 this.style.height=this.scrollHeight+"px";
 
 }
 
 
-/* MEDIA INFO */
+/* JUMLAH CUSTOM */
 
-function updateMediaInfo(){
+function cekJumlah(){
+
+jumlahCustom.style.display=
+jumlah.value=="custom"?"block":"none";
+
+}
+
+
+/* UPDATE AUTO */
+
+function updateAll(){
+
+let m=media.value;
 
 let info={
 
 LKPD:"📄 Lembar Kerja Peserta Didik",
 
-Poster:"🖼️ Poster",
+Poster:"🖼️ Poster Edukasi",
 
-Infografis:"📊 Infografis",
+Infografis:"📊 Infografis Edukasi",
 
 Flashcard:"🗂️ Flashcard",
 
-"Lembar Mewarnai":"🎨 Mewarnai",
+"Lembar Mewarnai":"🎨 Lembar Mewarnai",
 
-"Bahan Bacaan":"📚 Bacaan"
+"Bahan Bacaan":"📚 Bahan Bacaan"
 
 };
 
-mediaInfo.innerText=info[media.value];
+mediaInfo.innerText=info[m];
+
+
+let ukuranAuto={
+
+LKPD:"F4",
+Poster:"A3",
+Infografis:"A4",
+Flashcard:"A5",
+"Lembar Mewarnai":"A4",
+"Bahan Bacaan":"A4"
+
+};
+
+let orientasiAuto={
+
+LKPD:"Portrait",
+Poster:"Landscape",
+Infografis:"Landscape",
+Flashcard:"Landscape",
+"Lembar Mewarnai":"Portrait",
+"Bahan Bacaan":"Portrait"
+
+};
+
+ukuran.value=ukuranAuto[m];
+orientasi.value=orientasiAuto[m];
+
+
+rekomendasi.innerText=
+"🤖 Rekomendasi Pak Choyy: "+
+ukuran.value+" | "+
+orientasi.value+" | "+
+gaya.value;
 
 }
 
 
-/* GENERATE */
+/* GENERATE PROMPT */
 
 function generatePrompt(){
+
+let jumlahFinal=
+
+jumlah.value=="custom"?
+jumlahCustom.value:
+
+jumlah.value=="auto"?
+"10":
+jumlah.value;
+
 
 hasil.value=
 
@@ -219,15 +294,27 @@ hasil.value=
 
 "Topic: "+materi.value+"\n"+
 
-"Questions: "+jumlah.value+"\n"+
+"Questions: "+jumlahFinal+"\n"+
 
 "Paper size: "+ukuran.value+"\n"+
 
 "Orientation: "+orientasi.value+"\n"+
 
-"Style: "+gaya.value+"\n"+
+"Illustration style: "+gaya.value+"\n"+
 
-"Print ready\n300 DPI\nNo watermark";
+"IMPORTANT: Strictly follow paper size and orientation.\n"+
+
+"Use Indonesian language.\n"+
+
+"Use child-friendly wording.\n"+
+
+"Fix typo automatically.\n"+
+
+"Print ready.\n"+
+
+"300 DPI.\n"+
+
+"No watermark.";
 
 }
 
@@ -238,9 +325,12 @@ function copyPrompt(){
 
 navigator.clipboard.writeText(hasil.value);
 
-alert("Copied");
+alert("Prompt disalin");
 
 }
+
+
+updateAll();
 
 </script></body>
 </html>

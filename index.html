@@ -1,396 +1,124 @@
-<!DOCTYPE html>
-
-<html lang="id">
+<!DOCTYPE html><html>
 <head>
 <meta charset="UTF-8">
-<title>Bantu Guru Yuk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="icon" href="guru-cibisd2.png">
-
-<style>
+<title>Generator Prompt Media Ajar</title><style>
 
 body{
-font-family:'Segoe UI',sans-serif;
-background:#eef2f7;
-margin:0;
+font-family:Arial;
+padding:20px;
+background:#f4f6f8;
 }
 
-/* LOADING */
-
-#loading{
-position:fixed;
-width:100%;
-height:100%;
-background:white;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:9999;
-color:#2e7d32;
-font-weight:bold;
-}
-
-#loading img{
-width:80px;
-animation:lompat 1s infinite;
-}
-
-@keyframes lompat{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
-}
-
-
-/* HEADER */
-
-.header{
-
-background: linear-gradient(90deg,#66bb6a 0%,#4db6ac 50%,#4dd0e1 100%);
-color:white;
-padding:18px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:22px;
-font-weight:bold;
-}
-
-.header-icon{
-height:34px;
-background:white;
-border-radius:50%;
-padding:2px;
-}
-
-.trial{
-background:#ffeb3b;
-color:black;
-padding:5px 12px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
-}
-
-
-/* SUB */
-
-.sub{
-background: linear-gradient(90deg,#81c784,#4db6ac,#4dd0e1);
-color:white;
-padding:6px;
-text-align:center;
-}
-
-
-/* CONTAINER */
-
-.container{
-max-width:700px;
-margin:25px auto;
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-label{
-font-weight:bold;
-margin-top:12px;
-display:block;
-}
-
-select,input,textarea{
+select, textarea, button{
 width:100%;
 padding:10px;
-margin-top:5px;
+margin-top:10px;
 border-radius:8px;
 border:1px solid #ccc;
 }
 
-textarea{
-height:220px;
-}
-
 button{
-width:100%;
-padding:12px;
-margin-top:12px;
-border:none;
-border-radius:8px;
+background:#4CAF50;
 color:white;
-font-size:15px;
+border:none;
 cursor:pointer;
 }
 
-.generate{background:#4CAF50;}
-.copy{background:#2196F3;}
-.gpt{background:#009688;}
-.gemini{background:#673ab7;}
-
-
-/* FOOTER */
-
-.footer{
-
-background: linear-gradient(90deg,#66bb6a,#4db6ac,#4dd0e1);
-color:white;
-padding:12px;
-display:flex;
-justify-content:center;
-align-items:center;
-gap:8px;
-border-radius:0 0 15px 15px;
-
+button:hover{
+background:#45a049;
 }
 
-.footer-icon{
-height:32px;
-background:white;
-border-radius:50%;
-padding:2px;
+.styleimg{
+width:70px;
+cursor:pointer;
+border-radius:8px;
+border:2px solid transparent;
+margin:3px;
 }
 
-</style>
+.styleimg:hover{
+border:2px solid green;
+}
 
-</head>
+.styleactive{
+border:2px solid red;
+}
 
-<body>
+</style></head><body><h2>Generator Prompt Media Ajar SD</h2><label>Pilih Style:</label>
 
-<div id="loading">
-<img src="guru-cibisd2.png">
-Memuat Bantu Guru Yuk...
-</div>
+<select id="style"><option value="Storybook">Storybook</option>
+<option value="Cartoon Kids">Cartoon Kids</option>
+<option value="Pixar Style">Pixar Style</option>
+<option value="3D Clay">3D Clay</option>
+<option value="Crayon">Crayon</option>
+<option value="Comic">Comic</option>
+<option value="Coloring Page">Lembar Mewarnai</option>
+<option value="Upload Style">Upload Style Sendiri</option></select><!-- GRID STYLE --><div><img src="storybook.png" onclick="pilihStyle('Storybook', this)" class="styleimg">
+<img src="cartoonkids.png" onclick="pilihStyle('Cartoon Kids', this)" class="styleimg">
+<img src="pixar.png" onclick="pilihStyle('Pixar Style', this)" class="styleimg">
+<img src="clay.png" onclick="pilihStyle('3D Clay', this)" class="styleimg">
+<img src="crayon.png" onclick="pilihStyle('Crayon', this)" class="styleimg">
+<img src="comic.png" onclick="pilihStyle('Comic', this)" class="styleimg">
+<img src="blackwhite.png" onclick="pilihStyle('Coloring Page', this)" class="styleimg"></div><br><label>Upload Style Sendiri:</label>
 
-<div class="header">
+<input type="file" id="uploadStyle" accept="image/*"><div id="previewBox"></div><br><label>Prompt:</label>
 
-<div class="logo">
-
-<img src="guru-cibisd2.png" class="header-icon">
-
-BANTU GURU YUK
-
-</div>
-
-<div class="trial">TRIAL</div>
-
-</div>
-
-<div class="sub">
-AI Worksheet Generator
-</div>
-
-<div class="container">
-
-<label>Jenis Media</label>
-
-<select id="media" onchange="cekMedia()">
-<option>LKPD</option>
-<option>Infografis</option>
-<option>Poster</option>
-<option>Flashcard</option>
-<option>Lembar Mewarnai</option>
-</select>
-
-<label>Mata Pelajaran</label>
-
-<select id="mapel">
-<option>Umum</option>
-<option>Matematika</option>
-<option>Bahasa Indonesia</option>
-<option>IPA</option>
-<option>IPS</option>
-<option>Pendidikan Pancasila</option>
-<option>Pendidikan Agama</option>
-<option>Bahasa Jawa</option>
-</select>
-
-<label>Tema / Topik / Materi</label> <input id="topik">
-
-<label>Jumlah Soal</label> <select id="jumlah"></select>
-
-<label>Tingkat Kesulitan</label> <select id="level"></select>
-
-<label>Gaya Ilustrasi</label> <select id="gaya">
-
-<option>Cartoon Kids</option>
-<option>3D Clay</option>
-<option>Pixar Style</option>
-<option>Storybook</option>
-<option value="upload">Upload Referensi</option>
-</select>
-
-<label>Ukuran Kertas</label> <select id="kertas">
-
-<option>A4</option>
-<option>A5</option>
-<option>A3</option>
-</select>
-
-<label>Orientasi</label> <select id="orientasi">
-
-<option>Portrait</option>
-<option>Landscape</option>
-</select>
-
-<button class="generate" onclick="generatePrompt()">
-Generate Prompt
-</button>
-
-<textarea id="hasil"></textarea>
-
-<button class="copy" onclick="copyPrompt()">
-Copy Prompt
-</button>
-
-<button class="gpt" onclick="openGPT()">
-Open ChatGPT
-</button>
-
-<button class="gemini" onclick="openGemini()">
-Open Gemini
-</button>
-
-<div class="footer">
-
-<img src="guru-cibisd2.png" class="footer-icon">
-
-by pak.choyy / 2026
-
-</div>
-
-</div>
+<textarea id="prompt" rows="8"></textarea><button onclick="generatePrompt()">Generate Prompt</button>
 
 <script>
 
+function pilihStyle(styleName, element){
 
-// LOADING
+document.getElementById("style").value = styleName;
 
-window.onload=function(){
+document.querySelectorAll(".styleimg").forEach(img => {
 
-loading.style.display="none";
+img.classList.remove("styleactive");
 
-}
+});
 
-
-
-// TRIAL
-
-let start=localStorage.trialStart || Date.now();
-localStorage.trialStart=start;
-
-let days=(Date.now()-start)/86400000;
-
-if(days>30 && localStorage.license!="active"){
-
-document.body.innerHTML="Trial habis";
-
-}
-
-
-
-// FORM
-
-function cekMedia(){
-
-if(media.value!="LKPD"){
-
-jumlah.innerHTML="<option>-</option>";
-level.innerHTML="<option>-</option>";
-
-jumlah.disabled=true;
-level.disabled=true;
-
-}else{
-
-jumlah.innerHTML="<option>5</option><option selected>10</option>";
-level.innerHTML="<option>Mudah</option><option>Sedang</option>";
-
-jumlah.disabled=false;
-level.disabled=false;
-
+if(element){
+element.classList.add("styleactive");
 }
 
 }
 
 
 
-// PROMPT
+document.getElementById("uploadStyle").addEventListener("change", function(){
+
+const file = this.files[0];
+
+if(file){
+
+document.getElementById("style").value = "Upload Style";
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+document.getElementById("previewBox").innerHTML =
+'<p>Preview Style:</p><img src="'+e.target.result+'" style="width:100px;border-radius:8px;border:2px solid green;">';
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+});
+
+
 
 function generatePrompt(){
 
-let prompt=
+let style = document.getElementById("style").value;
 
-"Create "+media.value+" for elementary school students.\n\n"+
+let prompt = "Create media pembelajaran untuk siswa SD dengan gaya ilustrasi " + style + ". Gunakan bahasa Indonesia, layout profesional, siap cetak, tanpa watermark.";
 
-"Subject: "+mapel.value+"\n"+
-
-"Topic: "+topik.value+"\n"+
-
-"Paper size: "+kertas.value+"\n"+
-
-"Orientation: "+orientasi.value+"\n"+
-
-"Illustration style: "+gaya.value+"\n\n"+
-
-"IMPORTANT: All text inside image must be Indonesian language.\n"+
-
-"Use clear readable fonts.\n"+
-
-"Professional layout.\n"+
-
-"Print ready.\n"+
-"300 dpi.\n"+
-"No watermark.";
-
-
-if(media.value=="LKPD"){
-
-prompt+="\nQuestions: "+jumlah.value+
-"\nDifficulty: "+level.value;
+document.getElementById("prompt").value = prompt;
 
 }
 
-hasil.value=prompt;
-
-}
-
-
-
-// BUTTON
-
-function copyPrompt(){
-
-navigator.clipboard.writeText(hasil.value);
-
-alert("Prompt disalin");
-
-}
-
-function openGPT(){
-
-window.open("https://chat.openai.com");
-
-}
-
-function openGemini(){
-
-window.open("https://gemini.google.com");
-
-}
-
-cekMedia();
-
-</script>
-
-</body>
+</script></body>
 </html>

@@ -1,232 +1,248 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Generator Media Ajar SD</title><style>
+<title>Bantu Guru Yuk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
 
 body{
-font-family:Arial;
-padding:20px;
-background:#f4f6f8;
+font-family:'Segoe UI',sans-serif;
+background:#eef2f7;
+margin:0;
+}
+
+.header{
+background:linear-gradient(90deg,#1b5e20,#2e7d32,#66bb6a);
+color:white;
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:bold;
+}
+
+.trial{
+background:#ffeb3b;
+color:black;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.sub{
+background:#66bb6a;
+color:white;
+padding:6px;
+text-align:center;
+font-size:13px;
+}
+
+.container{
+max-width:700px;
+margin:25px auto;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 label{
 font-weight:bold;
+margin-top:12px;
+display:block;
 }
 
-select, textarea, button{
+select,input,textarea{
 width:100%;
 padding:10px;
-margin-top:8px;
-margin-bottom:15px;
+margin-top:5px;
 border-radius:8px;
 border:1px solid #ccc;
 }
 
+textarea{
+height:200px;
+}
+
 button{
-background:#4CAF50;
-color:white;
-border:none;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-max-width:500px;
-}
-
-.card{
-cursor:pointer;
-text-align:center;
-padding:5px;
-border:2px solid transparent;
-border-radius:10px;
-background:white;
-}
-
-.card img{
 width:100%;
+padding:12px;
+margin-top:12px;
+border:none;
 border-radius:8px;
+color:white;
+font-size:15px;
+cursor:pointer;
 }
 
-.card:hover{
-border:2px solid green;
+.generate{background:#4CAF50;}
+.copy{background:#2196F3;}
+.gpt{background:#009688;}
+
+.preview{
+max-width:200px;
+margin-top:10px;
+display:none;
+border-radius:10px;
 }
 
-.active{
-border:2px solid red;
+.footer{
+text-align:center;
+margin-top:15px;
+font-size:12px;
+color:#777;
 }
 
-</style></head><body><h2>Generator Prompt Media Ajar SD</h2><label>Materi:</label>
+</style></head><body><div class="header">
+<div class="logo">👩‍🏫 BANTU GURU YUK</div>
+<div class="trial">TRIAL</div>
+</div><div class="sub">
+AI Worksheet Generator
+</div><div class="container"><label>Jenis Media</label>
+<select id="media" onchange="cekMedia()">
 
-<textarea
-id="materi"
-rows="4"
-placeholder="Tulis materi dengan jelas agar hasil lebih akurat. Contoh: Siklus air kelas 2 SD"></textarea><label>Media:</label>
-
-<select id="media"><option>Worksheet (LKPD)</option>
-<option>Poster Edukasi</option>
+<option>LKPD</option>
 <option>Infografis</option>
-<option>Lembar Mewarnai</option></select><label>Style:</label>
+<option>Poster</option>
+<option>Flashcard</option>
+<option>Lembar Mewarnai</option>
+</select><label>Mata Pelajaran</label>
+<select id="mapel">
 
-<select id="style"><option value="Storybook">Storybook</option>
-<option value="Cartoon Kids">Cartoon Kids</option>
-<option value="Pixar Style">Pixar Style</option>
-<option value="3D Clay">3D Clay</option>
-<option value="Crayon">Crayon</option>
-<option value="Comic">Comic</option>
-<option value="Coloring Page">Mewarnai</option>
-<option value="Upload Style">Upload Style Sendiri</option></select><div class="grid"><div onclick="pilihStyle('Storybook',this)" class="card">
-<img src="storybook.png">
-<div>Storybook</div>
-</div><div onclick="pilihStyle('Cartoon Kids',this)" class="card">
-<img src="cartoonkids.png">
-<div>Cartoon</div>
-</div><div onclick="pilihStyle('Pixar Style',this)" class="card">
-<img src="pixar.png">
-<div>Pixar</div>
-</div><div onclick="pilihStyle('3D Clay',this)" class="card">
-<img src="clay.png">
-<div>Clay</div>
-</div><div onclick="pilihStyle('Crayon',this)" class="card">
-<img src="crayon.png">
-<div>Crayon</div>
-</div><div onclick="pilihStyle('Comic',this)" class="card">
-<img src="comic.png">
-<div>Comic</div>
-</div><div onclick="pilihStyle('Coloring Page',this)" class="card">
-<img src="blackwhite.png">
-<div>Mewarnai</div>
-</div></div><label>Upload Style:</label>
+<option>Umum</option>
+<option>Matematika</option>
+<option>Bahasa Indonesia</option>
+<option>IPA</option>
+<option>IPS</option>
+</select><label>Tema / Topik / Materi</label>
+<input id="topik" placeholder="Tulis materi dengan jelas agar hasil lebih akurat">
 
-<input type="file" id="uploadStyle"><div id="preview"></div><label>Prompt:</label>
+<label>Jumlah Soal</label>
+<select id="jumlah">
 
-<textarea id="prompt" rows="10"></textarea><button onclick="generatePrompt()">Generate Prompt</button>
+<option>5</option>
+<option selected>10</option>
+<option>15</option>
+<option>20</option>
+</select><label>Tingkat Kesulitan</label>
+<select id="level">
 
-<script>
+<option>Mudah</option>
+<option selected>Sedang</option>
+<option>Sulit</option>
+</select><label>
+<input type="checkbox" id="headerLKPD" checked>
+Tambahkan Header Nama, Kelas, Tanggal
+</label><label>Ukuran Kertas</label>
+<select id="kertas">
 
+<option>A4</option>
+<option>F4</option>
+<option>A3</option>
+<option>A5</option>
+</select><label>Orientasi</label>
+<select id="orientasi">
 
-const styleMap={
+<option>Portrait</option>
+<option>Landscape</option>
+</select><label>Gaya Ilustrasi</label>
+<select id="gaya" onchange="toggleUpload()">
 
-"Storybook":`
-storybook illustration
-hand drawn
-soft colors
-children book illustration
-warm atmosphere
-`,
+<option>Cartoon Kids</option>
+<option>3D Clay</option>
+<option>Pixar Style</option>
+<option>Storybook Illustration</option>
+<option>Crayon Drawing</option>
+<option>Comic Style</option>
+<option value="upload">Upload Referensi Sendiri</option>
+</select><div id="uploadBox" style="display:none">
+<label>Upload Referensi</label>
+<input type="file" id="ref">
+<img id="preview" class="preview">
+</div><button class="generate" onclick="generatePrompt()">
+Generate Prompt
+</button><textarea id="hasil"></textarea><button class="copy" onclick="copyPrompt()">Copy Prompt</button>
 
-"Cartoon Kids":`
-cartoon kids illustration
-bright colors
-simple shapes
-clean outlines
-`,
+<button class="gpt" onclick="openGPT()">Open ChatGPT</button>
 
-"Pixar Style":`
-Pixar style 3D illustration
-cinematic lighting
-high detail
-`,
+<div class="footer">
+by pak.choyy / FINAL
+</div></div><script>
 
-"3D Clay":`
-3D clay style
-clay texture
-soft shadows
-`,
+function cekMedia(){
 
-"Crayon":`
-crayon drawing
-hand drawn
-kids style
-`,
-
-"Comic":`
-comic book style
-bold outline
-`,
-
-"Coloring Page":`
-black and white coloring page
-clean outline
-no shading
-`,
-
-"Upload Style":`
-follow reference image style
-`
-
-};
-
-
-
-function pilihStyle(style,el){
-
-document.getElementById("style").value=style;
-
-document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
-
-el.classList.add("active");
-
-generatePrompt();
+if(media.value!="LKPD"){
+jumlah.disabled=true;
+level.disabled=true;
+}else{
+jumlah.disabled=false;
+level.disabled=false;
+}
 
 }
 
+function toggleUpload(){
+uploadBox.style.display=(gaya.value=="upload")?"block":"none";
+}
 
-
-document.getElementById("uploadStyle").onchange=function(){
-
-const file=this.files[0];
-
-const reader=new FileReader();
-
-reader.onload=e=>{
-
-document.getElementById("preview").innerHTML=
-"<img src='"+e.target.result+"' width=100>";
-
-};
-
-reader.readAsDataURL(file);
-
-document.getElementById("style").value="Upload Style";
-
-generatePrompt();
-
-};
-
-
+ref.onchange=function(e){
+preview.src=URL.createObjectURL(e.target.files[0]);
+preview.style.display="block";
+}
 
 function generatePrompt(){
 
-const materi=document.getElementById("materi").value;
+let styleText=(gaya.value=="upload")
+?"Match illustration style with uploaded reference image."
+:"Illustration style: "+gaya.value;
 
-const media=document.getElementById("media").value;
+let headerText="";
 
-const style=document.getElementById("style").value;
+if(media.value=="LKPD" && headerLKPD.checked){
 
-const prompt=
-
-`Create ${media} untuk siswa SD
-
-Materi:
-${materi}
-
-${styleMap[style]}
-
-Bahasa Indonesia
-print ready
-300 dpi
-no watermark`;
-
-document.getElementById("prompt").value=prompt;
+headerText=
+"Tambahkan header:\n"+
+"Nama: __________\n"+
+"Kelas: __________\n"+
+"Tanggal: __________\n";
 
 }
 
+hasil.value=
 
+"Create "+media.value+"\n"+
+headerText+
+"Subject: "+mapel.value+"\n"+
+"Topic: "+topik.value+"\n"+
+"Questions: "+jumlah.value+"\n"+
+"Difficulty: "+level.value+"\n"+
+styleText+"\n"+
+"Paper size: "+kertas.value+"\n"+
+"Orientation: "+orientasi.value+"\n"+
+"Print ready\n"+
+"300 dpi\n"+
+"No watermark\n"+
+"Language: Indonesian";
 
-generatePrompt();
+}
 
+function copyPrompt(){
+navigator.clipboard.writeText(hasil.value);
+alert("Prompt disalin");
+}
+
+function openGPT(){
+window.open("https://chat.openai.com","_blank");
+}
+
+cekMedia();
 
 </script></body>
 </html>

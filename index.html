@@ -1,336 +1,386 @@
 <!DOCTYPE html><html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bantu Guru Yuk</title><style>
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bantu Guru Yuk</title><link rel="manifest" href="manifest.json"><link rel="icon" href="guru-cibisd2.png"><meta name="theme-color" content="#6bbcff"><style>
 
 body{
-font-family:'Segoe UI',sans-serif;
-background:#eef2f7;
+font-family:Segoe UI;
 margin:0;
+background:#eef2f7;
 }
+
 
 /* HEADER */
 
 .header{
-background:linear-gradient(90deg,#1b5e20,#2e7d32,#66bb6a);
+
+background:linear-gradient(90deg,#6fdc8c,#6bbcff);
+
 color:white;
+
 padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
 
-.trial-badge{
-background:#ffeb3b;
-color:#1b5e20;
-padding:4px 10px;
-font-size:11px;
+font-size:20px;
+
 font-weight:bold;
-border-radius:12px;
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
 }
 
-/* SUB */
 
-.sub{
-background:#66bb6a;
-color:white;
-padding:6px;
-text-align:center;
-font-size:13px;
+.header img{
+
+height:38px;
+
 }
+
 
 /* CONTAINER */
 
 .container{
-max-width:700px;
-margin:20px auto;
+
+max-width:720px;
+
+margin:auto;
+
 background:white;
+
 padding:20px;
-border-radius:10px;
+
+margin-top:20px;
+
+border-radius:12px;
+
 }
+
 
 /* FORM */
 
 label{
+
 font-weight:bold;
-display:block;
+
 margin-top:12px;
+
+display:block;
+
 }
 
-select,input,textarea,button{
+
+select,input,textarea{
+
 width:100%;
+
 padding:10px;
+
 margin-top:5px;
+
 border-radius:8px;
+
 border:1px solid #ccc;
+
 }
+
 
 textarea{
-min-height:140px;
+
 resize:none;
+
 overflow:hidden;
+
+min-height:120px;
+
 }
+
+
+/* BUTTON */
 
 button{
+
+width:100%;
+
+padding:12px;
+
+margin-top:10px;
+
 border:none;
+
+border-radius:8px;
+
 color:white;
+
 cursor:pointer;
+
+font-size:14px;
+
 }
+
 
 .generate{background:#4CAF50;}
+
 .copy{background:#2196F3;}
-.gpt{background:#009688;}
+
+.gpt{background:#00acc1;}
+
 .gemini{background:#673ab7;}
 
-/* INFO */
-
-.info{
-margin-top:8px;
-background:#e8f5e9;
-border-left:4px solid #4CAF50;
-padding:10px;
-font-size:13px;
-color:#2e7d32;
-}
 
 /* FOOTER */
 
 .footer{
-background:linear-gradient(90deg,#1b5e20,#2e7d32,#66bb6a);
+
+margin-top:40px;
+
+background:linear-gradient(90deg,#6fdc8c,#6bbcff);
+
 color:white;
-padding:22px;
+
 text-align:center;
-margin-top:30px;
+
+padding:22px;
+
 }
 
-.footer a{
-color:white;
-text-decoration:none;
+
+/* TERIMA KASIH BOX */
+
+.terima{
+
+text-align:center;
+
+margin-top:35px;
+
+padding:18px;
+
+background:#f5fbf7;
+
+border-radius:12px;
+
+max-width:720px;
+
+margin-left:auto;
+
+margin-right:auto;
+
 }
 
-.footer a:hover{
-opacity:0.8;
+
+/* COUNTER */
+
+.counter{
+
+text-align:center;
+
+margin-top:25px;
+
+color:#2e7d32;
+
+font-size:26px;
+
+font-weight:bold;
+
 }
 
-</style></head><body><!-- HEADER --><div class="header"><div>👩‍🏫 BANTU GURU YUK</div><div class="trial-badge">🧪 TRIAL VERSION</div></div><div class="sub">
-AI Worksheet Generator
+</style></head><body><div class="header"><img src="guru-cibisd2.png">BANTU GURU YUK
+
 </div><div class="container"><label>Jenis Media</label>
 
-<select id="media" onchange="updateAll()"><option>LKPD</option>
-<option>Poster</option>
-<option>Infografis</option>
-<option>Flashcard</option>
-<option>Lembar Mewarnai</option>
-<option>Bahan Bacaan</option></select><div id="mediaInfo" class="info"></div><label>Mata Pelajaran</label>
+<select id="media"><option>LKPD (Lembar Kerja Peserta Didik)</option><option>Poster Edukasi</option><option>Infografis</option><option>Flashcard</option><option>Lembar Mewarnai</option><option>Bahan Bacaan</option></select><label>Kelas</label>
 
-<select id="mapel"><option>Umum</option>
-<option>Bahasa Indonesia</option>
-<option>Matematika</option>
-<option>IPAS</option>
-<option>Pendidikan Pancasila</option>
-<option>Seni</option></select><label>Kelas</label>
+<select id="kelas" onchange="updateMapel()"><option>Umum</option><option>SD Kelas 1</option>
+<option>SD Kelas 2</option>
+<option>SD Kelas 3</option><option>SMP Kelas 7</option>
+<option>SMP Kelas 8</option><option>SMA Kelas 10</option></select><label>Mata Pelajaran</label>
 
-<select id="kelas"><option>Umum</option>
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<option>6</option></select><label>Materi</label>
+<select id="mapel"></select>
+
+<label>Materi</label>
 
 <textarea id="materi"
-placeholder="Tulis materi dengan jelas agar hasil lebih akurat"></textarea><label>Jumlah Soal</label>
+placeholder="Tulis materi dengan jelas agar hasil lebih akurat"></textarea><label>Mode</label>
 
-<select id="jumlah" onchange="cekJumlah()"><option value="auto">Rekomendasi Pak Choyy</option>
-<option>5</option>
-<option selected>10</option>
-<option>15</option>
-<option value="custom">Isi Sendiri</option></select><input id="jumlahCustom"
-type="number"
-placeholder="Tulis jumlah soal"
-style="display:none">
+<select id="mode"><option>Siswa</option><option>Guru (Dengan Kunci Jawaban)</option></select><label>Jumlah Soal</label>
 
-<label>Ukuran</label>
+<select id="jumlah"><option>5</option><option selected>10</option><option>15</option><option>20</option></select><label>Ukuran</label>
 
-<select id="ukuran"><option>F4</option>
-<option>A4</option>
-<option>A3</option>
-<option>A5</option></select><label>Orientasi</label>
+<select id="ukuran"><option>A4</option><option>A3</option><option>A5</option><option>F4</option></select><label>Orientasi</label>
 
-<select id="orientasi"><option>Portrait</option>
-<option>Landscape</option></select><label>Gaya Ilustrasi</label>
+<select id="orientasi"><option>Portrait</option><option>Landscape</option></select><label>Gaya</label>
 
-<select id="gaya"><option>Cartoon Kids</option>
-<option>Storybook Illustration</option>
-<option>Flat Vector Kids</option>
-<option>Pixar Style</option>
-<option>Black and White Outline</option></select><div id="rekomendasi" class="info"></div><button class="generate" onclick="generatePrompt()">
+<select id="gaya"><option>Cartoon Kids (Rekomendasi)</option><option>Storybook Illustration</option><option>Flat Vector</option><option>Outline / Coloring</option></select><button class="generate"
+onclick="generatePrompt()">
+
 Generate Prompt
-</button><textarea id="hasil"></textarea><button class="copy" onclick="copyPrompt()">
+
+</button><button class="copy"
+onclick="copyPrompt()">
+
 Copy Prompt
+
 </button><button class="gpt"
-onclick="window.open('https://chat.openai.com')">
+onclick="openGPT()">
+
 Open ChatGPT
-</button>
 
-<button class="gemini"
-onclick="window.open('https://gemini.google.com')">
+</button><button class="gemini"
+onclick="openGemini()">
+
 Open Gemini
-</button>
 
-</div><!-- FOOTER FINAL --><div class="footer"><div style="font-size:12px;">
-Follow me on TikTok
-</div><a href="https://www.tiktok.com/@pak.choyy"
-target="_blank">
+</button><textarea id="hasil"></textarea></div><div class="terima"><div style="font-weight:bold;color:#2e7d32">Terima kasih sudah berkunjung 🤗
 
-<div style="font-size:18px;font-weight:bold;margin-top:4px;">
-❇️ @pak.choyy
-</div></a><div style="font-size:11px;margin-top:3px;">
-Free and Paid Worksheet
-</div></div><script>
+</div><div style="font-size:13px;color:#666;margin-top:6px;">Semoga membantu membuat media pembelajaran lebih cepat.
 
-/* AUTO EXPAND */
+</div></div><div class="counter">Jumlah Pengunjung 🔎
 
-materi.oninput=function(){
+<div id="visitorCount">0</div></div><div class="footer">Follow me on TikTok<br>
 
-this.style.height="auto";
-this.style.height=this.scrollHeight+"px";
+<b>@pak.choyy</b><br>
+
+<span style="font-size:11px">Free and Paid Worksheet
+
+</span></div><script>
+
+
+const mapelData={
+
+Umum:["Umum"],
+
+SD:["Matematika","Bahasa Indonesia","IPAS"],
+
+SMP:["Matematika","IPA"],
+
+SMA:["Matematika","Biologi"]
+
+};
+
+
+function updateMapel(){
+
+let k=kelas.value;
+
+let level="Umum";
+
+if(k.includes("SD"))level="SD";
+
+if(k.includes("SMP"))level="SMP";
+
+if(k.includes("SMA"))level="SMA";
+
+
+mapel.innerHTML="";
+
+
+mapelData[level].forEach(m=>{
+
+mapel.innerHTML+=`<option>${m}</option>`;
+
+});
+
 
 }
 
 
-/* JUMLAH CUSTOM */
+updateMapel();
 
-function cekJumlah(){
-
-jumlahCustom.style.display=
-jumlah.value=="custom"?"block":"none";
-
-}
-
-
-/* UPDATE AUTO */
-
-function updateAll(){
-
-let m=media.value;
-
-let info={
-
-LKPD:"📄 Lembar Kerja Peserta Didik",
-
-Poster:"🖼️ Poster Edukasi",
-
-Infografis:"📊 Infografis Edukasi",
-
-Flashcard:"🗂️ Flashcard",
-
-"Lembar Mewarnai":"🎨 Lembar Mewarnai",
-
-"Bahan Bacaan":"📚 Bahan Bacaan"
-
-};
-
-mediaInfo.innerText=info[m];
-
-
-let ukuranAuto={
-
-LKPD:"F4",
-Poster:"A3",
-Infografis:"A4",
-Flashcard:"A5",
-"Lembar Mewarnai":"A4",
-"Bahan Bacaan":"A4"
-
-};
-
-let orientasiAuto={
-
-LKPD:"Portrait",
-Poster:"Landscape",
-Infografis:"Landscape",
-Flashcard:"Landscape",
-"Lembar Mewarnai":"Portrait",
-"Bahan Bacaan":"Portrait"
-
-};
-
-ukuran.value=ukuranAuto[m];
-orientasi.value=orientasiAuto[m];
-
-
-rekomendasi.innerText=
-"🤖 Rekomendasi Pak Choyy: "+
-ukuran.value+" | "+
-orientasi.value+" | "+
-gaya.value;
-
-}
-
-
-/* GENERATE PROMPT */
 
 function generatePrompt(){
-
-let jumlahFinal=
-
-jumlah.value=="custom"?
-jumlahCustom.value:
-
-jumlah.value=="auto"?
-"10":
-jumlah.value;
 
 
 hasil.value=
 
-"Create "+media.value+"\n"+
+"Create "+media.value+
 
-"Subject: "+mapel.value+"\n"+
+"\nClass: "+kelas.value+
 
-"Class: "+kelas.value+"\n"+
+"\nSubject: "+mapel.value+
 
-"Topic: "+materi.value+"\n"+
+"\nTopic: "+materi.value+
 
-"Questions: "+jumlahFinal+"\n"+
+"\nQuestions: "+jumlah.value+
 
-"Paper size: "+ukuran.value+"\n"+
+"\nPaper size: "+ukuran.value+
 
-"Orientation: "+orientasi.value+"\n"+
+"\nOrientation: "+orientasi.value+
 
-"Illustration style: "+gaya.value+"\n"+
+"\nAspect ratio: "+(orientasi.value=="Portrait"?"3:4":"4:3")+
 
-"IMPORTANT: Strictly follow paper size and orientation.\n"+
+"\nIllustration style: "+gaya.value+
 
-"Use Indonesian language.\n"+
+"\nLanguage: Indonesian"+
 
-"Use child-friendly wording.\n"+
+"\nUse simple language"+
 
-"Fix typo automatically.\n"+
+"\nFollow layout strictly";
 
-"Print ready.\n"+
-
-"300 DPI.\n"+
-
-"No watermark.";
 
 }
 
-
-/* COPY */
 
 function copyPrompt(){
 
 navigator.clipboard.writeText(hasil.value);
 
-alert("Prompt disalin");
+}
+
+
+function openGPT(){
+
+window.open("https://chat.openai.com");
 
 }
 
 
-updateAll();
+function openGemini(){
 
-</script></body>
-</html>
+window.open("https://gemini.google.com");
+
+}
+
+
+/* COUNTER PREMIUM */
+
+let visitor = localStorage.getItem("pakchoyVisitor");
+
+if(!visitor){
+
+visitor=1;
+
+}else{
+
+visitor=parseInt(visitor)+1;
+
+}
+
+localStorage.setItem("pakchoyVisitor",visitor);
+
+
+let start=0;
+
+let end=visitor;
+
+
+function animasiCounter(){
+
+if(start<end){
+
+start++;
+
+visitorCount.innerText=
+
+start.toLocaleString("id-ID");
+
+setTimeout(animasiCounter,20);
+
+}
+
+}
+
+
+animasiCounter();
+
+</script></body></html>

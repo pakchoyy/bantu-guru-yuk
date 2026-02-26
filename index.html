@@ -1,7 +1,7 @@
 <!DOCTYPE html><html>
 <head>
 <meta charset="UTF-8">
-<title>Generator Prompt Media Ajar</title><style>
+<title>Generator Media Ajar SD</title><style>
 
 body{
 font-family:Arial;
@@ -9,10 +9,15 @@ padding:20px;
 background:#f4f6f8;
 }
 
+label{
+font-weight:bold;
+}
+
 select, textarea, button{
 width:100%;
 padding:10px;
-margin-top:10px;
+margin-top:8px;
+margin-bottom:15px;
 border-radius:8px;
 border:1px solid #ccc;
 }
@@ -21,30 +26,48 @@ button{
 background:#4CAF50;
 color:white;
 border:none;
-cursor:pointer;
 }
 
-button:hover{
-background:#45a049;
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+max-width:500px;
 }
 
-.styleimg{
-width:70px;
+.card{
 cursor:pointer;
-border-radius:8px;
+text-align:center;
+padding:5px;
 border:2px solid transparent;
-margin:3px;
+border-radius:10px;
+background:white;
 }
 
-.styleimg:hover{
+.card img{
+width:100%;
+border-radius:8px;
+}
+
+.card:hover{
 border:2px solid green;
 }
 
-.styleactive{
+.active{
 border:2px solid red;
 }
 
-</style></head><body><h2>Generator Prompt Media Ajar SD</h2><label>Pilih Style:</label>
+</style></head><body><h2>Generator Prompt Media Ajar SD</h2><label>Materi:</label>
+
+<textarea
+id="materi"
+rows="4"
+placeholder="Tulis materi dengan jelas agar hasil lebih akurat. Contoh: Siklus air kelas 2 SD"></textarea><label>Media:</label>
+
+<select id="media"><option>Worksheet (LKPD)</option>
+<option>Poster Edukasi</option>
+<option>Infografis</option>
+<option>Lembar Mewarnai</option></select><label>Style:</label>
 
 <select id="style"><option value="Storybook">Storybook</option>
 <option value="Cartoon Kids">Cartoon Kids</option>
@@ -52,73 +75,158 @@ border:2px solid red;
 <option value="3D Clay">3D Clay</option>
 <option value="Crayon">Crayon</option>
 <option value="Comic">Comic</option>
-<option value="Coloring Page">Lembar Mewarnai</option>
-<option value="Upload Style">Upload Style Sendiri</option></select><!-- GRID STYLE --><div><img src="storybook.png" onclick="pilihStyle('Storybook', this)" class="styleimg">
-<img src="cartoonkids.png" onclick="pilihStyle('Cartoon Kids', this)" class="styleimg">
-<img src="pixar.png" onclick="pilihStyle('Pixar Style', this)" class="styleimg">
-<img src="clay.png" onclick="pilihStyle('3D Clay', this)" class="styleimg">
-<img src="crayon.png" onclick="pilihStyle('Crayon', this)" class="styleimg">
-<img src="comic.png" onclick="pilihStyle('Comic', this)" class="styleimg">
-<img src="blackwhite.png" onclick="pilihStyle('Coloring Page', this)" class="styleimg"></div><br><label>Upload Style Sendiri:</label>
+<option value="Coloring Page">Mewarnai</option>
+<option value="Upload Style">Upload Style Sendiri</option></select><div class="grid"><div onclick="pilihStyle('Storybook',this)" class="card">
+<img src="storybook.png">
+<div>Storybook</div>
+</div><div onclick="pilihStyle('Cartoon Kids',this)" class="card">
+<img src="cartoonkids.png">
+<div>Cartoon</div>
+</div><div onclick="pilihStyle('Pixar Style',this)" class="card">
+<img src="pixar.png">
+<div>Pixar</div>
+</div><div onclick="pilihStyle('3D Clay',this)" class="card">
+<img src="clay.png">
+<div>Clay</div>
+</div><div onclick="pilihStyle('Crayon',this)" class="card">
+<img src="crayon.png">
+<div>Crayon</div>
+</div><div onclick="pilihStyle('Comic',this)" class="card">
+<img src="comic.png">
+<div>Comic</div>
+</div><div onclick="pilihStyle('Coloring Page',this)" class="card">
+<img src="blackwhite.png">
+<div>Mewarnai</div>
+</div></div><label>Upload Style:</label>
 
-<input type="file" id="uploadStyle" accept="image/*"><div id="previewBox"></div><br><label>Prompt:</label>
+<input type="file" id="uploadStyle"><div id="preview"></div><label>Prompt:</label>
 
-<textarea id="prompt" rows="8"></textarea><button onclick="generatePrompt()">Generate Prompt</button>
+<textarea id="prompt" rows="10"></textarea><button onclick="generatePrompt()">Generate Prompt</button>
 
 <script>
 
-function pilihStyle(styleName, element){
 
-document.getElementById("style").value = styleName;
+const styleMap={
 
-document.querySelectorAll(".styleimg").forEach(img => {
+"Storybook":`
+storybook illustration
+hand drawn
+soft colors
+children book illustration
+warm atmosphere
+`,
 
-img.classList.remove("styleactive");
+"Cartoon Kids":`
+cartoon kids illustration
+bright colors
+simple shapes
+clean outlines
+`,
 
-});
+"Pixar Style":`
+Pixar style 3D illustration
+cinematic lighting
+high detail
+`,
 
-if(element){
-element.classList.add("styleactive");
+"3D Clay":`
+3D clay style
+clay texture
+soft shadows
+`,
+
+"Crayon":`
+crayon drawing
+hand drawn
+kids style
+`,
+
+"Comic":`
+comic book style
+bold outline
+`,
+
+"Coloring Page":`
+black and white coloring page
+clean outline
+no shading
+`,
+
+"Upload Style":`
+follow reference image style
+`
+
+};
+
+
+
+function pilihStyle(style,el){
+
+document.getElementById("style").value=style;
+
+document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
+
+el.classList.add("active");
+
+generatePrompt();
+
 }
 
-}
 
 
+document.getElementById("uploadStyle").onchange=function(){
 
-document.getElementById("uploadStyle").addEventListener("change", function(){
+const file=this.files[0];
 
-const file = this.files[0];
+const reader=new FileReader();
 
-if(file){
+reader.onload=e=>{
 
-document.getElementById("style").value = "Upload Style";
-
-const reader = new FileReader();
-
-reader.onload = function(e){
-
-document.getElementById("previewBox").innerHTML =
-'<p>Preview Style:</p><img src="'+e.target.result+'" style="width:100px;border-radius:8px;border:2px solid green;">';
+document.getElementById("preview").innerHTML=
+"<img src='"+e.target.result+"' width=100>";
 
 };
 
 reader.readAsDataURL(file);
 
-}
+document.getElementById("style").value="Upload Style";
 
-});
+generatePrompt();
+
+};
 
 
 
 function generatePrompt(){
 
-let style = document.getElementById("style").value;
+const materi=document.getElementById("materi").value;
 
-let prompt = "Create media pembelajaran untuk siswa SD dengan gaya ilustrasi " + style + ". Gunakan bahasa Indonesia, layout profesional, siap cetak, tanpa watermark.";
+const media=document.getElementById("media").value;
 
-document.getElementById("prompt").value = prompt;
+const style=document.getElementById("style").value;
+
+const prompt=
+
+`Create ${media} untuk siswa SD
+
+Materi:
+${materi}
+
+${styleMap[style]}
+
+Bahasa Indonesia
+print ready
+300 dpi
+no watermark`;
+
+document.getElementById("prompt").value=prompt;
 
 }
+
+
+
+generatePrompt();
+
 
 </script></body>
 </html>

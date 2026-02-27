@@ -2,11 +2,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bantu Guru Yuk</title>
+<div class="header">
+<h1>Bantu Guru Yuk</h1>
+<p class="subtitle">Buat Worksheet, LKPD, Poster, dan Media Ajar untuk Semua Jenjang</p>
+</div>
 <link rel="icon" href="guru-cibisd2.png">
 <style>
 body{font-family:'Segoe UI',sans-serif;margin:0;background:#eef2f7}
-.header{background:linear-gradient(90deg,#6cc6a6,#4dabf7);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
+header{
+background:linear-gradient(90deg,#4f46e5,#06b6d4);
+color:#fff;
+padding:20px;
+text-align:center;
+display:block;
+}
+  .subtitle{
+font-size:14px;
+opacity:0.9;
+margin-top:4px;
+}
 .logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:bold}
 .logo img{width:36px}
 .trial{background:#ffd43b;color:#000;padding:4px 12px;border-radius:20px;font-weight:bold}
@@ -95,7 +109,7 @@ button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;col
 <option>Landscape</option>
 </select><label>Gaya Ilustrasi</label>
 <select id="gaya" onchange="toggleUpload()">
-
+<small id="gayaHint" style="color:#666; font-size:12px;"></small>
 <option>Cartoon Kids (paling cocok untuk SD)</option>
 
 <option>Storybook (seperti buku cerita anak)</option>
@@ -118,7 +132,7 @@ button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;col
 
 <option value="upload">Upload Referensi Sendiri</option>
 
-</select>
+
 
 <option>Cartoon Kids</option>
 <option>Storybook</option>
@@ -236,7 +250,20 @@ let prompt=
 "300 dpi\n"+
 "No watermark\n"+
 "IMPORTANT: Follow all instructions exactly\n"
+"Answer format MUST be multiple choice with options A, B, C.\n"+
+"DO NOT include answer boxes.\n"+
+"DO NOT include answer lines.\n"+
+"DO NOT include answer blanks.\n"+
+"Each option must have a small circle on the left side for students to mark with an X.\n"+
+"Instruction text must say: Beri tanda silang (X) pada jawaban yang benar.\n"+
+"Strictly use circle markers only.\n"+
+"No answer boxes.\n"+ 
+  "Instruction text must say: Beri tanda silang (X) pada jawaban yang benar.\n"+
+"Strictly use circle markers only.\n"+
+"No answer boxes.\n"+
+"Use circle symbol ○, not square □.\n"+
 
+if(media.value=="LKPD"){
 if(media.value=="LKPD"){
 prompt+="Type: "+jenisLKPD.value+"\n"
 prompt+="Questions: "+jumlahFinal+"\n"
@@ -284,5 +311,42 @@ function openGemini(){
 window.open("https://gemini.google.com")
 }
 
+  const mediaSelect = document.getElementById("media");
+const gayaSelect = document.getElementById("gaya");
+const gayaHint = document.getElementById("gayaHint");
+
+mediaSelect.addEventListener("change", function() {
+
+let media = mediaSelect.value;
+
+if (media === "Lembar Mewarnai") {
+
+gayaSelect.value = "Black and White (Coloring Book)";
+gayaHint.innerText = "Rekomendasi: khusus untuk mewarnai";
+
+}
+
+else if (media === "LKPD") {
+
+gayaSelect.value = "Crayon";
+gayaHint.innerText = "Rekomendasi: cocok untuk LKPD";
+
+}
+
+else if (media === "Infografis") {
+
+gayaSelect.value = "Flat";
+gayaHint.innerText = "Rekomendasi: cocok untuk infografis";
+
+}
+
+else {
+
+gayaHint.innerText = "";
+
+}
+
+});
+  
 </script></body>
 </html>

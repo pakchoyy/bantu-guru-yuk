@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bantu Guru Yuk</title>
+<title>Bantu Guru Yuk v26.3</title>
 
 <link rel="icon" href="guru-cibisd2.png">
 <link rel="manifest" href="manifest.json">
@@ -17,6 +17,8 @@ font-family:'Segoe UI',sans-serif;
 margin:0;
 background:#eef2f7;
 }
+
+/* INSTALL */
 
 .install-popup{
 position:fixed;
@@ -44,6 +46,8 @@ border-radius:6px;
 cursor:pointer;
 }
 
+/* HEADER */
+
 .header{
 background:linear-gradient(90deg,#6cc6a6,#4dabf7);
 color:#fff;
@@ -64,6 +68,8 @@ font-weight:bold;
 font-size:14px;
 }
 
+/* NAV */
+
 .navbar{
 background:#fff;
 padding:12px;
@@ -75,13 +81,15 @@ box-shadow:0 2px 10px rgba(0,0,0,.1);
 margin:0 12px;
 font-weight:bold;
 cursor:pointer;
-padding:4px 8px;
+padding:4px 10px;
 border-radius:6px;
 }
 
 .navbar a.active{
 background:yellow;
 }
+
+/* CONTAINER */
 
 .container{
 max-width:760px;
@@ -113,6 +121,8 @@ height:140px;
 font-size:12px;
 color:#666;
 }
+
+/* BUTTON */
 
 button{
 width:100%;
@@ -159,9 +169,8 @@ color:#fff;
 background:#fff3cd;
 padding:8px;
 border-radius:8px;
-margin-top:12px;
+margin-top:10px;
 font-size:13px;
-text-align:center;
 }
 
 </style>
@@ -180,9 +189,7 @@ Install Bantu Guru Yuk
 
 <img src="guru-cibisd2.png">
 
-<div class="title">
-BANTU GURU YUK
-</div>
+<div class="title">BANTU GURU YUK</div>
 
 <div class="subtitle">
 Bantu mempermudah mengajar<br>
@@ -199,9 +206,149 @@ Berbasis Kurikulum Merdeka
 
 </div>
 
-<!-- HOME tetap sama semua -->
+<div id="home" class="container section active">
 
-<!-- (SEMUA FORM ANDA TETAP) -->
+<label>Kelas</label>
+
+<select id="kelas" onchange="updateMapel()">
+
+<option>PAUD</option>
+<option>TK A</option>
+<option>TK B</option>
+<option selected>SD Kelas 2</option>
+<option>SD Kelas 3</option>
+<option>SD Kelas 4</option>
+<option>SD Kelas 5</option>
+<option>SD Kelas 6</option>
+<option>SMP Kelas 7</option>
+<option>SMP Kelas 8</option>
+<option>SMP Kelas 9</option>
+<option>SMA Kelas 10</option>
+<option>SMA Kelas 11</option>
+<option>SMA Kelas 12</option>
+
+</select>
+
+<label>Mata Pelajaran</label>
+
+<select id="mapel"></select>
+
+<label>Jenis Media</label>
+
+<select id="media" onchange="toggleLKPD();autoStyle()">
+
+<option>LKPD</option>
+<option>Poster</option>
+<option>Infografis</option>
+<option>Flashcard</option>
+<option>Lembar Mewarnai</option>
+
+</select>
+
+<div id="lkpdBox">
+
+<label>Jenis LKPD</label>
+
+<select id="jenisLKPD">
+
+<option>Pilihan Ganda</option>
+<option>Isian</option>
+<option>Menjodohkan</option>
+<option>Tracing</option>
+<option>Uraian</option>
+
+</select>
+
+<label>Mode</label>
+
+<select id="mode">
+
+<option>Siswa</option>
+<option>Guru (dengan kunci jawaban)</option>
+
+</select>
+
+<label>Jumlah Soal</label>
+
+<select id="jumlah" onchange="cekJumlahCustom()">
+
+<option>5</option>
+<option selected>10</option>
+<option>15</option>
+<option>20</option>
+<option value="custom">Isi Sendiri</option>
+
+</select>
+
+<input id="jumlahCustom" placeholder="Masukkan jumlah soal" style="display:none">
+
+</div>
+
+<label>Materi</label>
+
+<textarea id="materi"
+placeholder="Contoh: Fabel, Penjumlahan, Siklus Air"></textarea>
+
+<div class="keterangan">
+Materi akan dibantu otomatis sesuai mapel (v26.3)
+</div>
+
+<label>Gaya Ilustrasi</label>
+
+<select id="gaya">
+
+<option value="Cartoon Kids">Cartoon Kids</option>
+<option value="Storybook">Storybook</option>
+<option value="Comic">Comic</option>
+<option value="Crayon">Crayon</option>
+<option value="Watercolor">Watercolor</option>
+<option value="Flat Vector">Flat Vector</option>
+<option value="3D Clay">3D Clay</option>
+<option value="Pixar Style">Pixar Style</option>
+<option value="Sketch">Sketch</option>
+<option value="Black White">Black White</option>
+
+</select>
+
+<button class="generate" onclick="generatePrompt()">
+Generate Prompt
+</button>
+
+<div class="hasiljudul">HASIL GENERATE</div>
+
+<textarea id="hasil"></textarea>
+
+<button class="copy" onclick="copyPrompt()">Copy Prompt</button>
+
+<div class="notif" id="notif">
+Prompt berhasil disalin
+</div>
+
+<div class="rekom">
+⭐ Disarankan buka GPT agar lebih akurat
+</div>
+
+<button class="gpt" onclick="openGPT()">Open ChatGPT</button>
+
+<button class="gemini" onclick="openGemini()">Open Gemini</button>
+
+</div>
+
+<div id="tentang" class="container section">
+Generator Media Ajar Profesional
+</div>
+
+<div id="kontak" class="container section">
+
+<a href="https://wa.me/6289530713597">
+<button class="generate">Chat WhatsApp</button>
+</a>
+
+<a href="https://tiktok.com/@pak.choyy" target="_blank">
+<button class="gemini">TikTok Pak.Choyy</button>
+</a>
+
+</div>
 
 <div class="footer">
 
@@ -217,31 +364,129 @@ by Pak.Choyy
 
 <script>
 
-/* COUNTER FIX FINAL */
+/* NAV */
 
-function loadVisitor(){
+function show(x,e){
 
-let el=document.getElementById("visitor")
+document.querySelectorAll(".section")
+.forEach(el=>el.classList.remove("active"))
 
-fetch("https://api.counterapi.dev/v1/pakchoyy/bantuguruyuk/up")
+document.querySelectorAll(".navbar a")
+.forEach(el=>el.classList.remove("active"))
 
-.then(res=>res.json())
+document.getElementById(x).classList.add("active")
 
-.then(data=>{
+if(e) e.target.classList.add("active")
 
-el.innerHTML="Pengunjung: "+data.count
+}
 
-})
+/* MAPEL */
 
-.catch(()=>{
+function updateMapel(){
 
-el.innerHTML="Pengunjung: online"
+mapel.innerHTML=""
+
+let list=[
+"Bahasa Indonesia",
+"Matematika",
+"IPAS",
+"Pancasila",
+"Seni",
+"Umum"
+]
+
+list.forEach(x=>{
+
+let o=document.createElement("option")
+o.text=x
+mapel.add(o)
 
 })
 
 }
 
-loadVisitor()
+updateMapel()
+
+/* AUTO MATERI v26.3 */
+
+const dataMateri={
+
+"Bahasa Indonesia":["Fabel","Puisi","Cerita","Deskripsi"],
+
+"Matematika":["Penjumlahan","Pengurangan","Perkalian"],
+
+"IPAS":["Siklus Air","Hewan","Tumbuhan"],
+
+"Pancasila":["Aturan","Tanggung Jawab"],
+
+"Seni":["Menggambar","Mewarnai"],
+
+"Umum":["Literasi","Numerasi"]
+
+}
+
+mapel.addEventListener("change",()=>{
+
+materi.placeholder="Contoh: "+dataMateri[mapel.value]
+
+})
+
+/* GENERATE */
+
+function generatePrompt(){
+
+let jumlahFinal=
+jumlah.value=="custom"?jumlahCustom.value:jumlah.value
+
+hasil.value=
+
+"Create "+media.value+"\n"+
+"Class: "+kelas.value+"\n"+
+"Subject: "+mapel.value+"\n"+
+"Topic: "+materi.value+"\n"+
+"Questions: "+jumlahFinal+"\n"+
+"Illustration style: "+gaya.value+"\n"+
+"Use Kurikulum Merdeka"
+
+}
+
+/* COPY */
+
+function copyPrompt(){
+
+hasil.select()
+
+document.execCommand("copy")
+
+notif.style.display="block"
+
+setTimeout(()=>notif.style.display="none",2000)
+
+}
+
+/* OPEN */
+
+function openGPT(){
+window.open("https://chat.openai.com")
+}
+
+function openGemini(){
+window.open("https://gemini.google.com")
+}
+
+/* INSTALL FIX */
+
+function closeInstall(){
+installPopup.remove()
+}
+
+/* COUNTER FIX */
+
+fetch("https://api.counterapi.dev/v1/pakchoyy/bantuguruyuk/up")
+.then(res=>res.json())
+.then(data=>{
+visitor.innerHTML="Pengunjung: "+data.count
+})
 
 </script>
 

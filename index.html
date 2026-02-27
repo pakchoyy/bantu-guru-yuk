@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bantu Guru Yuk v26.3</title>
+<title>Bantu Guru Yuk v26.3.2</title>
 
 <link rel="icon" href="guru-cibisd2.png">
 <link rel="manifest" href="manifest.json">
@@ -18,7 +18,7 @@ margin:0;
 background:#eef2f7;
 }
 
-/* INSTALL */
+/* INSTALL POPUP */
 
 .install-popup{
 position:fixed;
@@ -31,19 +31,10 @@ padding:14px;
 text-align:center;
 transition:.4s;
 z-index:9999;
-font-weight:bold;
 }
 
 .install-popup.show{
 top:0;
-}
-
-.install-popup button{
-margin-left:10px;
-padding:6px 12px;
-border:none;
-border-radius:6px;
-cursor:pointer;
 }
 
 /* HEADER */
@@ -59,16 +50,7 @@ text-align:center;
 width:60px;
 }
 
-.title{
-font-size:26px;
-font-weight:bold;
-}
-
-.subtitle{
-font-size:14px;
-}
-
-/* NAV */
+/* NAVBAR */
 
 .navbar{
 background:#fff;
@@ -81,12 +63,18 @@ box-shadow:0 2px 10px rgba(0,0,0,.1);
 margin:0 12px;
 font-weight:bold;
 cursor:pointer;
-padding:4px 10px;
-border-radius:6px;
+position:relative;
 }
 
-.navbar a.active{
+.navbar a.active::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-2px;
+width:100%;
+height:6px;
 background:yellow;
+z-index:-1;
 }
 
 /* CONTAINER */
@@ -139,11 +127,6 @@ cursor:pointer;
 .gpt{background:#0b7285;}
 .gemini{background:#6741d9;}
 
-.hasiljudul{
-font-weight:bold;
-margin-top:20px;
-}
-
 .notif{
 display:none;
 background:#2f9e44;
@@ -165,14 +148,6 @@ text-align:center;
 color:#fff;
 }
 
-.rekom{
-background:#fff3cd;
-padding:8px;
-border-radius:8px;
-margin-top:10px;
-font-size:13px;
-}
-
 </style>
 
 </head>
@@ -180,187 +155,262 @@ font-size:13px;
 <body>
 
 <div class="install-popup" id="installPopup">
-Install Bantu Guru Yuk
+
+Install aplikasi Bantu Guru Yuk
+
 <button onclick="installApp()">Install</button>
+
 <button onclick="closeInstall()">Tutup</button>
+
 </div>
+
 
 <div class="header">
 
 <img src="guru-cibisd2.png">
 
-<div class="title">BANTU GURU YUK</div>
+<h2>BANTU GURU YUK</h2>
 
-<div class="subtitle">
-Bantu mempermudah mengajar<br>
-Berbasis Kurikulum Merdeka
-</div>
+Generator Media Ajar Profesional
 
 </div>
+
 
 <div class="navbar">
 
 <a onclick="show('home',event)" class="active">Home</a>
+
 <a onclick="show('tentang',event)">Tentang</a>
+
 <a onclick="show('kontak',event)">Kontak</a>
 
 </div>
 
+
 <div id="home" class="container section active">
+
 
 <label>Kelas</label>
 
-<select id="kelas" onchange="updateMapel()">
+<select id="kelas">
 
-<option>PAUD</option>
-<option>TK A</option>
-<option>TK B</option>
 <option selected>SD Kelas 2</option>
+
 <option>SD Kelas 3</option>
-<option>SD Kelas 4</option>
-<option>SD Kelas 5</option>
-<option>SD Kelas 6</option>
-<option>SMP Kelas 7</option>
-<option>SMP Kelas 8</option>
-<option>SMP Kelas 9</option>
-<option>SMA Kelas 10</option>
-<option>SMA Kelas 11</option>
-<option>SMA Kelas 12</option>
 
 </select>
 
+
 <label>Mata Pelajaran</label>
 
-<select id="mapel"></select>
+<select id="mapel">
+
+<option>Bahasa Indonesia</option>
+
+<option>Matematika</option>
+
+<option>IPAS</option>
+
+<option>Umum</option>
+
+</select>
+
 
 <label>Jenis Media</label>
 
-<select id="media" onchange="toggleLKPD();autoStyle()">
+<select id="media" onchange="autoStyle();toggleLKPD()">
 
 <option>LKPD</option>
+
 <option>Poster</option>
+
 <option>Infografis</option>
+
 <option>Flashcard</option>
+
 <option>Lembar Mewarnai</option>
 
 </select>
 
+
 <div id="lkpdBox">
+
 
 <label>Jenis LKPD</label>
 
 <select id="jenisLKPD">
 
 <option>Pilihan Ganda</option>
+
 <option>Isian</option>
+
 <option>Menjodohkan</option>
+
 <option>Tracing</option>
+
 <option>Uraian</option>
 
 </select>
+
 
 <label>Mode</label>
 
 <select id="mode">
 
 <option>Siswa</option>
+
 <option>Guru (dengan kunci jawaban)</option>
 
 </select>
+
 
 <label>Jumlah Soal</label>
 
 <select id="jumlah" onchange="cekJumlahCustom()">
 
 <option>5</option>
+
 <option selected>10</option>
+
 <option>15</option>
+
 <option>20</option>
+
 <option value="custom">Isi Sendiri</option>
 
 </select>
 
-<input id="jumlahCustom" placeholder="Masukkan jumlah soal" style="display:none">
+
+<input id="jumlahCustom"
+placeholder="Masukkan jumlah soal"
+style="display:none">
 
 </div>
+
 
 <label>Materi</label>
 
-<textarea id="materi"
-placeholder="Contoh: Fabel, Penjumlahan, Siklus Air"></textarea>
+<textarea id="materi"></textarea>
+
 
 <div class="keterangan">
-Materi akan dibantu otomatis sesuai mapel (v26.3)
+
+Materi otomatis dibantu sesuai mapel
+
 </div>
+
 
 <label>Gaya Ilustrasi</label>
 
 <select id="gaya">
 
 <option value="Cartoon Kids">Cartoon Kids</option>
+
 <option value="Storybook">Storybook</option>
+
 <option value="Comic">Comic</option>
+
 <option value="Crayon">Crayon</option>
+
 <option value="Watercolor">Watercolor</option>
+
 <option value="Flat Vector">Flat Vector</option>
+
 <option value="3D Clay">3D Clay</option>
+
 <option value="Pixar Style">Pixar Style</option>
-<option value="Sketch">Sketch</option>
+
 <option value="Black White">Black White</option>
 
 </select>
 
+
 <button class="generate" onclick="generatePrompt()">
+
 Generate Prompt
+
 </button>
 
-<div class="hasiljudul">HASIL GENERATE</div>
 
 <textarea id="hasil"></textarea>
 
-<button class="copy" onclick="copyPrompt()">Copy Prompt</button>
+
+<button class="copy" onclick="copyPrompt()">
+
+Copy Prompt
+
+</button>
+
 
 <div class="notif" id="notif">
-Prompt berhasil disalin
-</div>
 
-<div class="rekom">
-⭐ Disarankan buka GPT agar lebih akurat
-</div>
-
-<button class="gpt" onclick="openGPT()">Open ChatGPT</button>
-
-<button class="gemini" onclick="openGemini()">Open Gemini</button>
+Prompt disalin
 
 </div>
+
+
+<button class="gpt" onclick="openGPT()">
+
+Open ChatGPT
+
+</button>
+
+
+</div>
+
 
 <div id="tentang" class="container section">
-Generator Media Ajar Profesional
+
+Website ini membantu guru membuat media ajar otomatis.
+
 </div>
+
 
 <div id="kontak" class="container section">
 
 <a href="https://wa.me/6289530713597">
-<button class="generate">Chat WhatsApp</button>
+
+<button class="generate">
+
+WhatsApp
+
+</button>
+
 </a>
 
-<a href="https://tiktok.com/@pak.choyy" target="_blank">
-<button class="gemini">TikTok Pak.Choyy</button>
+
+<a href="https://tiktok.com/@pak.choyy">
+
+<button class="gemini">
+
+TikTok Pak.Choyy
+
+</button>
+
 </a>
 
 </div>
+
+
 
 <div class="footer">
 
 © 2026 Bantu Guru Yuk
 
-<br><br>
+<br>
 
 by Pak.Choyy
 
-<div id="visitor">Pengunjung: loading...</div>
+<br><br>
+
+<div id="visitor">
+
+Pengunjung ke: loading...
 
 </div>
+
+</div>
+
 
 <script>
 
@@ -376,67 +426,85 @@ document.querySelectorAll(".navbar a")
 
 document.getElementById(x).classList.add("active")
 
-if(e) e.target.classList.add("active")
+e.target.classList.add("active")
 
 }
 
-/* MAPEL */
 
-function updateMapel(){
+/* CUSTOM */
 
-mapel.innerHTML=""
+function cekJumlahCustom(){
 
-let list=[
-"Bahasa Indonesia",
-"Matematika",
-"IPAS",
-"Pancasila",
-"Seni",
-"Umum"
-]
-
-list.forEach(x=>{
-
-let o=document.createElement("option")
-o.text=x
-mapel.add(o)
-
-})
+jumlahCustom.style.display=
+jumlah.value=="custom"?"block":"none"
 
 }
 
-updateMapel()
 
-/* AUTO MATERI v26.3 */
+/* TOGGLE LKPD */
+
+function toggleLKPD(){
+
+lkpdBox.style.display=
+media.value=="LKPD"?"block":"none"
+
+}
+
+
+/* AUTO STYLE */
+
+function autoStyle(){
+
+if(media.value=="Poster"||
+media.value=="Infografis")
+
+gaya.value="Flat Vector"
+
+if(media.value=="Flashcard")
+
+gaya.value="Cartoon Kids"
+
+if(media.value=="Lembar Mewarnai")
+
+gaya.value="Black White"
+
+}
+
+
+/* AUTO MATERI */
 
 const dataMateri={
 
-"Bahasa Indonesia":["Fabel","Puisi","Cerita","Deskripsi"],
+"Bahasa Indonesia":
+"Fabel, Puisi, Cerita",
 
-"Matematika":["Penjumlahan","Pengurangan","Perkalian"],
+"Matematika":
+"Penjumlahan, Pengurangan",
 
-"IPAS":["Siklus Air","Hewan","Tumbuhan"],
+"IPAS":
+"Siklus Air, Hewan",
 
-"Pancasila":["Aturan","Tanggung Jawab"],
-
-"Seni":["Menggambar","Mewarnai"],
-
-"Umum":["Literasi","Numerasi"]
+"Umum":
+"Literasi, Numerasi"
 
 }
 
-mapel.addEventListener("change",()=>{
+mapel.onchange=()=>{
 
-materi.placeholder="Contoh: "+dataMateri[mapel.value]
+materi.placeholder=
+"Contoh: "+dataMateri[mapel.value]
 
-})
+}
+
 
 /* GENERATE */
 
 function generatePrompt(){
 
 let jumlahFinal=
-jumlah.value=="custom"?jumlahCustom.value:jumlah.value
+jumlah.value=="custom"?
+(jumlahCustom.value||"10"):
+jumlah.value
 
 hasil.value=
 
@@ -445,10 +513,16 @@ hasil.value=
 "Subject: "+mapel.value+"\n"+
 "Topic: "+materi.value+"\n"+
 "Questions: "+jumlahFinal+"\n"+
+"Type: "+jenisLKPD.value+"\n"+
+"Mode: "+mode.value+"\n"+
 "Illustration style: "+gaya.value+"\n"+
-"Use Kurikulum Merdeka"
+"Use Kurikulum Merdeka\n"+
+"Print ready\n"+
+"300 dpi\n"+
+"No watermark"
 
 }
+
 
 /* COPY */
 
@@ -464,31 +538,86 @@ setTimeout(()=>notif.style.display="none",2000)
 
 }
 
-/* OPEN */
+
+/* GPT */
 
 function openGPT(){
+
 window.open("https://chat.openai.com")
+
 }
 
-function openGemini(){
-window.open("https://gemini.google.com")
+
+/* INSTALL */
+
+let deferredPrompt
+
+window.addEventListener('beforeinstallprompt',(e)=>{
+
+e.preventDefault()
+
+deferredPrompt=e
+
+installPopup.classList.add("show")
+
+})
+
+
+function installApp(){
+
+if(deferredPrompt){
+
+deferredPrompt.prompt()
+
+}else{
+
+alert("Install belum tersedia")
+
 }
 
-/* INSTALL FIX */
+}
+
 
 function closeInstall(){
+
 installPopup.remove()
+
 }
 
-/* COUNTER FIX */
 
-fetch("https://api.counterapi.dev/v1/pakchoyy/bantuguruyuk/up")
+/* SERVICE WORKER */
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register(
+"service-worker.js")
+
+}
+
+
+/* COUNTER */
+
+fetch(
+"https://api.counterapi.dev/v1/pakchoyy/bantuguruyuk")
+
 .then(res=>res.json())
+
 .then(data=>{
-visitor.innerHTML="Pengunjung: "+data.count
+
+visitor.innerHTML=
+"Pengunjung ke: "+data.count
+
+})
+
+.catch(()=>{
+
+visitor.innerHTML=
+"Pengunjung ke: aktif"
+
 })
 
 </script>
+
 
 </body>
 </html>

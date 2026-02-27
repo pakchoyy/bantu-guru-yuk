@@ -3,92 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bantu Guru Yuk v26.5 TRUE FINAL MASTER</title>
+<title>Bantu Guru Yuk</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2f9e44">
 
 <style>
-body{font-family:'Segoe UI',sans-serif;margin:0;background:#eef2f7}
-#loading{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;font-weight:bold}
 
-.header{background:linear-gradient(90deg,#6cc6a6,#4dabf7);color:#fff;padding:14px}
-.header-row{display:flex;align-items:center;justify-content:center;gap:10px}
-.logo{width:46px}
+body{
+font-family:'Segoe UI',sans-serif;
+margin:0;
+background:#eef2f7;
+}
 
-.navbar{background:#fff;padding:14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-.navbar a{margin:0 15px;font-weight:bold;cursor:pointer;position:relative}
-.navbar a.active::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:-4px;width:40%;height:5px;background:yellow;border-radius:4px}
+/* SPLASH */
 
-.container{max-width:760px;margin:auto;background:#fff;padding:24px;border-radius:14px;margin-top:20px}
-label{font-weight:bold;margin-top:14px;display:block}
-select,input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc}
-textarea{height:120px}
-button{width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;color:#fff;background:#2f9e44;cursor:pointer}
-.copy{background:#1971c2}
+#splash{
+position:fixed;
+inset:0;
+background:#2f9e44;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+z-index:9999;
+}
 
-.ket{font-size:12px;color:#666;margin-top:4px}
+/* HEADER */
 
-.saran-item{display:inline-block;background:#e7f5ff;margin:4px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:12px}
+.header{
+background:#2f9e44;
+color:#fff;
+padding:16px;
+text-align:center;
+}
 
-.install-popup{position:fixed;top:-160px;left:0;right:0;background:#2f9e44;color:#fff;padding:15px;text-align:center;transition:.4s;z-index:9999}
-.install-popup.show{top:0}
+/* NAVBAR */
 
-.footer{text-align:center;margin-top:30px;padding:18px;background:#4dabf7;color:#fff}
-.section{display:none}
-.active{display:block}
+.navbar{
+background:#fff;
+padding:12px;
+text-align:center;
+box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+
+.navbar a{
+margin:0 15px;
+font-weight:bold;
+cursor:pointer;
+position:relative;
+}
+
+.navbar a.active::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-5px;
+width:100%;
+height:4px;
+background:gold;
+border-radius:3px;
+}
+
+/* CONTAINER */
+
+.container{
+background:#fff;
+margin:15px;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+label{
+font-weight:bold;
+margin-top:10px;
+display:block;
+}
+
+select,input,textarea{
+width:100%;
+padding:9px;
+margin-top:5px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:12px;
+background:#2f9e44;
+color:#fff;
+border:none;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.copy{
+background:#1971c2;
+}
+
+.section{display:none;}
+.active{display:block;}
+
+#installBox{
+display:none;
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#2f9e44;
+color:#fff;
+padding:15px;
+text-align:center;
+}
+
+.footer{
+background:#2f9e44;
+color:#fff;
+padding:10px;
+text-align:center;
+margin-top:20px;
+}
+
 </style>
 </head>
 
 <body>
 
-<div id="loading">Loading...</div>
-
-<div class="install-popup" id="installPopup">
-Install aplikasi Bantu Guru Yuk<br>
-<button onclick="installApp()">Install</button>
-<button onclick="closeInstall()">Tutup</button>
-</div>
+<div id="splash">Bantu Guru Yuk</div>
 
 <div class="header">
-<div class="header-row">
-<img src="guru-cibisd2.png" class="logo">
-<div>
-<h2>BANTU GURU YUK</h2>
+<h2>Bantu Guru Yuk</h2>
 Generator Media Ajar Profesional
-</div>
-</div>
 </div>
 
 <div class="navbar">
-<a onclick="showSection('home',event)" class="active">Home</a>
-<a onclick="showSection('tentang',event)">Tentang</a>
-<a onclick="showSection('kontak',event)">Kontak</a>
+<a onclick="showPage('home',event)" class="active">Home</a>
+<a onclick="showPage('kontak',event)">Kontak</a>
 </div>
 
 <div id="home" class="container section active">
 
 <label>Kelas</label>
-<select id="kelas" onchange="updateMapel();updateHint();tampilkanSaran()">
+<select id="kelas" onchange="updateMapel()">
+<option>SD Kelas 1</option>
 <option selected>SD Kelas 2</option>
 <option>SD Kelas 3</option>
-<option>SD Kelas 4</option>
-<option>SD Kelas 5</option>
-<option>SD Kelas 6</option>
 <option>SMP Kelas 7</option>
 <option>SMP Kelas 8</option>
-<option>SMP Kelas 9</option>
 <option>SMA Kelas 10</option>
 <option>SMA Kelas 11</option>
 <option>SMA Kelas 12</option>
-<option>Umum</option>
 </select>
 
 <label>Mata Pelajaran</label>
 <select id="mapel"></select>
 
 <label>Jenis Media</label>
-<select id="media" onchange="autoStyle()">
+<select id="media">
 <option>LKPD</option>
 <option>Poster</option>
 <option>Infografis</option>
@@ -96,22 +172,16 @@ Generator Media Ajar Profesional
 <option>Lembar Mewarnai</option>
 </select>
 
-<div id="lkpdBox">
-
 <label>Jenis LKPD</label>
-<select id="jenisLKPD" onchange="cekBebas()">
+<select id="jenis" onchange="toggleInstruksi()">
 <option>Pilihan Ganda</option>
 <option>Isian</option>
 <option>Menjodohkan</option>
-<option>Tracing</option>
 <option>Uraian</option>
 <option>Bebas</option>
 </select>
 
-<div id="boxBebas" style="display:none">
-<label>Petunjuk LKPD Bebas</label>
-<textarea id="instruksiBebas"></textarea>
-</div>
+<textarea id="instruksi" placeholder="Instruksi khusus LKPD Bebas" style="display:none"></textarea>
 
 <label>Mode</label>
 <select id="mode">
@@ -120,7 +190,7 @@ Generator Media Ajar Profesional
 </select>
 
 <label>Jumlah Soal</label>
-<select id="jumlah" onchange="cekCustomJumlah()">
+<select id="jumlah" onchange="toggleJumlah()">
 <option>5</option>
 <option selected>10</option>
 <option>15</option>
@@ -128,38 +198,62 @@ Generator Media Ajar Profesional
 <option value="custom">Custom</option>
 </select>
 
-<input id="jumlahCustom" style="display:none">
-
-</div>
+<input id="jumlahCustom" placeholder="Masukkan jumlah custom" style="display:none">
 
 <label>Materi</label>
 <textarea id="materi"></textarea>
-  <div id="saranBox" class="ket"></div>
-
-<div class="ket">
-Klik saran untuk mengisi otomatis. Materi masih bisa diedit.
-</div>
-
-<div id="saranBox" class="ket"></div>
 
 <label>Gaya Ilustrasi</label>
-<select id="gaya" onchange="cekUpload()">
 
-<option value="Cartoon Kids">Cartoon Kids (kartun ceria anak)</option>
-<option value="Storybook">Storybook (buku cerita anak)</option>
-<option value="Comic">Comic (komik berwarna)</option>
-<option value="Crayon">Crayon (gambar krayon)</option>
-<option value="Watercolor">Watercolor (cat air)</option>
-<option value="Flat Vector">Flat Vector (infografis)</option>
-<option value="3D Clay">3D Clay (plastisin)</option>
-<option value="Pixar Style">Pixar Style (animasi film)</option>
-<option value="Sketch">Sketch (pensil)</option>
-<option value="Black White">Black White (mewarnai)</option>
-<option value="UPLOAD">Upload Referensi Sendiri...</option>
+<select id="gaya" onchange="triggerUpload()">
+
+<option value="Cartoon Kids — kartun ceria anak SD">
+Cartoon Kids — kartun ceria anak SD
+</option>
+
+<option value="Storybook — ilustrasi buku cerita anak">
+Storybook — ilustrasi buku cerita anak
+</option>
+
+<option value="Comic — gaya komik berwarna">
+Comic — gaya komik berwarna
+</option>
+
+<option value="Crayon — efek gambar krayon">
+Crayon — efek gambar krayon
+</option>
+
+<option value="Watercolor — cat air lembut">
+Watercolor — cat air lembut
+</option>
+
+<option value="Flat Vector — infografis modern">
+Flat Vector — infografis modern
+</option>
+
+<option value="3D Clay — seperti plastisin 3D">
+3D Clay — seperti plastisin 3D
+</option>
+
+<option value="Pixar Style — animasi film Pixar">
+Pixar Style — animasi film Pixar
+</option>
+
+<option value="Sketch — gambar pensil">
+Sketch — gambar pensil
+</option>
+
+<option value="Black White — tanpa warna untuk mewarnai">
+Black White — tanpa warna untuk mewarnai
+</option>
+
+<option value="UPLOAD">
+Upload Referensi Sendiri
+</option>
 
 </select>
 
-<input type="file" id="referensi" style="display:none">
+<input type="file" id="file" style="display:none">
 
 <button onclick="generatePrompt()">Generate Prompt</button>
 
@@ -169,44 +263,53 @@ Klik saran untuk mengisi otomatis. Materi masih bisa diedit.
 
 </div>
 
-<div id="tentang" class="container section">
-Generator media ajar siap cetak sesuai Kurikulum Merdeka.
+<div id="kontak" class="container section">
+
+<button onclick="window.open('https://wa.me/6289530713597')">
+WhatsApp
+</button>
+
+<button onclick="window.open('https://tiktok.com/@pak.choyy')">
+TikTok
+</button>
+
 </div>
 
-<div id="kontak" class="container section">
-WhatsApp: Pak.Choyy
+<div id="installBox">
+Install aplikasi ini?
+<button onclick="installApp()">INSTALL</button>
 </div>
 
 <div class="footer">
-© 2026 Bantu Guru Yuk
-<div id="visitor">Total Pengunjung: ...</div>
+Pengunjung: <span id="counter">0</span>
 </div>
 
 <script>
 
-/* NAV */
-function showSection(id,e){
+setTimeout(()=>splash.style.display="none",800)
+
+function showPage(id,e){
 document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"))
 document.querySelectorAll(".navbar a").forEach(x=>x.classList.remove("active"))
 document.getElementById(id).classList.add("active")
 e.target.classList.add("active")
 }
 
-/* MAPEL DINAMIS */
-const kelas=document.getElementById("kelas")
-const mapel=document.getElementById("mapel")
-
 function updateMapel(){
 
-let list=["Bahasa Indonesia","Matematika","IPAS","Seni","Bahasa Inggris","Umum"]
+let list=[]
 
-if(kelas.value.includes("SMP"))
-list=["Bahasa Indonesia","Matematika","IPA","IPS","PPKn","Bahasa Inggris","Umum"]
+if(kelas.value.includes("SD"))
+list=["Bahasa Indonesia","Matematika","IPAS","Seni"]
 
-if(kelas.value.includes("SMA"))
-list=["Bahasa Indonesia","Matematika","Biologi","Fisika","Kimia","Bahasa Inggris","Umum"]
+else if(kelas.value.includes("SMP"))
+list=["Bahasa Indonesia","Matematika","IPA","IPS"]
+
+else if(kelas.value.includes("SMA"))
+list=["Bahasa Indonesia","Matematika","Biologi","Fisika","Kimia"]
 
 mapel.innerHTML=""
+
 list.forEach(x=>{
 let o=document.createElement("option")
 o.text=x
@@ -214,290 +317,84 @@ mapel.add(o)
 })
 
 }
+
 updateMapel()
 
-/* CUSTOM JUMLAH */
-function cekCustomJumlah(){
+function toggleInstruksi(){
+instruksi.style.display=
+jenis.value=="Bebas"?"block":"none"
+}
+
+function toggleJumlah(){
 jumlahCustom.style.display=
 jumlah.value=="custom"?"block":"none"
 }
 
-/* AUTO STYLE */
-function autoStyle(){
-
-if(media.value=="Poster"||media.value=="Infografis")
-gaya.value="Flat Vector"
-
-if(media.value=="Flashcard")
-gaya.value="Cartoon Kids"
-
-if(media.value=="Lembar Mewarnai")
-gaya.value="Black White"
-
-}
-
-/* BEBAS */
-function cekBebas(){
-boxBebas.style.display=
-jenisLKPD.value=="Bebas"?"block":"none"
-}
-
-/* UPLOAD */
-function cekUpload(){
+function triggerUpload(){
 if(gaya.value=="UPLOAD")
-referensi.click()
+file.click()
 }
 
-/* PROMPT */
 function generatePrompt(){
 
-let j=jumlah.value=="custom"?jumlahCustom.value:jumlah.value
+let j=
+jumlah.value=="custom"?
+jumlahCustom.value:
+jumlah.value
 
-let ref=referensi.files.length>0?
-"\nReference: "+referensi.files[0].name:""
-
-let bebas=
-jenisLKPD.value=="Bebas"?
-"\nCustom Instruction: "+instruksiBebas.value:""
+let ref=
+file.files.length>0?
+"\nReference: "+file.files[0].name:""
 
 hasil.value=
 
 "Create "+media.value+
-
 "\nClass: "+kelas.value+
-
 "\nSubject: "+mapel.value+
-
 "\nTopic: "+materi.value+
-
-"\nLKPD Type: "+jenisLKPD.value+
-
-bebas+
-
+"\nInstruction: "+instruksi.value+
 "\nQuestions: "+j+
-
 "\nMode: "+mode.value+
-
 "\nIllustration style: "+gaya.value+
-
 ref+
-
 "\nUse Kurikulum Merdeka"+
-
 "\nLanguage: Indonesian"+
-
 "\nPaper size: A4"+
-
 "\nOrientation: Portrait"+
-
 "\nProfessional layout"+
-
 "\nHigh quality"+
-
 "\nPrint ready"+
-
 "\n300 dpi"+
-
 "\nNo watermark"+
-
 "\nIMPORTANT: Follow all instructions exactly"
 
 }
 
-/* COPY */
 function copyPrompt(){
 hasil.select()
 document.execCommand("copy")
 }
 
-/* COUNTER */
 fetch("https://api.counterapi.dev/v1/pakchoyy/bantuguruyuk/up")
 .then(res=>res.json())
-.then(data=>visitor.innerHTML="Total Pengunjung: "+data.count)
+.then(data=>counter.innerText=data.count)
 
-/* INSTALL */
 let deferredPrompt
 
-window.addEventListener("beforeinstallprompt",(e)=>{
+window.addEventListener("beforeinstallprompt",e=>{
 e.preventDefault()
 deferredPrompt=e
-installPopup.classList.add("show")
+installBox.style.display="block"
 })
 
 function installApp(){
-if(deferredPrompt) deferredPrompt.prompt()
+deferredPrompt.prompt()
 }
 
-function closeInstall(){
-installPopup.classList.remove("show")
-}
-
-/* SERVICE WORKER */
 if("serviceWorker" in navigator){
 navigator.serviceWorker.register("service-worker.js")
 }
 
-/* LOADING */
-window.onload=()=>{
-loading.style.display="none"
-}
-/* =========================
-HINT FASE + SARAN MATERI FINAL
-========================= */
-
-const materiEl = document.getElementById("materi");
-const saranBox = document.getElementById("saranBox");
-
-
-function getFaseFinal(){
-
-if(kelas.value.includes("SD Kelas 1") || kelas.value.includes("SD Kelas 2"))
-return "Fase A";
-
-if(kelas.value.includes("SD Kelas 3") || kelas.value.includes("SD Kelas 4"))
-return "Fase B";
-
-if(kelas.value.includes("SD Kelas 5") || kelas.value.includes("SD Kelas 6"))
-return "Fase C";
-
-if(kelas.value.includes("SMP"))
-return "Fase D";
-
-if(kelas.value.includes("SMA Kelas 10"))
-return "Fase E";
-
-if(kelas.value.includes("SMA Kelas 11") || kelas.value.includes("SMA Kelas 12"))
-return "Fase F";
-
-return "";
-}
-
-
-
-function updateHintFinal(){
-
-let fase = getFaseFinal();
-
-let hint =
-"Contoh: Materi "+mapel.value+
-" sesuai Kurikulum Merdeka "+fase;
-
-if(mapel.value=="Matematika" && fase=="Fase A")
-hint="Contoh: Penjumlahan 1–100 sesuai Kurikulum Merdeka Fase A";
-
-if(mapel.value=="Bahasa Indonesia" && fase=="Fase A")
-hint="Contoh: Fabel sederhana sesuai Kurikulum Merdeka Fase A";
-
-if(mapel.value=="IPAS")
-hint="Contoh: Siklus air sesuai Kurikulum Merdeka "+fase;
-
-
-materiEl.placeholder = hint;
-
-}
-
-
-
-function tampilkanSaranFinal(){
-
-let fase = getFaseFinal();
-
-let list = [];
-
-
-if(mapel.value=="Matematika" && fase=="Fase A"){
-
-list = [
-
-"Penjumlahan 1–20",
-
-"Pengurangan sederhana",
-
-"Soal cerita penjumlahan"
-
-];
-
-}
-
-
-else if(mapel.value=="Bahasa Indonesia"){
-
-list = [
-
-"Fabel",
-
-"Cerita pendek",
-
-"Teks deskripsi"
-
-];
-
-}
-
-
-else if(mapel.value=="IPAS"){
-
-list = [
-
-"Siklus air",
-
-"Bagian tubuh",
-
-"Hewan dan habitat"
-
-];
-
-}
-
-
-saranBox.innerHTML = "Saran materi:<br>";
-
-
-list.forEach(function(item){
-
-let span = document.createElement("span");
-
-span.className = "saran-item";
-
-span.innerText = item;
-
-span.onclick = function(){
-
-materiEl.value = item;
-
-};
-
-saranBox.appendChild(span);
-
-});
-
-}
-
-
-
-/* aktifkan */
-
-kelas.addEventListener("change", function(){
-
-updateHintFinal();
-
-tampilkanSaranFinal();
-
-});
-
-
-mapel.addEventListener("change", function(){
-
-updateHintFinal();
-
-tampilkanSaranFinal();
-
-});
-
-
-updateHintFinal();
-
-tampilkanSaranFinal();
 </script>
 
 </body>

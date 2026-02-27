@@ -96,6 +96,30 @@ button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;col
 </select><label>Gaya Ilustrasi</label>
 <select id="gaya" onchange="toggleUpload()">
 
+<option>Cartoon Kids (paling cocok untuk SD)</option>
+
+<option>Storybook (seperti buku cerita anak)</option>
+
+<option>Comic (seperti komik berwarna)</option>
+
+<option>Crayon (seperti gambar krayon anak)</option>
+
+<option>Watercolor (seperti cat air)</option>
+
+<option>Flat Vector (cocok infografis)</option>
+
+<option>3D Clay (seperti mainan plastisin)</option>
+
+<option>Pixar Style (seperti film animasi Pixar)</option>
+
+<option>Sketch (gambar pensil)</option>
+
+<option>Black White (khusus mewarnai)</option>
+
+<option value="upload">Upload Referensi Sendiri</option>
+
+</select>
+
 <option>Cartoon Kids</option>
 <option>Storybook</option>
 <option>Comic</option>
@@ -236,7 +260,20 @@ hasil.value=prompt
 }
 
 function copyPrompt(){
-navigator.clipboard.writeText(hasil.value)
+
+let text = document.getElementById("hasil");
+
+text.select();
+text.setSelectionRange(0, 99999);
+
+try{
+document.execCommand("copy");
+alert("Prompt berhasil disalin ✅");
+}
+catch(err){
+alert("Copy gagal. Silakan copy manual.");
+}
+
 }
 
 function openGPT(){

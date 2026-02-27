@@ -2,36 +2,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bantu Guru Yuk</title>
-<link rel="icon" href="guru-cibisd2.png">
-<style>
-body{font-family:'Segoe UI',sans-serif;margin:0;background:#eef2f7}
-.header{background:linear-gradient(90deg,#6cc6a6,#4dabf7);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
-.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:bold}
-.logo img{width:36px}
-.trial{background:#ffd43b;color:#000;padding:4px 12px;border-radius:20px;font-weight:bold}
-.container{max-width:760px;margin:auto;background:#fff;padding:20px;border-radius:14px;margin-top:20px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
-label{font-weight:bold;margin-top:12px;display:block}
-select,input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;margin-top:4px}
-textarea{height:140px}
-button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;color:#fff;font-size:15px;cursor:pointer}
-.generate{background:#2f9e44}
-.copy{background:#1971c2}
-.gpt{background:#0b7285}
-.gemini{background:#6741d9}
-.footer{margin-top:20px;background:linear-gradient(90deg,#6cc6a6,#4dabf7);padding:16px;text-align:center;color:#fff}
-.preview{width:120px;margin-top:8px;display:none;border-radius:8px}
-.spinner{display:none;width:36px;height:36px;border:4px solid #ddd;border-top:4px solid #2f9e44;border-radius:50%;animation:spin 1s linear infinite;margin:auto;margin-top:10px}
-@keyframes spin{100%{transform:rotate(360deg)}}
-</style>
-</head>
-<body><div class="header">
-<div class="logo"><img src="guru-cibisd2.png">BANTU GURU YUK</div>
-<div class="trial">TRIAL</div>
-</div><div class="container"><label>Kelas</label>
-<select id="kelas" onchange="updateMapel()">
+<title>Bantu Guru Yuk - MASTER PERFECT</title>
+<link rel="icon" href="guru-cibisd2.png"><style>
 
-<option>PAUD</option>
+body{
+font-family:'Segoe UI',sans-serif;
+margin:0;
+background:#eef2f7;
+}
+
+.header{
+background:linear-gradient(90deg,#6cc6a6,#4dabf7);
+color:#fff;
+padding:16px;
+text-align:center;
+}
+
+.logo{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:bold;
+}
+
+.logo img{
+width:40px;
+}
+
+.subtitle{
+font-size:14px;
+}
+
+.trial{
+display:inline-block;
+margin-top:6px;
+background:#ffd43b;
+color:#000;
+padding:4px 14px;
+border-radius:20px;
+font-weight:bold;
+}
+
+.navbar{
+background:#fff;
+padding:12px;
+text-align:center;
+box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+
+.navbar a{
+margin:0 14px;
+text-decoration:none;
+font-weight:bold;
+color:#333;
+}
+
+.container{
+max-width:760px;
+margin:auto;
+background:#fff;
+padding:24px;
+border-radius:14px;
+margin-top:20px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+label{
+font-weight:bold;
+display:block;
+margin-top:12px;
+}
+
+select,input,textarea{
+width:100%;
+padding:10px;
+margin-top:4px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+textarea{
+height:140px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:12px;
+border:none;
+border-radius:8px;
+color:#fff;
+font-size:15px;
+cursor:pointer;
+}
+
+.generate{background:#2f9e44;}
+.copy{background:#1971c2;}
+.gpt{background:#0b7285;}
+.gemini{background:#6741d9;}
+
+.spinner{
+display:none;
+width:40px;
+height:40px;
+border:4px solid #ddd;
+border-top:4px solid #2f9e44;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:auto;
+margin-top:10px;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+.preview{
+width:120px;
+margin-top:10px;
+display:none;
+border-radius:10px;
+}
+
+.footer{
+margin-top:30px;
+background:linear-gradient(90deg,#6cc6a6,#4dabf7);
+padding:18px;
+text-align:center;
+color:#fff;
+}
+
+</style></head><body><div class="header"><div class="logo">
+<img src="guru-cibisd2.png">
+BANTU GURU YUK
+</div><div class="subtitle">
+AI Worksheet Generator MASTER PERFECT
+</div><div class="trial">
+FREE VERSION
+</div></div><div class="navbar"><a href="#">Home</a>
+<a href="#">Generator</a>
+<a href="#">Kontak</a>
+
+</div><div class="container"><label>Kelas</label>
+
+<select id="kelas" onchange="updateMapel()"><option>PAUD</option>
 <option>TK A</option>
 <option>TK B</option>
 <option>SD Kelas 1</option>
@@ -45,82 +161,44 @@ button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;col
 <option>SMP Kelas 9</option>
 <option>SMA Kelas 10</option>
 <option>SMA Kelas 11</option>
-<option>SMA Kelas 12</option>
-</select><label>Mata Pelajaran</label>
+<option>SMA Kelas 12</option></select><label>Mata Pelajaran</label>
+
 <select id="mapel"></select>
 
 <label>Jenis Media</label>
-<select id="media" onchange="toggleLKPD();autoStyle()">
 
-<option>LKPD</option>
+<select id="media" onchange="toggleLKPD();autoStyle()"><option>LKPD</option>
 <option>Poster</option>
 <option>Infografis</option>
 <option>Flashcard</option>
-<option>Lembar Mewarnai</option>
-</select><div id="lkpdBox" style="display:none">
-<label>Jenis LKPD</label>
-<select id="jenisLKPD">
-<option>Pilihan Ganda</option>
+<option>Lembar Mewarnai</option></select><div id="lkpdBox"><label>Jenis LKPD</label>
+
+<select id="jenisLKPD"><option>Pilihan Ganda</option>
 <option>Isian</option>
 <option>Menjodohkan</option>
 <option>Tracing</option>
-<option>Uraian</option>
-</select><label>Mode</label>
-<select id="mode">
+<option>Uraian</option></select><label>Mode</label>
 
-<option>Siswa</option>
-<option>Guru (dengan kunci jawaban)</option>
-</select><label>Jumlah Soal</label>
-<select id="jumlah" onchange="cekJumlahCustom()">
+<select id="mode"><option>Siswa</option>
+<option>Guru (dengan kunci jawaban)</option></select><label>Jumlah Soal</label>
 
-<option>5</option>
+<select id="jumlah" onchange="cekJumlahCustom()"><option>5</option>
 <option selected>10</option>
 <option>15</option>
 <option>20</option>
-<option value="custom">Isi Sendiri</option>
-</select><input id="jumlahCustom" placeholder="Tulis jumlah soal" style="display:none">
-</div><label>Materi</label>
+<option value="custom">Isi Sendiri</option></select><input id="jumlahCustom" placeholder="Masukkan jumlah soal" style="display:none"></div><label>Materi</label>
 
-<textarea id="materi" placeholder="Contoh: Siklus air"></textarea><label>Ukuran Kertas</label>
-<select id="kertas">
+<textarea id="materi"></textarea><label>Ukuran Kertas</label>
 
-<option>A4</option>
+<select id="kertas"><option>A4</option>
 <option>A3</option>
 <option>A5</option>
-<option>F4</option>
-</select><label>Orientasi</label>
-<select id="orientasi">
+<option>F4</option></select><label>Orientasi</label>
 
-<option>Portrait</option>
-<option>Landscape</option>
-</select><label>Gaya Ilustrasi</label>
-<select id="gaya" onchange="toggleUpload()">
+<select id="orientasi"><option>Portrait</option>
+<option>Landscape</option></select><label>Gaya Ilustrasi</label>
 
-<option>Cartoon Kids (paling cocok untuk SD)</option>
-
-<option>Storybook (seperti buku cerita anak)</option>
-
-<option>Comic (seperti komik berwarna)</option>
-
-<option>Crayon (seperti gambar krayon anak)</option>
-
-<option>Watercolor (seperti cat air)</option>
-
-<option>Flat Vector (cocok infografis)</option>
-
-<option>3D Clay (seperti mainan plastisin)</option>
-
-<option>Pixar Style (seperti film animasi Pixar)</option>
-
-<option>Sketch (gambar pensil)</option>
-
-<option>Black White (khusus mewarnai)</option>
-
-<option value="upload">Upload Referensi Sendiri</option>
-
-</select>
-
-<option>Cartoon Kids</option>
+<select id="gaya" onchange="toggleUpload()"><option>Cartoon Kids</option>
 <option>Storybook</option>
 <option>Comic</option>
 <option>Crayon</option>
@@ -130,76 +208,101 @@ button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;col
 <option>Pixar Style</option>
 <option>Sketch</option>
 <option>Black White</option>
-<option value="upload">Upload Referensi</option>
-</select><input type="file" id="upload" style="display:none">
-<img id="preview" class="preview"><div class="spinner" id="spinner"></div><button class="generate" onclick="generatePrompt()">Generate Prompt</button>
-<button class="copy" onclick="copyPrompt()">Copy Prompt</button>
-
-<textarea id="hasil"></textarea><button class="gpt" onclick="openGPT()">Open ChatGPT</button>
-<button class="gemini" onclick="openGemini()">Open Gemini</button>
-
-</div><div class="footer">
-Follow TikTok @pak.choyy<br>Free & Paid Worksheet
+<option value="upload">Upload Referensi Sendiri</option></select><input type="file" id="upload" style="display:none"><img id="preview" class="preview"><div class="spinner" id="spinner"></div><button class="generate" onclick="generatePrompt()">
+Generate Prompt
+</button><button class="copy" onclick="copyPrompt()">
+Copy Prompt
+</button><textarea id="hasil"></textarea><button class="gpt" onclick="openGPT()">
+Open ChatGPT
+</button><button class="gemini" onclick="openGemini()">
+Open Gemini
+</button></div><div class="footer">
+© Bantu Guru Yuk MASTER PERFECT
 </div><script>
 
 function getFase(){
+
 let k=kelas.value
-if(k.includes("PAUD")||k.includes("TK")||k.includes("1")||k.includes("2"))return"Fase A"
+
+if(k.includes("1")||k.includes("2"))return"Fase A"
 if(k.includes("3")||k.includes("4"))return"Fase B"
 if(k.includes("5")||k.includes("6"))return"Fase C"
 if(k.includes("SMP"))return"Fase D"
 if(k.includes("10"))return"Fase E"
 if(k.includes("11")||k.includes("12"))return"Fase F"
+
 return""
+
 }
 
+
 function updateMapel(){
-let k=kelas.value
-let list=["Umum"]
 
-if(k.includes("PAUD")||k.includes("TK"))
-list=["Calistung","Huruf","Angka","Motorik","Mewarnai"]
-
-else if(k.includes("SD"))
-list=["Bahasa Indonesia","Matematika","IPAS","Pancasila","Seni"]
-
-else if(k.includes("SMP"))
-list=["Bahasa Indonesia","Matematika","IPA","IPS"]
-
-else if(k.includes("SMA"))
-list=["Matematika","Biologi","Fisika","Kimia"]
+let list=["Bahasa Indonesia","Matematika","IPAS","Pancasila","Seni"]
 
 mapel.innerHTML=""
+
 list.forEach(x=>{
+
 let o=document.createElement("option")
 o.text=x
 mapel.add(o)
+
 })
+
 }
+
 updateMapel()
 
+
 function toggleLKPD(){
-lkpdBox.style.display=media.value=="LKPD"?"block":"none"
+
+lkpdBox.style.display=
+
+media.value=="LKPD"?"block":"none"
+
 }
+
 toggleLKPD()
 
+
 function cekJumlahCustom(){
-jumlahCustom.style.display=jumlah.value=="custom"?"block":"none"
+
+jumlahCustom.style.display=
+
+jumlah.value=="custom"?"block":"none"
+
 }
 
-function autoStyle(){
-if(media.value=="Lembar Mewarnai")
-gaya.value="Black White"
-}
 
 function toggleUpload(){
-upload.style.display=gaya.value=="upload"?"block":"none"
+
+upload.style.display=
+
+gaya.value=="upload"?"block":"none"
+
 }
 
+
 upload.onchange=e=>{
-preview.src=URL.createObjectURL(e.target.files[0])
+
+preview.src=
+
+URL.createObjectURL(e.target.files[0])
+
 preview.style.display="block"
+
 }
+
+
+function autoStyle(){
+
+if(media.value=="Lembar Mewarnai")
+
+gaya.value="Black White"
+
+}
+
 
 function generatePrompt(){
 
@@ -209,79 +312,97 @@ setTimeout(()=>{
 
 spinner.style.display="none"
 
-let jumlahFinal=jumlah.value=="custom"?jumlahCustom.value:jumlah.value
+let jumlahFinal=
 
-let styleText=gaya.value=="upload"
-?"Match illustration style EXACTLY with uploaded reference image. Use it as PRIMARY style reference."
+jumlah.value=="custom"
+
+?jumlahCustom.value
+
+:jumlah.value
+
+
+let styleText=
+
+gaya.value=="upload"
+
+?"Match EXACT style from uploaded image"
+
 :gaya.value
 
+
 if(media.value=="Lembar Mewarnai")
+
 styleText+=". Black and white line art, thick outline, no shading."
 
+
 let prompt=
+
 "Create "+media.value+"\n"+
+
 "Class: "+kelas.value+"\n"+
+
 "Fase: "+getFase()+"\n"+
+
 "Subject: "+mapel.value+"\n"+
+
 "Topic: "+materi.value+"\n"+
+
 "Paper size: "+kertas.value+"\n"+
+
 "Orientation: "+orientasi.value+"\n"+
-"Aspect ratio: follow paper size\n"+
+
 "Illustration style: "+styleText+"\n"+
-"Use Kurikulum Merdeka\n"+
-"All text Indonesian\n"+
-"Professional layout\n"+
-"High quality\n"+
-"Print ready\n"+
-"300 dpi\n"+
-"No watermark\n"+
-"IMPORTANT: Follow all instructions exactly\n"
 
-if(media.value=="LKPD"){
-prompt+="Type: "+jenisLKPD.value+"\n"
-prompt+="Questions: "+jumlahFinal+"\n"
+"Questions: "+jumlahFinal+"\n"+
+
+"Type: "+jenisLKPD.value+"\n"
+
+
 if(mode.value.includes("Guru"))
+
 prompt+="Include answer key\n"
-prompt+="Include instructions and answer space\n"
-}
 
-if(media.value=="Poster")
-prompt+="Use poster layout with big title and illustration. DO NOT include questions\n"
 
-if(media.value=="Infografis")
-prompt+="Use infographic layout with sections and icons. DO NOT include questions\n"
+prompt+=
 
-if(media.value=="Flashcard")
-prompt+="Flashcard size. Front: illustration. Back: explanation text. Clean background\n"
+"Use Kurikulum Merdeka\n"+
+
+"Professional layout\n"+
+
+"Print ready\n"+
+
+"300 dpi\n"+
+
+"No watermark"
+
 
 hasil.value=prompt
 
 },400)
+
 }
+
 
 function copyPrompt(){
 
-let text = document.getElementById("hasil");
-
-text.select();
-text.setSelectionRange(0, 99999);
-
-try{
-document.execCommand("copy");
-alert("Prompt berhasil disalin ✅");
-}
-catch(err){
-alert("Copy gagal. Silakan copy manual.");
-}
+hasil.select()
+document.execCommand("copy")
+alert("Prompt disalin")
 
 }
+
 
 function openGPT(){
+
 window.open("https://chat.openai.com")
+
 }
 
+
 function openGemini(){
+
 window.open("https://gemini.google.com")
+
 }
 
 </script></body>

@@ -1,475 +1,251 @@
 <!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bantu Guru Yuk</title><link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bantu Guru Yuk</title>
 <link rel="icon" href="guru-cibisd2.png">
-<meta name="theme-color" content="#6bbcff"><style>
+<style>
+body{font-family:'Segoe UI',sans-serif;margin:0;background:#eef2f7}
+.header{background:linear-gradient(90deg,#6cc6a6,#4dabf7);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:bold}
+.logo img{width:36px}
+.trial{background:#ffd43b;color:#000;padding:4px 12px;border-radius:20px;font-weight:bold}
+.container{max-width:760px;margin:auto;background:#fff;padding:20px;border-radius:14px;margin-top:20px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+label{font-weight:bold;margin-top:12px;display:block}
+select,input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;margin-top:4px}
+textarea{height:140px}
+button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;color:#fff;font-size:15px;cursor:pointer}
+.generate{background:#2f9e44}
+.copy{background:#1971c2}
+.gpt{background:#0b7285}
+.gemini{background:#6741d9}
+.footer{margin-top:20px;background:linear-gradient(90deg,#6cc6a6,#4dabf7);padding:16px;text-align:center;color:#fff}
+.preview{width:120px;margin-top:8px;display:none;border-radius:8px}
+.spinner{display:none;width:36px;height:36px;border:4px solid #ddd;border-top:4px solid #2f9e44;border-radius:50%;animation:spin 1s linear infinite;margin:auto;margin-top:10px}
+@keyframes spin{100%{transform:rotate(360deg)}}
+</style>
+</head>
+<body><div class="header">
+<div class="logo"><img src="guru-cibisd2.png">BANTU GURU YUK</div>
+<div class="trial">TRIAL</div>
+</div><div class="container"><label>Kelas</label>
+<select id="kelas" onchange="updateMapel()">
 
-body{
-font-family:Segoe UI;
-margin:0;
-background:#eef2f7;
-}
+<option>PAUD</option>
+<option>TK A</option>
+<option>TK B</option>
+<option>SD Kelas 1</option>
+<option selected>SD Kelas 2</option>
+<option>SD Kelas 3</option>
+<option>SD Kelas 4</option>
+<option>SD Kelas 5</option>
+<option>SD Kelas 6</option>
+<option>SMP Kelas 7</option>
+<option>SMP Kelas 8</option>
+<option>SMP Kelas 9</option>
+<option>SMA Kelas 10</option>
+<option>SMA Kelas 11</option>
+<option>SMA Kelas 12</option>
+</select><label>Mata Pelajaran</label>
+<select id="mapel"></select>
 
-.header{
-background:linear-gradient(90deg,#6fdc8c,#6bbcff);
-color:white;
-padding:15px;
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.container{
-max-width:720px;
-margin:auto;
-background:white;
-padding:20px;
-margin-top:20px;
-border-radius:12px;
-}
-
-label{
-font-weight:bold;
-margin-top:12px;
-display:block;
-}
-
-select,input,textarea{
-width:100%;
-padding:10px;
-margin-top:5px;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-textarea{
-min-height:180px;
-resize:none;
-}
-
-button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:8px;
-color:white;
-cursor:pointer;
-}
-
-.generate{background:#4CAF50;}
-.gpt{background:#00acc1;}
-.gemini{background:#673ab7;}
-
-.spinner{
-display:none;
-border:4px solid #eee;
-border-top:4px solid #4CAF50;
-border-radius:50%;
-width:30px;
-height:30px;
-margin:auto;
-animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-100%{transform:rotate(360deg);}
-}
-
-.footer{
-margin-top:40px;
-background:linear-gradient(90deg,#6fdc8c,#6bbcff);
-color:white;
-text-align:center;
-padding:20px;
-}
-
-</style></head><body><div class="header"><img src="guru-cibisd2.png" height="36"><div style="flex:1;">
-BANTU GURU YUK
-</div><div style="
-font-size:11px;
-background:#ffffff33;
-padding:4px 12px;
-border-radius:20px;
-font-weight:bold;
-">TRIAL VERSION
-
-</div></div><div class="container"><label>Jenis Media</label>
-
-<select id="media"
-onchange="cekFormLKPD(); rekomendasiGaya();">
+<label>Jenis Media</label>
+<select id="media" onchange="toggleLKPD();autoStyle()">
 
 <option>LKPD</option>
 <option>Poster</option>
 <option>Infografis</option>
 <option>Flashcard</option>
 <option>Lembar Mewarnai</option>
-<option>Bahan Bacaan</option></select><label>Kelas</label>
-
-<select id="kelas"
-onchange="updateMapel()">
-
-<option>Umum</option><option>SD Kelas 1</option>
-<option>SD Kelas 2</option>
-<option>SD Kelas 3</option>
-<option>SD Kelas 4</option>
-<option>SD Kelas 5</option>
-<option>SD Kelas 6</option><option>SMP Kelas 7</option>
-<option>SMP Kelas 8</option>
-<option>SMP Kelas 9</option><option>SMA Kelas 10</option>
-<option>SMA Kelas 11</option>
-<option>SMA Kelas 12</option></select><label>Mata Pelajaran</label>
-
-<select id="mapel"></select>
-
-<label>Materi</label>
-
-<textarea id="materi"
-placeholder="Contoh: Penjumlahan bilangan sampai 100">
-</textarea><div id="boxLKPD"><label>Jenis LKPD</label>
-
-<select id="jenisLKPD"><option>Pilihan Ganda</option>
+</select><div id="lkpdBox" style="display:none">
+<label>Jenis LKPD</label>
+<select id="jenisLKPD">
+<option>Pilihan Ganda</option>
 <option>Isian</option>
 <option>Menjodohkan</option>
 <option>Tracing</option>
 <option>Uraian</option>
-<option>Bebas</option></select><label>Mode</label>
+</select><label>Mode</label>
+<select id="mode">
 
-<select id="mode"><option>Siswa</option>
-<option>Guru (Dengan Kunci Jawaban)</option></select><label>Jumlah Soal</label>
-
-<select id="jumlah"
-onchange="cekJumlahCustom()">
+<option>Siswa</option>
+<option>Guru (dengan kunci jawaban)</option>
+</select><label>Jumlah Soal</label>
+<select id="jumlah" onchange="cekJumlahCustom()">
 
 <option>5</option>
 <option selected>10</option>
 <option>15</option>
-<option>20</option><option value="custom">
-Isi Sendiri
-</option></select><input id="jumlahCustom"
-placeholder="Tulis jumlah soal"
-style="display:none;">
+<option>20</option>
+<option value="custom">Isi Sendiri</option>
+</select><input id="jumlahCustom" placeholder="Tulis jumlah soal" style="display:none">
+</div><label>Materi</label>
 
-</div><label>Ukuran</label>
+<textarea id="materi" placeholder="Contoh: Siklus air"></textarea><label>Ukuran Kertas</label>
+<select id="kertas">
 
-<select id="ukuran"><option>A4</option>
+<option>A4</option>
 <option>A3</option>
 <option>A5</option>
-<option>F4</option></select><label>Orientasi</label>
+<option>F4</option>
+</select><label>Orientasi</label>
+<select id="orientasi">
 
-<select id="orientasi"><option>Portrait</option>
-<option>Landscape</option></select><label>Gaya Ilustrasi</label>
+<option>Portrait</option>
+<option>Landscape</option>
+</select><label>Gaya Ilustrasi</label>
+<select id="gaya" onchange="toggleUpload()">
 
-<select id="gaya"><option>Cartoon Kids</option>
-<option>Storybook Illustration</option>
+<option>Cartoon Kids</option>
+<option>Storybook</option>
+<option>Comic</option>
+<option>Crayon</option>
+<option>Watercolor</option>
 <option>Flat Vector</option>
-<option>Pixar Style</option>
 <option>3D Clay</option>
-<option>Crayon Drawing</option>
-<option>Outline / Coloring</option>
-<option>Comic Style</option>
-<option>Infographic Vector</option>
-<option>Watercolor</option></select><div class="spinner"
-id="spinner"></div><button class="generate"
-onclick="generatePrompt()">
+<option>Pixar Style</option>
+<option>Sketch</option>
+<option>Black White</option>
+<option value="upload">Upload Referensi</option>
+</select><input type="file" id="upload" style="display:none">
+<img id="preview" class="preview"><div class="spinner" id="spinner"></div><button class="generate" onclick="generatePrompt()">Generate Prompt</button>
+<button class="copy" onclick="copyPrompt()">Copy Prompt</button>
 
-Generate Prompt
+<textarea id="hasil"></textarea><button class="gpt" onclick="openGPT()">Open ChatGPT</button>
+<button class="gemini" onclick="openGemini()">Open Gemini</button>
 
-</button><div style="position:relative;"><textarea id="hasil"
-placeholder="Hasil prompt muncul di sini..."
-style="min-height:260px;padding-right:70px;">
-</textarea><button onclick="copyPrompt()"
-style="
-position:absolute;
-top:8px;
-right:8px;
-background:#4CAF50;
-border:none;
-color:white;
-padding:5px 10px;
-border-radius:6px;
-font-size:12px;
-cursor:pointer;
-">
-
-COPY
-
-</button></div><button class="gpt"
-onclick="openGPT()">
-
-Open ChatGPT
-
-</button><button class="gemini"
-onclick="openGemini()">
-
-Open Gemini
-
-</button></div><div style="text-align:center;margin-top:30px;">
-Terima kasih sudah berkunjung 🤗
-</div><div style="text-align:center;">
-Jumlah Pengunjung 🔎
-<div id="visitorCount">0</div>
-</div><div class="footer">Follow me on TikTok<br>
-
-<b>@pak.choyy</b><br>
-
-Free and Paid Worksheet
-
+</div><div class="footer">
+Follow TikTok @pak.choyy<br>Free & Paid Worksheet
 </div><script>
 
-
-const mapelData={
-
-Umum:["Umum"],
-
-SD:[
-"Matematika",
-"Bahasa Indonesia",
-"IPAS",
-"Pendidikan Pancasila",
-"Seni Budaya",
-"PJOK",
-"Bahasa Inggris"
-],
-
-SMP:[
-"Matematika",
-"Bahasa Indonesia",
-"IPA",
-"IPS",
-"Bahasa Inggris",
-"Informatika"
-],
-
-SMA:[
-"Matematika",
-"Bahasa Indonesia",
-"Biologi",
-"Fisika",
-"Kimia",
-"Ekonomi",
-"Sosiologi",
-"Geografi"
-]
-
-};
-
+function getFase(){
+let k=kelas.value
+if(k.includes("PAUD")||k.includes("TK")||k.includes("1")||k.includes("2"))return"Fase A"
+if(k.includes("3")||k.includes("4"))return"Fase B"
+if(k.includes("5")||k.includes("6"))return"Fase C"
+if(k.includes("SMP"))return"Fase D"
+if(k.includes("10"))return"Fase E"
+if(k.includes("11")||k.includes("12"))return"Fase F"
+return""
+}
 
 function updateMapel(){
+let k=kelas.value
+let list=["Umum"]
 
-let k=kelas.value;
+if(k.includes("PAUD")||k.includes("TK"))
+list=["Calistung","Huruf","Angka","Motorik","Mewarnai"]
 
-let level="Umum";
+else if(k.includes("SD"))
+list=["Bahasa Indonesia","Matematika","IPAS","Pancasila","Seni"]
 
-if(k.includes("SD"))level="SD";
-if(k.includes("SMP"))level="SMP";
-if(k.includes("SMA"))level="SMA";
+else if(k.includes("SMP"))
+list=["Bahasa Indonesia","Matematika","IPA","IPS"]
 
-mapel.innerHTML="";
+else if(k.includes("SMA"))
+list=["Matematika","Biologi","Fisika","Kimia"]
 
-mapelData[level].forEach(m=>{
-mapel.innerHTML+=`<option>${m}</option>`;
-});
-
+mapel.innerHTML=""
+list.forEach(x=>{
+let o=document.createElement("option")
+o.text=x
+mapel.add(o)
+})
 }
+updateMapel()
 
-updateMapel();
-
-
-
-function cekFormLKPD(){
-
-boxLKPD.style.display=
-media.value=="LKPD"
-?"block"
-:"none";
-
+function toggleLKPD(){
+lkpdBox.style.display=media.value=="LKPD"?"block":"none"
 }
-
-cekFormLKPD();
-
-
+toggleLKPD()
 
 function cekJumlahCustom(){
-
-jumlahCustom.style.display=
-jumlah.value=="custom"
-?"block"
-:"none";
-
+jumlahCustom.style.display=jumlah.value=="custom"?"block":"none"
 }
 
-
-
-function getFase(){
-
-let k=kelas.value;
-
-if(k.includes("1")||k.includes("2"))
-return"Fase A";
-
-if(k.includes("3")||k.includes("4"))
-return"Fase B";
-
-if(k.includes("5")||k.includes("6"))
-return"Fase C";
-
-if(k.includes("SMP"))
-return"Fase D";
-
-if(k.includes("10"))
-return"Fase E";
-
-if(k.includes("11")||k.includes("12"))
-return"Fase F";
-
-return"-";
-
+function autoStyle(){
+if(media.value=="Lembar Mewarnai")
+gaya.value="Black White"
 }
 
+function toggleUpload(){
+upload.style.display=gaya.value=="upload"?"block":"none"
+}
 
+upload.onchange=e=>{
+preview.src=URL.createObjectURL(e.target.files[0])
+preview.style.display="block"
+}
 
 function generatePrompt(){
 
-spinner.style.display="block";
-
+spinner.style.display="block"
 
 setTimeout(()=>{
 
+spinner.style.display="none"
 
-spinner.style.display="none";
+let jumlahFinal=jumlah.value=="custom"?jumlahCustom.value:jumlah.value
 
+let styleText=gaya.value=="upload"
+?"Match illustration style EXACTLY with uploaded reference image. Use it as PRIMARY style reference."
+:gaya.value
 
-let jumlahFinal=
+if(media.value=="Lembar Mewarnai")
+styleText+=". Black and white line art, thick outline, no shading."
 
-jumlah.value=="custom"
-?jumlahCustom.value
-:jumlah.value;
+let prompt=
+"Create "+media.value+"\n"+
+"Class: "+kelas.value+"\n"+
+"Fase: "+getFase()+"\n"+
+"Subject: "+mapel.value+"\n"+
+"Topic: "+materi.value+"\n"+
+"Paper size: "+kertas.value+"\n"+
+"Orientation: "+orientasi.value+"\n"+
+"Aspect ratio: follow paper size\n"+
+"Illustration style: "+styleText+"\n"+
+"Use Kurikulum Merdeka\n"+
+"All text Indonesian\n"+
+"Professional layout\n"+
+"High quality\n"+
+"Print ready\n"+
+"300 dpi\n"+
+"No watermark\n"+
+"IMPORTANT: Follow all instructions exactly\n"
 
-
-
-hasil.value=
-
-"Create "+media.value+
-
-"\nClass: "+kelas.value+
-
-"\nFase: "+getFase()+
-
-"\nSubject: "+mapel.value+
-
-"\nTopic: "+materi.value+
-
-"\nQuestions: "+jumlahFinal+
-
-"\nPaper size: "+ukuran.value+
-
-"\nOrientation: "+orientasi.value+
-
-"\nAspect ratio: "+
-(orientasi.value=="Portrait"?"3:4":"4:3")+
-
-"\nIllustration style: "+gaya.value+
-
-"\nLanguage: Indonesian"+
-
-"\nUse Kurikulum Merdeka"+
-
-"\nInclude objectives, instructions, questions, answer space"+
-
-"\nFollow layout strictly";
-
-
-hasil.scrollIntoView(
-{behavior:"smooth"});
-
-
-hasil.focus();
-
-
-},500);
-
+if(media.value=="LKPD"){
+prompt+="Type: "+jenisLKPD.value+"\n"
+prompt+="Questions: "+jumlahFinal+"\n"
+if(mode.value.includes("Guru"))
+prompt+="Include answer key\n"
+prompt+="Include instructions and answer space\n"
 }
 
+if(media.value=="Poster")
+prompt+="Use poster layout with big title and illustration. DO NOT include questions\n"
 
+if(media.value=="Infografis")
+prompt+="Use infographic layout with sections and icons. DO NOT include questions\n"
+
+if(media.value=="Flashcard")
+prompt+="Flashcard size. Front: illustration. Back: explanation text. Clean background\n"
+
+hasil.value=prompt
+
+},400)
+}
 
 function copyPrompt(){
-
-navigator.clipboard.writeText(
-hasil.value);
-
-alert("Prompt disalin");
-
+navigator.clipboard.writeText(hasil.value)
 }
-
-
 
 function openGPT(){
-
-window.open(
-"https://chat.openai.com");
-
+window.open("https://chat.openai.com")
 }
-
-
 
 function openGemini(){
-
-window.open(
-"https://gemini.google.com");
-
+window.open("https://gemini.google.com")
 }
 
-
-
-/* visitor counter */
-
-
-let v=
-
-localStorage.getItem(
-"pakchoyVisitor");
-
-
-v=v?parseInt(v)+1:1;
-
-
-localStorage.setItem(
-"pakchoyVisitor",
-v);
-
-
-visitorCount.innerText=
-
-v.toLocaleString("id-ID");
-
-
-
-/* auto resize */
-
-
-function autoResize(el){
-
-el.style.height="auto";
-
-el.style.height=
-el.scrollHeight+"px";
-
-}
-
-
-materi.addEventListener(
-"input",
-()=>autoResize(materi));
-
-
-hasil.addEventListener(
-"input",
-()=>autoResize(hasil));
-
-
-</script><script>
-navigator.serviceWorker.register("sw.js");
 </script></body>
 </html>

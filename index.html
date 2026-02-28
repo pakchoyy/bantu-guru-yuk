@@ -202,7 +202,7 @@ opacity:.9;
 <body>
  <div id="loadingScreen">
 
-<img src="icon.png">
+<img src="guru-cibisd2.png">
 
 <div class="loadingText">
 BANTU GURU YUK
@@ -282,7 +282,7 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 <div id="home" class="container section active">
 
 <label>Kelas</label>
-<select id="kelas" onchange="autoMateri()">
+<select id="kelas" onchange="autoMapel()">
 <option>PAUD</option>
 <option>TK A</option>
 <option>TK B</option>
@@ -302,11 +302,7 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 </select>
 
 <label>Mata Pelajaran</label>
-<select id="mapel" onchange="autoMateri()">
-<option>Bahasa Indonesia</option>
-<option>Matematika</option>
-<option>IPAS</option>
-</select>
+<select id="mapel"></select>
 
 <label>Jenis Media</label>
 <select id="media" onchange="autoStyle()">
@@ -348,22 +344,12 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
   </div>
 
 <label>Materi</label>
-<textarea id="materi"></textarea>
-  
-<label>Referensi Gambar</label>
 
-<select id="referensi" onchange="handleReferensi()">
-
-<option value="">Tanpa Referensi</option>
-
-<option value="upload">+ Upload Referensi Baru</option>
-
-</select>
-
-<input type="file" id="uploadRef" accept="image/*" style="display:none">
-  
+<textarea id="materi" placeholder="Tulis materi dengan jelas dan spesifik agar hasil media ajar lebih akurat."></textarea
+ 
 <label>Gaya Ilustrasi</label>
-<select id="gaya">
+<select id="gaya" onchange="handleGayaUpload()">
+
 <option>Cartoon Kids — kartun ceria anak SD</option>
 <option>Storybook — ilustrasi buku cerita anak</option>
 <option>Comic — gaya komik berwarna</option>
@@ -374,7 +360,12 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 <option>Pixar Style — animasi film</option>
 <option>Sketch — gambar pensil</option>
 <option>Black White — tanpa warna</option>
+
+<option value="upload">+ Upload Referensi Gambar</option>
+
 </select>
+
+<input type="file" id="uploadRef" accept="image/*" style="display:none">
 
 <button class="generate" onclick="generatePrompt()">Generate Prompt</button>
 
@@ -383,7 +374,17 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 <button class="copy" onclick="copyPrompt()">Salin Prompt</button>
 
 <div id="notif">Prompt berhasil disalin</div>
+<div style="
+font-size:13px;
+color:#0b7285;
+margin-top:6px;
+text-align:center;
+font-weight:bold;
+">
 
+Disarankan menggunakan ChatGPT untuk hasil paling akurat
+
+</div>
 <button class="gpt" onclick="openGPT()">Open ChatGPT</button>
 <button class="gemini" onclick="openGemini()">Open Gemini</button>
 
@@ -495,17 +496,46 @@ let deferredPrompt=null;
 
 function autoStyle(){
 
+function autoStyle(){
+
+/* ================= LKPD ================= */
+
 if(media.value=="LKPD"){
 
 jumlahBox.style.display="block";
 
-}else{
+jenisBox.style.display="block";
 
-jumlahBox.style.display="none";
+jenis.disabled=false;
+
+mode.disabled=false;
 
 }
 
+/* ================= SELAIN LKPD ================= */
+
+else{
+
+jumlahBox.style.display="none";
+
+jenisBox.style.display="none";
+
+jenis.disabled=true;
+
+mode.disabled=true;
+
+}
+
+
+/* ================= AUTO GAYA ================= */
+
 if(media.value=="Poster"){
+
+gaya.value="Flat Vector — infografis modern";
+
+}
+
+else if(media.value=="Infografis"){
 
 gaya.value="Flat Vector — infografis modern";
 
@@ -523,11 +553,109 @@ gaya.value="Black White — tanpa warna";
 
 }
 
-else if(media.value=="Infografis"){
+}
 
-gaya.value="Flat Vector — infografis modern";
+function autoMapel(){
+
+let k=kelas.value;
+
+let daftar=[];
+
+
+/* PAUD */
+
+if(k=="PAUD"){
+
+daftar=[
+"Nilai Agama dan Moral",
+"Motorik",
+"Kognitif",
+"Bahasa",
+"Sosial Emosional",
+"Seni"
+];
 
 }
+
+
+/* TK */
+
+else if(k.includes("TK")){
+
+daftar=[
+"Nilai Agama",
+"Bahasa",
+"Kognitif",
+"Motorik",
+"Seni"
+];
+
+}
+
+
+/* SD */
+
+else if(k.includes("SD")){
+
+daftar=[
+"Bahasa Indonesia",
+"Matematika",
+"IPAS",
+"Pendidikan Pancasila",
+"Seni Budaya"
+];
+
+}
+
+
+/* SMP */
+
+else if(k.includes("SMP")){
+
+daftar=[
+"Bahasa Indonesia",
+"Matematika",
+"IPA",
+"IPS",
+"Bahasa Inggris"
+];
+
+}
+
+
+/* SMA */
+
+else if(k.includes("SMA")){
+
+daftar=[
+"Bahasa Indonesia",
+"Matematika",
+"Biologi",
+"Fisika",
+"Kimia",
+"Sejarah",
+"Ekonomi"
+];
+
+}
+
+
+/* isi dropdown */
+
+mapel.innerHTML="";
+
+daftar.forEach(function(n){
+
+let opt=document.createElement("option");
+
+opt.text=n;
+
+opt.value=n;
+
+mapel.appendChild(opt);
+
+});
+
 
 }
 
@@ -715,7 +843,10 @@ hasil.value=
   kurikulumTambahan+
 "\nEducation level: "+kelas.value+
 
-"\nType: "+jenis.value+
+(media.value=="LKPD"
+? "\nType: "+jenis.value
+: "")
++
 
 "\nMode: "+mode.value+
 
@@ -858,6 +989,40 @@ materi.value=isi;
 
 }
 
+function handleGayaUpload(){
+
+if(gaya.value=="upload"){
+
+document.getElementById("uploadRef").click();
+
+}
+
+}
+
+document.getElementById("uploadRef").addEventListener("change", function(){
+
+let file=this.files[0];
+
+if(!file) return;
+
+let lama=document.getElementById("gayaRef");
+
+if(lama) lama.remove();
+
+let option=document.createElement("option");
+
+option.value="Referensi gambar: "+file.name;
+
+option.text="Referensi gambar: "+file.name;
+
+option.id="gayaRef";
+
+gaya.appendChild(option);
+
+gaya.value=option.value;
+
+});
+
 function openGPT(){window.open("https://chat.openai.com");}
 function openGemini(){window.open("https://gemini.google.com");}
 
@@ -911,10 +1076,10 @@ alert("Install belum tersedia di perangkat ini");
 }
 
 }
-autoStyle();
+
 if("serviceWorker" in navigator)
 navigator.serviceWorker.register("service-worker.js");
-autoMateri();
+
 function closeInstall(){
 
 installPopup.style.top="-160px";
@@ -980,6 +1145,8 @@ select.appendChild(option);
 select.value = file.name;
 
 });
+autoStyle();
+autoMapel();
   
 </script>
 

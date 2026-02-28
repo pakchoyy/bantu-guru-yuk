@@ -202,15 +202,27 @@ Install aplikasi Bantu Guru Yuk
 Install
 </button>
 
+<button onclick="installApp()" style="
+margin-left:10px;
+background:white;
+color:#2f9e44;
+border:none;
+padding:6px 12px;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;">
+Install
+</button>
+
 <button onclick="closeInstall()" style="
 margin-left:10px;
 background:red;
 color:white;
 border:none;
-padding:5px 10px;
+padding:6px 12px;
 border-radius:6px;
-cursor:pointer;
-">
+font-weight:bold;
+cursor:pointer;">
 Tutup
 </button>
 
@@ -469,13 +481,17 @@ Masukan dan saran Anda sangat membantu untuk pengembangan aplikasi ini agar menj
 
 👁️ Total Pengunjung<br>
 
-<script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=5670b1ee46ce1ccae5c30b7f86650bf5ced3f40e'></script>
+<script type="text/javascript"
+src="https://www.freevisitorcounters.com/auth.php?id=5670b1ee46ce1ccae5c30b7f86650bf5ced3f40e"></script>
 
-<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1509735/t/9"></script>
+<script type="text/javascript"
+src="https://www.freevisitorcounters.com/en/home/counter/1509735/t/9"></script>
 
 </div>
+
+<!-- SCRIPT UTAMA WEB -->
 <script>
-  
+
 const modeBox=document.getElementById("modeBox");
 const media=document.getElementById("media");
 const jenisBox=document.getElementById("jenisBox");
@@ -560,6 +576,7 @@ let daftar=["Umum"];
 if(k=="PAUD"){
 
 daftar=[
+"Umum",
 "Nilai Agama dan Moral",
 "Motorik",
 "Kognitif",
@@ -576,6 +593,7 @@ daftar=[
 else if(k.includes("TK")){
 
 daftar=[
+"Umum",
 "Nilai Agama",
 "Bahasa",
 "Kognitif",
@@ -591,6 +609,7 @@ daftar=[
 else if(k.includes("SD Kelas 1") || k.includes("SD Kelas 2")){
 
 daftar=[
+"Umum",
 "Pendidikan Agama dan Budi Pekerti",
 "Pendidikan Pancasila",
 "Bahasa Indonesia",
@@ -609,6 +628,7 @@ k.includes("SD Kelas 6")
 ){
 
 daftar=[
+"Umum",
 "Pendidikan Agama dan Budi Pekerti",
 "Pendidikan Pancasila",
 "Bahasa Indonesia",
@@ -626,6 +646,7 @@ daftar=[
 else if(k.includes("SMP")){
 
 daftar=[
+"Umum",
 "Bahasa Indonesia",
 "Matematika",
 "IPA",
@@ -641,6 +662,7 @@ daftar=[
 else if(k.includes("SMA")){
 
 daftar=[
+"Umum",
 "Bahasa Indonesia",
 "Matematika",
 "Biologi",

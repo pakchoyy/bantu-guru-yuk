@@ -276,7 +276,12 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 </select>
 
 <label>Mata Pelajaran</label>
-<select id="mapel"></select>
+
+<select id="mapel">
+
+<option value="Umum" selected>Umum</option>
+
+</select>
 
 <label>Jenis Media</label>
 <select id="media" onchange="autoStyle()">
@@ -366,6 +371,18 @@ Disarankan menggunakan ChatGPT untuk hasil paling akurat
 </div>
 <button class="gpt" onclick="openGPT()">Open ChatGPT</button>
 <button class="gemini" onclick="openGemini()">Open Gemini</button>
+  <div style="
+margin-top:12px;
+font-size:13px;
+color:#555;
+text-align:center;
+line-height:1.6;
+">
+
+💡 <b>Cara pakai:</b><br>
+Salin prompt → buka ChatGPT / Gemini → pilih <b>Buat Gambar</b> → tempel → kirim
+
+  </div>
 
 </div>
 
@@ -818,15 +835,49 @@ extra=
 }
 ;
 
-hasil.value=
+let prompt = "";
 
-"Create "+media.value+
+prompt += "Create " + media.value;
+prompt += "\nClass: " + kelas.value;
+prompt += "\nSubject: " + mapel.value;
+prompt += "\nTopic: " + materi.value;
+prompt += "\nIllustration style: " + gaya.value;
 
-"\nClass: "+kelas.value+
+prompt += extra;
+prompt += ref;
 
-"\nSubject: "+mapel.value+
-  kurikulumTambahan+
-"\nEducation level: "+kelas.value+
+prompt += "\nAll text Indonesian";
+prompt += "\nUse Kurikulum Merdeka";
+prompt += "\nPaper size: " + paper;
+prompt += "\nOrientation: " + orient;
+prompt += "\nAspect ratio: follow paper size";
+prompt += "\nProfessional layout";
+prompt += "\nHigh quality";
+prompt += "\nPrint ready";
+prompt += "\n300 dpi";
+prompt += "\nNo watermark";
+
+
+/* KHUSUS LKPD SAJA */
+
+if(media.value=="LKPD"){
+
+prompt += kurikulumTambahan;
+
+prompt += "\nType: " + jenis.value;
+
+prompt += "\nMode: " + mode.value;
+
+prompt += "\nQuestions: " + j;
+
+prompt += kunciTambahan;
+
+}
+
+prompt += "\nIMPORTANT: Follow all instructions exactly";
+
+
+hasil.value = prompt;
 
 (media.value=="LKPD"
 ? "\nType: "+jenis.value

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bantu Guru Yuk - Free Version</title>
 
-<link rel="icon" type="image/png" href="icon.png">
+<link rel="icon" type="image/png" href="guru-cibisd2.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2f9e44">
 
@@ -149,10 +149,25 @@ color:#fff;
 </head>
 <script id="newLoadJS">
 window.addEventListener("load", ()=>{
-loadingScreen.remove();
+const loading = document.getElementById("loadingScreen");
+
+if(loading){
+
+loading.remove();
+
+}
 });
 </script>
 <body>
+<div id="loadingScreen">
+<div style="font-size:20px;font-weight:bold">
+Bantu Guru Yuk
+</div>
+<div style="font-size:13px;margin-top:6px">
+Loading...
+</div>
+</div>
+  
 <style id="newLoadCSS">
 #loadingScreen{
 position:fixed;
@@ -235,7 +250,7 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 <div id="home" class="container section active">
 
 <label>Kelas</label>
-<select id="kelas" onchange="autoMapel()">
+<select id="kelas" onchange="autoMapel(); autoStyle();">
 <option>PAUD</option>
 <option>TK A</option>
 <option>TK B</option>
@@ -298,7 +313,7 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 
 <label>Materi</label>
 
-<textarea id="materi" placeholder="Tulis materi dengan jelas dan spesifik agar hasil media ajar lebih akurat."></textarea
+<textarea id="materi" placeholder="Tulis materi dengan jelas dan spesifik agar hasil media ajar lebih akurat."></textarea>
  
 <label>Gaya Ilustrasi</label>
 <select id="gaya" onchange="handleGayaUpload()">
@@ -432,7 +447,6 @@ const jumlah=document.getElementById("jumlah");
 const jumlahBox=document.getElementById("jumlahBox");
 const jumlahCustom=document.getElementById("jumlahCustom");
 const hasil=document.getElementById("hasil");
-const referensi=document.getElementById("referensi");
 const visitor=document.getElementById("visitor");
 const kelas=document.getElementById("kelas");
 const mapel=document.getElementById("mapel");
@@ -449,38 +463,29 @@ let deferredPrompt=null;
 
 function autoStyle(){
 
-function autoStyle(){
-
-/* ================= LKPD ================= */
+/* LKPD */
 
 if(media.value=="LKPD"){
 
 jumlahBox.style.display="block";
-
 jenisBox.style.display="block";
-
 jenis.disabled=false;
-
 mode.disabled=false;
 
 }
 
-/* ================= SELAIN LKPD ================= */
+/* selain LKPD */
 
 else{
 
 jumlahBox.style.display="none";
-
 jenisBox.style.display="none";
-
 jenis.disabled=true;
-
 mode.disabled=true;
 
 }
 
-
-/* ================= AUTO GAYA ================= */
+/* auto gaya */
 
 if(media.value=="Poster"){
 
@@ -744,10 +749,8 @@ orient="Portrait";
 
 }
   
-ref =
-referensi.value && referensi.value!="upload"
-? "\nReference image: " + referensi.value
-: "";
+ref="";
+
 
 if(media.value=="Poster"){
 
@@ -946,7 +949,7 @@ function handleGayaUpload(){
 
 if(gaya.value=="upload"){
 
-document.getElementById("uploadRef").click();
+uploadRef.click();
 
 }
 
@@ -987,6 +990,7 @@ document.getElementById(id).classList.add("active");
 e.target.classList.add("active");
 
 }
+document.addEventListener("DOMContentLoaded", ()=>{
 
 fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk")
 
@@ -1000,7 +1004,9 @@ visitor.innerHTML = "👁️ Total Pengunjung: " + data.value;
 
 .catch(() => {
 
-visitor.innerHTML = "Total Pengunjung: -";
+visitor.innerHTML = "👁️ Total Pengunjung: -";
+
+});
 
 });
 window.addEventListener("beforeinstallprompt", e=>{
@@ -1041,9 +1047,11 @@ sessionStorage.setItem("installClosed","yes");
 
 }
 
-window.addEventListener("load", ()=>{
-
+document.addEventListener("DOMContentLoaded", ()=>{
+  
 const loading = document.getElementById("loadingScreen");
+
+if(loading){
 
 setTimeout(()=>{
 
@@ -1051,58 +1059,12 @@ loading.remove();
 
 },300);
 
-});
-
-function handleReferensi(){
-
-let select = document.getElementById("referensi");
-
-if(select.value=="upload"){
-
-document.getElementById("uploadRef").click();
-
 }
 
-}
-
-
-document.getElementById("uploadRef").addEventListener("change", function(){
-
-let file = this.files[0];
-
-if(!file) return;
-
-let select = document.getElementById("referensi");
-
-
-/* hapus referensi lama jika ada */
-
-let lama = document.getElementById("refCustom");
-
-if(lama) lama.remove();
-
-
-/* tambah ke dropdown */
-
-let option = document.createElement("option");
-
-option.value = file.name;
-
-option.text = "Referensi: " + file.name;
-
-option.id = "refCustom";
-
-select.appendChild(option);
-
-
-/* pilih otomatis */
-
-select.value = file.name;
-
-});
 autoStyle();
 autoMapel();
   
+});
 </script>
 
   

@@ -144,7 +144,9 @@ text-align:center;
 color:#fff;
 }
 
-
+#modeBox{
+display:none;
+}
 </style>
 </head>
 <script id="newLoadJS">
@@ -184,6 +186,8 @@ color:white;
 font-family:sans-serif;
 z-index:99999;
 }
+
+
 </style>
 
 <div id="installPopup">
@@ -440,6 +444,7 @@ Masukan dan saran Anda sangat membantu untuk pengembangan aplikasi ini agar menj
 
 <script>
 
+const modeBox=document.getElementById("modeBox");
 const media=document.getElementById("media");
 const jenisBox=document.getElementById("jenisBox");
 const gaya=document.getElementById("gaya");
@@ -1012,25 +1017,16 @@ document.addEventListener("DOMContentLoaded", function(){
 
 const visitor = document.getElementById("visitor");
 
-fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk-2026")
+fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk")
+.then(res=>res.json())
+.then(data=>{
 
-.then(function(res){
-return res.json();
-})
-
-.then(function(data){
-
-visitor.innerHTML =
-"👁️ Total Pengunjung: " + data.value;
+visitor.innerHTML="👁️ Total Pengunjung: "+data.value;
 
 })
+.catch(()=>{
 
-.catch(function(){
-
-visitor.innerHTML =
-"👁️ Total Pengunjung: 0";
-
-});
+visitor.innerHTML="Total Pengunjung: -";
 
 });
 window.addEventListener("beforeinstallprompt", e=>{
@@ -1085,9 +1081,11 @@ loading.remove();
 
 }
 
-autoStyle();
+document.addEventListener("DOMContentLoaded", function(){
+
 autoMapel();
-  
+autoStyle();
+
 });
 </script>
 

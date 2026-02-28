@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bantu Guru Yuk v26.5 GOLD FINAL ABSOLUTE</title>
+<title>Bantu Guru Yuk - Free Version</title>
 
+<link rel="icon" type="image/png" href="icon.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2f9e44">
 
@@ -47,28 +48,37 @@ width:44px;
 }
 
 .navbar{
-background:#fff;
-padding:14px;
+
+background:transparent;
+
+padding:10px;
+
 text-align:center;
-box-shadow:0 2px 10px rgba(0,0,0,.1);
+
+box-shadow:none;
+
 }
 
 .navbar a{
-margin:0 15px;
+
+display:inline-block;
+margin:0 6px;
+padding:6px 14px;
 font-weight:bold;
 cursor:pointer;
-position:relative;
+border-radius:20px;
+background:linear-gradient(90deg,#6cc6a6,#4dabf7);
+color:white;
+font-size:14px;
+
 }
 
-.navbar a.active::after{
-content:"";
-position:absolute;
-left:0;
-bottom:-5px;
-width:100%;
-height:5px;
-background:yellow;
-border-radius:4px;
+.navbar a.active{
+
+background:linear-gradient(90deg,#f59f00,#ffd43b);
+
+color:#000;
+
 }
 
 .container{
@@ -134,24 +144,133 @@ text-align:center;
 color:#fff;
 }
 
+#loadingScreen{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:linear-gradient(135deg,#4dabf7,#6cc6a6);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+z-index:99999;
+
+color:white;
+
+}
+
+#loadingScreen img{
+
+width:90px;
+margin-bottom:15px;
+
+animation:pulse 1.5s infinite;
+
+}
+
+.loadingText{
+
+font-size:24px;
+font-weight:bold;
+
+}
+
+.loadingSub{
+
+font-size:14px;
+opacity:.9;
+
+}
+
+@keyframes pulse{
+
+0%{transform:scale(1);}
+50%{transform:scale(1.08);}
+100%{transform:scale(1);}
+
+}
+
 </style>
 </head>
 
 <body>
+ <div id="loadingScreen">
+
+<img src="icon.png">
+
+<div class="loadingText">
+BANTU GURU YUK
+</div>
+
+<div class="loadingSub">
+v26.2.8 • Free Version
+</div>
+    
+<div style="margin-top:10px;font-size:13px">
+Memuat aplikasi...
+</div>
+   
+</div>
 
 <div id="installPopup">
+
+<span style="font-weight:bold">
 Install aplikasi Bantu Guru Yuk
-<button onclick="installApp()">Install</button>
+</span>
+
+<button onclick="installApp()" style="margin-left:10px">
+Install
+</button>
+
+<button onclick="closeInstall()" style="
+margin-left:10px;
+background:red;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:6px;
+cursor:pointer;
+">
+Tutup
+</button>
+
 </div>
 
 <div class="header">
+
 <div class="header-box">
+
 <img src="guru-cibisd2.png">
+
 <div>
-<h2 style="margin:0">BANTU GURU YUK</h2>
-<div style="font-size:13px">Generator Media Ajar Profesional</div>
+
+<div style="
+font-size:22px;
+font-weight:bold;
+letter-spacing:1px;
+">
+BANTU GURU YUK
 </div>
+
+<div style="
+font-size:12px;
+opacity:.9;
+">
+
+v26.2.8 • <span style="color:yellow">Free Version</span>
+
 </div>
+
+</div>
+
+</div>
+
 </div>
 
 <div class="navbar">
@@ -163,7 +282,7 @@ Install aplikasi Bantu Guru Yuk
 <div id="home" class="container section active">
 
 <label>Kelas</label>
-<select id="kelas">
+<select id="kelas" onchange="autoMateri()">
 <option>PAUD</option>
 <option>TK A</option>
 <option>TK B</option>
@@ -183,7 +302,7 @@ Install aplikasi Bantu Guru Yuk
 </select>
 
 <label>Mata Pelajaran</label>
-<select id="mapel">
+<select id="mapel" onchange="autoMateri()">
 <option>Bahasa Indonesia</option>
 <option>Matematika</option>
 <option>IPAS</option>
@@ -193,11 +312,12 @@ Install aplikasi Bantu Guru Yuk
 <select id="media" onchange="autoStyle()">
 <option>LKPD</option>
 <option>Poster</option>
-<option>Infografis</option>
+<option selected>Infografis</option>
 <option>Flashcard</option>
 <option>Lembar Mewarnai</option>
 </select>
 
+<div id="jenisBox">
 <label>Jenis LKPD</label>
 <select id="jenis">
 <option>Pilihan Ganda</option>
@@ -206,13 +326,15 @@ Install aplikasi Bantu Guru Yuk
 <option>Uraian</option>
 <option>Bebas</option>
 </select>
-
+</div>
+  
 <label>Mode</label>
 <select id="mode">
 <option>Siswa</option>
 <option>Guru (dengan kunci jawaban)</option>
 </select>
 
+<div id="jumlahBox">
 <label>Jumlah Soal</label>
 <select id="jumlah" onchange="customJumlah()">
 <option>5</option>
@@ -223,13 +345,23 @@ Install aplikasi Bantu Guru Yuk
 </select>
 
 <input id="jumlahCustom" placeholder="Masukkan jumlah soal" style="display:none">
+  </div>
 
 <label>Materi</label>
 <textarea id="materi"></textarea>
+  
+<label>Referensi Gambar</label>
 
-<label>Upload Referensi</label>
-<input type="file" id="referensi">
+<select id="referensi" onchange="handleReferensi()">
 
+<option value="">Tanpa Referensi</option>
+
+<option value="upload">+ Upload Referensi Baru</option>
+
+</select>
+
+<input type="file" id="uploadRef" accept="image/*" style="display:none">
+  
 <label>Gaya Ilustrasi</label>
 <select id="gaya">
 <option>Cartoon Kids — kartun ceria anak SD</option>
@@ -258,24 +390,92 @@ Install aplikasi Bantu Guru Yuk
 </div>
 
 <div id="tentang" class="container section">
-Generator profesional media ajar siap cetak sesuai Kurikulum Merdeka.
+
+<h3>Tentang Aplikasi</h3>
+
+<p>
+<b>Bantu Guru Yuk v26.2.8 (Free Version)</b> adalah generator media ajar yang membantu guru membuat bahan pembelajaran secara cepat, rapi, dan siap cetak.
+</p>
+
+<p>
+Aplikasi ini dirancang khusus untuk mendukung <b>Kurikulum Merdeka</b> dan dapat digunakan untuk berbagai jenjang:
+PAUD, TK, SD, SMP, dan SMA.
+</p>
+
+<h4>Fitur Utama:</h4>
+
+<ul>
+
+<li>Membuat LKPD otomatis</li>
+
+<li>Membuat Poster edukasi</li>
+
+<li>Membuat Infografis pembelajaran</li>
+
+<li>Membuat Flashcard</li>
+
+<li>Membuat Lembar Mewarnai</li>
+
+<li>Siap cetak kualitas tinggi (300 dpi)</li>
+
+<li>Format profesional</li>
+
+</ul>
+
+<h4>Tujuan:</h4>
+
+<p>
+Membantu guru menghemat waktu dan meningkatkan kualitas media pembelajaran.
+</p>
+
+<h4>Versi:</h4>
+
+<p>
+v26.2.8 — Free Version
+</p>
+
+<h4>Pengembang:</h4>
+
+<p>
+Pak Choyy
+</p>
+
 </div>
 
 <div id="kontak" class="container section">
-<button onclick="window.open('https://wa.me/6289530713597')" style="background:#25D366">WhatsApp</button>
-<button onclick="window.open('https://tiktok.com/@pak.choyy')" style="background:#000">TikTok</button>
+
+<h3>Kontak</h3>
+
+<p>
+Untuk info lebih lanjut, bantuan penggunaan, atau menyampaikan kritik dan saran, silakan hubungi melalui:
+</p>
+
+<button onclick="window.open('https://wa.me/6289530713597')" style="background:#25D366">
+WhatsApp
+</button>
+
+<button onclick="window.open('https://tiktok.com/@pak.choyy')" style="background:#000">
+TikTok
+</button>
+
+<p style="margin-top:15px;font-size:13px;color:#555">
+Masukan dan saran Anda sangat membantu untuk pengembangan aplikasi ini agar menjadi lebih baik.
+</p>
+
 </div>
 
 <div class="footer">
-© 2026 Bantu Guru Yuk
+© 2026 Bantu Guru Yuk by Pak.Choyy
 <div id="visitor">Total Pengunjung: ...</div>
 </div>
 
 <script>
 
 const media=document.getElementById("media");
+const jenisBox=document.getElementById("jenisBox");
 const gaya=document.getElementById("gaya");
 const jumlah=document.getElementById("jumlah");
+const jumlahBox=document.getElementById("jumlahBox");
 const jumlahCustom=document.getElementById("jumlahCustom");
 const hasil=document.getElementById("hasil");
 const referensi=document.getElementById("referensi");
@@ -284,22 +484,50 @@ const kelas=document.getElementById("kelas");
 const mapel=document.getElementById("mapel");
 const jenis=document.getElementById("jenis");
 const mode=document.getElementById("mode");
+let kunciTambahan="";
 const materi=document.getElementById("materi");
 const notif=document.getElementById("notif");
 const installPopup=document.getElementById("installPopup");
+/* PRESET KURIKULUM */
 
+let kurikulumTambahan="";
 let deferredPrompt=null;
 
 function autoStyle(){
 
-if(media.value=="Poster")
+if(media.value=="LKPD"){
+
+jumlahBox.style.display="block";
+
+}else{
+
+jumlahBox.style.display="none";
+
+}
+
+if(media.value=="Poster"){
+
 gaya.value="Flat Vector — infografis modern";
 
-else if(media.value=="Flashcard")
+}
+
+else if(media.value=="Flashcard"){
+
 gaya.value="Cartoon Kids — kartun ceria anak SD";
 
-else if(media.value=="Lembar Mewarnai")
+}
+
+else if(media.value=="Lembar Mewarnai"){
+
 gaya.value="Black White — tanpa warna";
+
+}
+
+else if(media.value=="Infografis"){
+
+gaya.value="Flat Vector — infografis modern";
+
+}
 
 }
 
@@ -311,16 +539,171 @@ jumlah.value=="custom"?"block":"none";
 }
 
 function generatePrompt(){
+/* VALIDASI MATERI WAJIB */
 
+if(materi.value.trim()==""){
+
+alert("Materi belum diisi");
+
+materi.focus();
+
+return;
+
+}
+  /* PRESET CP TP ATP */
+
+kurikulumTambahan="";
+
+if(kelas.value.includes("SD Kelas 1") || kelas.value.includes("SD Kelas 2")){
+
+kurikulumTambahan=
+
+"\nFase: Fase A"+
+"\nLearning objective: Students understand basic concepts"+
+"\nProvide activities suitable for early elementary students";
+
+}
+
+else if(kelas.value.includes("SD Kelas 3") || kelas.value.includes("SD Kelas 4")){
+
+kurikulumTambahan=
+
+"\nFase: Fase B"+
+"\nLearning objective: Students analyze simple information"+
+"\nProvide structured exercises";
+
+}
+
+else if(kelas.value.includes("SD Kelas 5") || kelas.value.includes("SD Kelas 6")){
+
+kurikulumTambahan=
+
+"\nFase: Fase C"+
+"\nLearning objective: Students apply knowledge independently"+
+"\nProvide higher thinking exercises";
+
+}
+
+else if(kelas.value.includes("SMP")){
+
+kurikulumTambahan=
+
+"\nFase: Fase D"+
+"\nLearning objective: Students understand deeper concepts";
+
+}
+
+else if(kelas.value.includes("SMA")){
+
+kurikulumTambahan=
+
+"\nFase: Fase E"+
+"\nLearning objective: Students analyze and evaluate concepts";
+
+}
 let j =
 jumlah.value=="custom"
 ? (jumlahCustom.value || "10")
 : jumlah.value;
+/* MODE GURU */
 
-let ref =
-referensi.files.length>0
-? "\nReference: "+referensi.files[0].name
+if(mode.value.includes("Guru")){
+
+kunciTambahan=
+"\nInclude answer key"+
+"\nProvide correct answers"+
+"\nSeparate answer section for teacher";
+
+}else{
+
+kunciTambahan="";
+
+}
+let ref="";
+let extra="";;
+
+/* PAPER DAN ORIENTASI OTOMATIS */
+
+let paper="A4";
+let orient="Portrait";
+
+/* POSTER */
+
+if(media.value=="Poster"){
+
+paper="A3";
+orient="Portrait";
+
+}
+
+/* INFOGRAFIS */
+
+else if(media.value=="Infografis"){
+
+paper="A4";
+orient="Portrait";
+
+}
+
+/* FLASHCARD */
+
+else if(media.value=="Flashcard"){
+
+paper="A6";
+orient="Landscape";
+
+}
+
+/* LKPD */
+
+else if(media.value=="LKPD"){
+
+paper="A4";
+orient="Portrait";
+
+}
+  
+ref =
+referensi.value && referensi.value!="upload"
+? "\nReference image: " + referensi.value
 : "";
+
+if(media.value=="Poster"){
+
+extra=
+"\nUse poster layout with big title and illustration"+
+"\nDo not include questions"+
+"\nMake text short and clear";
+
+}
+
+else if(media.value=="Infografis"){
+
+extra=
+"\nUse infographic layout with sections"+
+"\nUse icons and visual elements"+
+"\nMake information structured";
+
+}
+
+else if(media.value=="Flashcard"){
+
+extra=
+"\nCreate separate cards"+
+"\nOne question per card"+
+"\nChild-friendly design";
+
+}
+
+else if(media.value=="Lembar Mewarnai"){
+
+extra=
+"\nBlack and white outline"+
+"\nNo shading"+
+"\nThick lines for coloring";
+
+}
+;
 
 hasil.value=
 
@@ -329,27 +712,33 @@ hasil.value=
 "\nClass: "+kelas.value+
 
 "\nSubject: "+mapel.value+
+  kurikulumTambahan+
+"\nEducation level: "+kelas.value+
 
 "\nType: "+jenis.value+
 
 "\nMode: "+mode.value+
 
-"\nQuestions: "+j+
+(media.value=="LKPD"
+? "\nQuestions: "+j
+: "")
++
 
 "\nTopic: "+materi.value+
 
 "\nIllustration style: "+gaya.value+
+  extra+
+  kunciTambahan+
 
 ref+
 
-"\nUse Kurikulum Merdeka"+
+"\nAll text Indonesian"+
 
 "\nLanguage: Indonesian"+
-
-"\nPaper size: A4"+
-
-"\nOrientation: Portrait"+
-
+"\nUse Kurikulum Merdeka"+
+"\nPaper size: "+paper+
+"\nOrientation: "+orient+
+"\nAspect ratio: follow paper size"+
 "\nProfessional layout"+
 
 "\nHigh quality"+
@@ -360,6 +749,10 @@ ref+
 
 "\nNo watermark"+
 
+(media.value=="Poster"
+? "\nUse poster layout with big title and illustration"
+: "")
++
 "\nIMPORTANT: Follow all instructions exactly";
 
 }
@@ -376,6 +769,95 @@ setTimeout(()=>notif.style.display="none",2000);
 
 }
 
+function autoMateri(){
+
+let k=kelas.value;
+let m=mapel.value;
+
+let isi="";
+
+/* ================= TK ================= */
+
+if(k.includes("TK")){
+
+isi="Tujuan: Anak mengenal konsep dasar melalui kegiatan bermain sesuai tahap perkembangan.";
+
+}
+
+/* ================= SD ================= */
+
+else if(k.includes("SD Kelas 1")){
+
+isi="Tujuan: Siswa mengenal konsep dasar "+m+" melalui kegiatan sederhana.";
+
+}
+
+else if(k.includes("SD Kelas 2")){
+
+isi="Tujuan: Siswa memahami konsep dasar "+m+" dan menerapkannya dalam kehidupan sehari-hari.";
+
+}
+
+else if(k.includes("SD Kelas 3")){
+
+isi="Tujuan: Siswa mengidentifikasi dan menggunakan konsep "+m+" secara sederhana.";
+
+}
+
+else if(k.includes("SD Kelas 4")){
+
+isi="Tujuan: Siswa menjelaskan dan menggunakan konsep "+m+" dengan benar.";
+
+}
+
+else if(k.includes("SD Kelas 5")){
+
+isi="Tujuan: Siswa menganalisis konsep "+m+" dan menyelesaikan masalah sederhana.";
+
+}
+
+else if(k.includes("SD Kelas 6")){
+
+isi="Tujuan: Siswa menerapkan konsep "+m+" untuk menyelesaikan masalah.";
+
+}
+
+/* ================= SMP ================= */
+
+else if(k.includes("SMP")){
+
+isi="Tujuan: Siswa memahami dan menganalisis konsep "+m+" serta menerapkannya dalam berbagai konteks.";
+
+}
+
+/* ================= SMA ================= */
+
+else if(k.includes("SMA")){
+
+isi="Tujuan: Siswa menganalisis, mengevaluasi, dan menerapkan konsep "+m+" secara mandiri.";
+
+}
+
+/* ================= PAUD ================= */
+
+else if(k.includes("PAUD")){
+
+isi="Tujuan: Anak mengenal lingkungan sekitar melalui kegiatan bermain.";
+
+}
+
+/* ================= UMUM ================= */
+
+else{
+
+isi="Tujuan: Peserta didik memahami materi "+m+" sesuai jenjang pembelajaran.";
+
+}
+
+materi.value=isi;
+
+}
+
 function openGPT(){window.open("https://chat.openai.com");}
 function openGemini(){window.open("https://gemini.google.com");}
 
@@ -388,15 +870,33 @@ e.target.classList.add("active");
 
 }
 
-fetch("https://api.counterapi.dev/v1/pakchoyy/bantuguruyuk/up")
-.then(res=>res.json())
-.then(data=>visitor.innerHTML="Total Pengunjung: "+data.count);
+fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk")
 
-window.addEventListener("beforeinstallprompt",e=>{
-e.preventDefault();
-deferredPrompt=e;
-installPopup.style.top="0";
+.then(res => res.json())
+
+.then(data => {
+
+visitor.innerHTML = "👁️ Total Pengunjung: " + data.value;
+
+})
+
+.catch(() => {
+
+visitor.innerHTML = "Total Pengunjung: -";
+
 });
+window.addEventListener("beforeinstallprompt", e=>{
+
+if(sessionStorage.getItem("installClosed")=="yes") return;
+
+e.preventDefault();
+
+deferredPrompt=e;
+
+installPopup.style.top="0";
+
+});
+
 
 function installApp(){
 
@@ -411,11 +911,79 @@ alert("Install belum tersedia di perangkat ini");
 }
 
 }
-
+autoStyle();
 if("serviceWorker" in navigator)
 navigator.serviceWorker.register("service-worker.js");
+autoMateri();
+function closeInstall(){
 
+installPopup.style.top="-160px";
+
+sessionStorage.setItem("installClosed","yes");
+
+}
+
+window.addEventListener("load",function(){
+
+setTimeout(()=>{
+
+document.getElementById("loadingScreen").style.display="none";
+
+},800);
+
+});
+
+function handleReferensi(){
+
+let select = document.getElementById("referensi");
+
+if(select.value=="upload"){
+
+document.getElementById("uploadRef").click();
+
+}
+
+}
+
+
+document.getElementById("uploadRef").addEventListener("change", function(){
+
+let file = this.files[0];
+
+if(!file) return;
+
+let select = document.getElementById("referensi");
+
+
+/* hapus referensi lama jika ada */
+
+let lama = document.getElementById("refCustom");
+
+if(lama) lama.remove();
+
+
+/* tambah ke dropdown */
+
+let option = document.createElement("option");
+
+option.value = file.name;
+
+option.text = "Referensi: " + file.name;
+
+option.id = "refCustom";
+
+select.appendChild(option);
+
+
+/* pilih otomatis */
+
+select.value = file.name;
+
+});
+  
 </script>
 
+  
 </body>
+
   </html>

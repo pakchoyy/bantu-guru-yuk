@@ -469,6 +469,8 @@ if(media.value=="LKPD"){
 
 jumlahBox.style.display="block";
 jenisBox.style.display="block";
+modeBox.style.display="block";
+
 jenis.disabled=false;
 mode.disabled=false;
 
@@ -480,20 +482,16 @@ else{
 
 jumlahBox.style.display="none";
 jenisBox.style.display="none";
+modeBox.style.display="none";
+
 jenis.disabled=true;
 mode.disabled=true;
 
 }
 
-/* auto gaya */
+/* AUTO GAYA */
 
-if(media.value=="Poster"){
-
-gaya.value="Flat Vector — infografis modern";
-
-}
-
-else if(media.value=="Infografis"){
+if(media.value=="Poster" || media.value=="Infografis"){
 
 gaya.value="Flat Vector — infografis modern";
 
@@ -553,14 +551,34 @@ daftar=[
 
 /* SD */
 
-else if(k.includes("SD")){
+else if(k.includes("SD Kelas 1") || k.includes("SD Kelas 2")){
 
 daftar=[
+"Pendidikan Agama dan Budi Pekerti",
+"Pendidikan Pancasila",
+"Bahasa Indonesia",
+"Matematika",
+"Seni Budaya",
+"PJOK"
+];
+
+}
+
+else if(
+k.includes("SD Kelas 3") ||
+k.includes("SD Kelas 4") ||
+k.includes("SD Kelas 5") ||
+k.includes("SD Kelas 6")
+){
+
+daftar=[
+"Pendidikan Agama dan Budi Pekerti",
+"Pendidikan Pancasila",
 "Bahasa Indonesia",
 "Matematika",
 "IPAS",
-"Pendidikan Pancasila",
-"Seni Budaya"
+"Seni Budaya",
+"PJOK"
 ];
 
 }
@@ -990,21 +1008,27 @@ document.getElementById(id).classList.add("active");
 e.target.classList.add("active");
 
 }
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", function(){
 
-fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk")
+const visitor = document.getElementById("visitor");
 
-.then(res => res.json())
+fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk-2026")
 
-.then(data => {
+.then(function(res){
+return res.json();
+})
 
-visitor.innerHTML = "👁️ Total Pengunjung: " + data.value;
+.then(function(data){
+
+visitor.innerHTML =
+"👁️ Total Pengunjung: " + data.value;
 
 })
 
-.catch(() => {
+.catch(function(){
 
-visitor.innerHTML = "👁️ Total Pengunjung: -";
+visitor.innerHTML =
+"👁️ Total Pengunjung: 0";
 
 });
 

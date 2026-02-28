@@ -296,11 +296,16 @@ v26.2.8 • <span style="color:yellow">Free Version</span>
 </select>
 </div>
   
+<div id="modeBox">
+
 <label>Mode</label>
+
 <select id="mode">
 <option>Siswa</option>
 <option>Guru (dengan kunci jawaban)</option>
 </select>
+
+</div>
 
 <div id="jumlahBox">
 <label>Jumlah Soal</label>
@@ -1013,22 +1018,50 @@ document.getElementById(id).classList.add("active");
 e.target.classList.add("active");
 
 }
+function installApp(){
+
+if(deferredPrompt){
+
+deferredPrompt.prompt();
+
+}else{
+
+alert("Install belum tersedia");
+
+}
+
+}
+
+function closeInstall(){
+
+installPopup.style.top="-160px";
+
+sessionStorage.setItem("installClosed","yes");
+
+}
+  
 document.addEventListener("DOMContentLoaded", function(){
 
-const visitor = document.getElementById("visitor");
+/* ================= VISITOR ================= */
 
 fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk")
 .then(res=>res.json())
 .then(data=>{
 
-visitor.innerHTML="👁️ Total Pengunjung: "+data.value;
+document.getElementById("visitor").innerHTML=
+"👁️ Total Pengunjung: "+data.value;
 
 })
 .catch(()=>{
 
-visitor.innerHTML="Total Pengunjung: -";
+document.getElementById("visitor").innerHTML=
+"👁️ Total Pengunjung: -";
 
 });
+
+
+/* ================= INSTALL ================= */
+
 window.addEventListener("beforeinstallprompt", e=>{
 
 if(sessionStorage.getItem("installClosed")=="yes") return;
@@ -1042,34 +1075,18 @@ installPopup.style.top="0";
 });
 
 
-function installApp(){
+/* ================= SERVICE WORKER ================= */
 
-if(deferredPrompt){
+if("serviceWorker" in navigator){
 
-deferredPrompt.prompt();
-
-}else{
-
-alert("Install belum tersedia di perangkat ini");
-
-}
-
-}
-
-if("serviceWorker" in navigator)
 navigator.serviceWorker.register("service-worker.js");
 
-function closeInstall(){
-
-installPopup.style.top="-160px";
-
-sessionStorage.setItem("installClosed","yes");
-
 }
 
-document.addEventListener("DOMContentLoaded", ()=>{
-  
-const loading = document.getElementById("loadingScreen");
+
+/* ================= LOADING ================= */
+
+const loading=document.getElementById("loadingScreen");
 
 if(loading){
 
@@ -1081,10 +1098,12 @@ loading.remove();
 
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+
+/* ================= INIT ================= */
 
 autoMapel();
 autoStyle();
+
 
 });
 </script>

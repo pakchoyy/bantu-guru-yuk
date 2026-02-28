@@ -1046,21 +1046,23 @@ document.addEventListener("DOMContentLoaded", function(){
 
 /* ================= VISITOR ================= */
 
-fetch("https://api.counterapi.dev/v1/pakchoyy/bantu-guru-yuk/up")
+fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk")
+
 .then(res=>res.json())
+
 .then(data=>{
 
-document.getElementById("visitor").innerHTML=
-"👁️ Total Pengunjung: "+data.value;
+document.getElementById("visitor").innerHTML =
+"👁️ Total Pengunjung: " + data.value;
 
 })
+
 .catch(()=>{
 
-document.getElementById("visitor").innerHTML=
+document.getElementById("visitor").innerHTML =
 "👁️ Total Pengunjung: -";
 
 });
-
 
 /* ================= INSTALL ================= */
 

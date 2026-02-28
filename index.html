@@ -446,10 +446,8 @@ Masukan dan saran Anda sangat membantu untuk pengembangan aplikasi ini agar menj
 
 <div class="footer">
 © 2026 Bantu Guru Yuk by Pak.Choyy
-<div id="visitor">Total Pengunjung: ...</div>
+<div id="visitor">👁️ Total Pengunjung: ...</div>
 </div>
-
-<script>
 
 const modeBox=document.getElementById("modeBox");
 const media=document.getElementById("media");
@@ -1044,25 +1042,31 @@ sessionStorage.setItem("installClosed","yes");
   
 document.addEventListener("DOMContentLoaded", function(){
 
-/* ================= VISITOR ================= */
+/* ================= VISITOR COUNTER v26.5 FINAL ================= */
 
-fetch("https://api.countapi.xyz/hit/pakchoyy/bantu-guru-yuk")
+function updateVisitor(){
 
-.then(res=>res.json())
+fetch("https://api.countapi.xyz/hit/pakchoyy-bantu-guru-yuk/visits")
 
-.then(data=>{
+.then(res => res.json())
+
+.then(data => {
 
 document.getElementById("visitor").innerHTML =
 "👁️ Total Pengunjung: " + data.value;
 
 })
 
-.catch(()=>{
+.catch(() => {
 
 document.getElementById("visitor").innerHTML =
-"👁️ Total Pengunjung: -";
+"👁️ Total Pengunjung: 0";
 
 });
+
+}
+
+updateVisitor();
 
 /* ================= INSTALL ================= */
 

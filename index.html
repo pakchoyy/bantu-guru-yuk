@@ -170,7 +170,7 @@ color:white;
 width:90px;
 margin-bottom:15px;
 
-animation:pulse 1.5s infinite;
+animation:pulse 0.5s infinite;
 
 }
 
@@ -1088,13 +1088,15 @@ sessionStorage.setItem("installClosed","yes");
 
 }
 
-window.addEventListener("load",function(){
+window.addEventListener("load", ()=>{
+
+const loading = document.getElementById("loadingScreen");
 
 setTimeout(()=>{
 
-document.getElementById("loadingScreen").style.display="none";
+loading.remove();
 
-},800);
+},300);
 
 });
 

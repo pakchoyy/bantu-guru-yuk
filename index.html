@@ -875,8 +875,27 @@ prompt += "\nIllustration style: " + gaya.value;
 prompt += extra;
 prompt += ref;
 
+prompt += "\nREFERENCE IMAGE RULE:";
+prompt += "\nUse the uploaded reference image for illustration style.";
+prompt += "\nFollow illustration style, colors, and character design.";
+prompt += "\nDo NOT copy text.";
+prompt += "\nCreate original educational content.";
+
 prompt += "\nAll text Indonesian";
-prompt += "\nUse Kurikulum Merdeka";
+prompt += "\nUse simple Indonesian";
+prompt += "\nNo typo allowed";
+prompt += "\nAdjust to student level";
+prompt += "\nDo not write curriculum";
+prompt += "\nDo not write phase";
+prompt += "\nStrictly follow reference image style";
+
+prompt += "\nPaper size: " + paper;
+prompt += "\nOrientation: " + orient;
+prompt += "\nProfessional layout";
+prompt += "\nHigh quality";
+prompt += "\nPrint ready";
+prompt += "\nAll text Indonesian";
+// prompt += "\nUse Kurikulum Merdeka";
 prompt += "\nPaper size: " + paper;
 prompt += "\nOrientation: " + orient;
 prompt += "\nAspect ratio: follow paper size";
@@ -887,11 +906,12 @@ prompt += "\n300 dpi";
 prompt += "\nNo watermark";
 
 
+
 /* KHUSUS LKPD SAJA */
 
 if(media.value=="LKPD"){
 
-prompt += kurikulumTambahan;
+// prompt += kurikulumTambahan;
 
 prompt += "\nType: " + jenis.value;
 
@@ -937,7 +957,11 @@ ref+
 
   
 "\nAll text Indonesian"+
-
+"\nUse simple Indonesian"+
+"\nNo typo allowed"+
+"\nAdjust to student level"+
+"\nDo not write curriculum"+
+"\nDo not write phase"+
 "\nLanguage: Indonesian"+
 "\nUse Kurikulum Merdeka"+
 "\nPaper size: "+paper+

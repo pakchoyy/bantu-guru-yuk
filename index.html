@@ -303,77 +303,49 @@ function getOpsiPG(){
   }
 }
 
-function generatePrompt(){
-  if(materi.value.trim()==""){
-    alert("Materi belum diisi!");
-    materi.focus();
-    return;
-  }
-  let j=jumlah.value=="custom"?(jumlahCustom.value||"10"):jumlah.value;
-  if(mode.value.includes("Guru")){
-    kunciTambahan="\nSertakan kunci jawaban yang terpisah di bagian bawah untuk guru.";
-  } else {
-    kunciTambahan="";
-  }
-  let paper="A4", orient="Portrait";
-  if(media.value=="Poster"){ paper="A3"; orient="Portrait"; }
-  else if(media.value=="Flashcard"){ paper="A6"; orient="Landscape"; }
-
-  let extraMedia="";
-  if(media.value=="Poster"){
-    extraMedia="\nGunakan layout poster dengan judul besar dan ilustrasi menarik.\nTeks singkat, padat, dan mudah dibaca dari jarak jauh.\nTidak perlu soal atau pertanyaan.";
-  } else if(media.value=="Infografis"){
-    extraMedia="\nGunakan layout infografis dengan bagian-bagian yang jelas.\nGunakan ikon dan elemen visual untuk memperjelas informasi.\nInformasi terstruktur dan mudah dipahami.";
-  } else if(media.value=="Flashcard"){
-    extraMedia="\nBuat flashcard ukuran A6 orientasi Landscape.\nSisi depan: pertanyaan atau gambar.\nSisi belakang: jawaban atau penjelasan.\nFont besar dan tebal agar mudah dibaca.\nBorder tebal dengan warna cerah dan menarik.\nDesain ramah anak.";
-  } else if(media.value=="Lembar Mewarnai"){
-    extraMedia="\nHanya outline hitam putih, tanpa warna apapun.\nGaris tebal dan jelas agar mudah diwarnai anak.\nGambar besar memenuhi halaman.\nTambahkan judul atau teks singkat di bagian atas gambar.\nTidak ada bayangan atau gradasi warna.";
-  }
-
-  let extraLKPD="";
-  if(media.value=="LKPD"){
-    extraLKPD+="\n\n=== FORMAT LKPD STANDAR ===\nBuat judul LKPD yang sesuai materi.\nTambahkan header identitas siswa: Nama: ___________ Kelas: ___________ Tanggal: ___________\nTambahkan petunjuk pengerjaan yang jelas di awal.\nNomor soal berurutan.";
-    if(jenis.value=="Pilihan Ganda"){
-      extraLKPD+="\nJenis soal: Pilihan Ganda\nSetiap soal memiliki "+getOpsiPG()+".\nTambahkan lingkaran kecil di depan setiap pilihan untuk disilang siswa. Contoh: ○ A. ... ○ B. ... ○ C. ...\nJumlah soal: "+j;
-    } else if(jenis.value=="Isian"){
-      extraLKPD+="\nJenis soal: Isian Singkat\nSetiap soal diakhiri dengan garis titik-titik panjang untuk jawaban siswa. Contoh: Ibu kota Indonesia adalah ....\nJumlah soal: "+j;
-    } else if(jenis.value=="Menjodohkan"){
-      extraLKPD+="\nJenis soal: Menjodohkan\nBuat dua kolom: kolom kiri berisi soal/pertanyaan, kolom kanan berisi jawaban/pilihan yang diacak.\nBeri space kosong yang cukup di antara dua kolom agar siswa bisa menuliskan jawabannya.\nTidak perlu garis penghubung, biarkan siswa menuliskan sendiri.\nJumlah pasangan: "+j;
-    } else if(jenis.value=="Uraian"){
-      extraLKPD+="\nJenis soal: Uraian\nSetiap soal diikuti dengan ruang kosong/kotak yang cukup lebar untuk jawaban siswa.\nJumlah soal: "+j;
-    } else if(jenis.value=="Bebas"){
-      extraLKPD+="\nJenis soal: Aktivitas Bebas\nBuat aktivitas kreatif yang sesuai materi: bisa menggambar, menulis, mewarnai, atau mengisi tabel.\nLayout kreatif dan menarik sesuai jenjang siswa.";
-    }
-    extraLKPD+=kunciTambahan;
-  }
-
-  let refRule="";
-  if(gaya.value.startsWith("Referensi gambar:")){
-    refRule="\n\n=== ATURAN REFERENSI GAMBAR ===\nGunakan gambar referensi yang dilampirkan sebagai acuan gaya ilustrasi.\nIkuti gaya ilustrasi, warna, dan desain karakter dari referensi.\nJANGAN menyalin teks atau konten dari referensi.\nBuat konten orisinal sesuai materi.";
-  }
-
-  let prompt="";
+  function generatePrompt(){
+if(materi.value.trim()==""){alert("Materi belum diisi!");materi.focus();return;}
+let j=jumlah.value=="custom"?(jumlahCustom.value||"10"):jumlah.value;
+kunciTambahan=mode.value.includes("Guru")?"\nInclude a separate answer key at the bottom for the teacher.":"";
+let paper="A4",orient="Portrait";
+if(media.value=="Poster"){paper="A3";}
+else if(media.value=="Flashcard"){paper="A6";orient="Landscape";}
+let extraMedia="";
+if(media.value=="Poster"){extraMedia="\nUse poster layout with large title and attractive illustration.\nShort, clear text readable from a distance.\nNo questions or exercises needed.";}
+else if(media.value=="Infografis"){extraMedia="\nUse infographic layout with clear sections.\nUse icons and visual elements to clarify information.\nStructured and easy to understand.";}
+else if(media.value=="Flashcard"){extraMedia="\nCreate flashcard in A6 Landscape size.\nFront side: question or image.\nBack side: answer or explanation.\nLarge bold font for easy reading.\nThick border with bright attractive colors.\nChild-friendly design.";}
+else if(media.value=="Lembar Mewarnai"){extraMedia="\nBlack and white outline only, no colors at all.\nThick clear lines for easy coloring.\nLarge image filling the page.\nAdd a short title or text at the top.\nNo shadows or color gradients.";}
+let extraLKPD="";
+if(media.value=="LKPD"){
+extraLKPD+="\n\n=== LKPD STANDARD FORMAT ===\nCreate a relevant LKPD title based on the topic.\nAdd student identity header: Name: ___________ Class: ___________ Date: ___________\nAdd clear instructions at the beginning.\nNumber questions sequentially.\nDo NOT place any image or illustration over text or questions.\nAll questions must be fully visible and not covered by any illustration.\nPlace illustrations only in designated areas: header, sidebar, or bottom of page.\nText and questions must always be readable and unobstructed.";
+if(jenis.value=="Pilihan Ganda"){extraLKPD+="\nQuestion type: Multiple Choice\nEach question has "+getOpsiPG()+".\nAdd a small circle before each option for students to cross. Example: ○ A. ... ○ B. ... ○ C. ...\nNumber of questions: "+j;}
+else if(jenis.value=="Isian"){extraLKPD+="\nQuestion type: Fill in the Blank\nEach question ends with a long dotted line for the student's answer. Example: The capital of Indonesia is ....\nNumber of questions: "+j;}
+else if(jenis.value=="Menjodohkan"){extraLKPD+="\nQuestion type: Matching\nCreate two columns: left column contains questions, right column contains shuffled answers.\nLeave enough blank space between the two columns for students to write their answers.\nNo connecting lines needed, let students write it themselves.\nNumber of pairs: "+j;}
+else if(jenis.value=="Uraian"){extraLKPD+="\nQuestion type: Essay\nEach question is followed by a wide blank space or box for the student's answer.\nNumber of questions: "+j;}
+else if(jenis.value=="Bebas"){extraLKPD+="\nQuestion type: Free Activity\nCreate creative activities suitable for the topic: drawing, writing, coloring, or filling in a table.\nCreative and attractive layout suitable for the student's level.";}
+extraLKPD+=kunciTambahan;
+}
+let refRule="";
+if(gaya.value.startsWith("Referensi gambar:")){refRule="\n\n=== REFERENCE IMAGE RULES ===\nUse the attached reference image as a guide for illustration style.\nFollow the illustration style, colors, and character design from the reference.\nDO NOT copy any text or content from the reference.\nCreate original content based on the topic.";}
+let prompt="";
 prompt+="Create a "+media.value+" educational material.";
 prompt+="\nClass: "+kelas.value;
 prompt+="\nSubject: "+mapel.value;
 prompt+="\nTopic: "+materi.value;
 prompt+="\nIllustration style: "+gaya.value;
-  prompt+=extraMedia;
-  prompt+=extraLKPD;
-  prompt+=refRule;
-  prompt+="\n\n=== ATURAN UMUM ===";
-  prompt+="\nSemua teks dalam Bahasa Indonesia yang sederhana dan mudah dipahami.";
-  prompt+="\nSesuaikan bahasa dan tingkat kesulitan dengan jenjang "+kelas.value+".";
-  prompt+="\nTidak ada typo.";
-  prompt+="\nUkuran kertas: "+paper;
-  prompt+="\nOrientasi: "+orient;
-  prompt+="\nLayout profesional dan rapi.";
-  prompt+="\nKualitas tinggi, siap cetak, 300 dpi.";
-  prompt+="\nTanpa watermark.";
-  prompt+="\nJangan tulis fase atau kode kurikulum di dalam desain.";
-  prompt+="\nIMPORTANT: Ikuti semua instruksi dengan tepat.";
-
-  hasil.value=prompt;
+prompt+=extraMedia+extraLKPD+refRule;
+prompt+="\n\n=== GENERAL RULES ===";
+prompt+="\nAll text content must be in simple Indonesian language.";
+prompt+="\nAdjust language difficulty to the level of "+kelas.value+" students.";
+prompt+="\nNo typos allowed.";
+prompt+="\nPaper size: "+paper;
+prompt+="\nOrientation: "+orient;
+prompt+="\nProfessional and neat layout.";
+prompt+="\nHigh quality, print ready, 300 dpi.";
+prompt+="\nNo watermark.";
+prompt+="\nDo not write curriculum phase or code in the design.";
+prompt+="\nIMPORTANT: Follow all instructions exactly.";
+hasil.value=prompt;
 }
 
 function copyPrompt(){

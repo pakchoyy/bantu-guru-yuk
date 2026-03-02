@@ -389,10 +389,7 @@ async function generateDiSini(){
     alert("Generate prompt dulu sebelum Generate di Sini!");
     return;
   }
-  if(APPS_SCRIPT_URL=="https://script.google.com/macros/s/AKfycbxQm4D9VieNBvMFsmWUKpHcg5A5HpUI4TIcZlb3T9zt5MkjTuofIj-vEhaYLrCx3yb2/exec"){
-    alert("Apps Script belum dikonfigurasi. Hubungi Pak Choyy untuk aktivasi fitur ini.");
-    return;
-  }
+  
   const btn=document.getElementById("btnGeminiGenerate");
   btn.disabled=true;
   btn.innerHTML='<span class="spinner"></span> Generating...';

@@ -407,16 +407,8 @@ mode: "cors",
 
 redirect: "follow",
 
-headers: {
-
-"Content-Type": "application/json"
-
-},
-
-body: JSON.stringify({
-
+body: new URLSearchParams({
 prompt: hasil.value
-
 })
 
 });

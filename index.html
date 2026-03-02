@@ -397,24 +397,48 @@ async function generateDiSini(){
   const hasilGemini=document.getElementById("hasilGemini");
   hasilGeminiBox.style.display="none";
   hasilGemini.innerText="";
-  try {
-    const response=await fetch(APPS_SCRIPT_URL,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({prompt:hasil.value})
-    });
-    const data=await response.json();
-    if(data.result){
-      hasilGemini.innerText=data.result;
-      hasilGeminiBox.style.display="block";
-      hasilGeminiBox.scrollIntoView({behavior:"smooth"});
-    } else {
-      alert("Gagal generate. Coba lagi.");
-    }
-  } catch(err){
-    alert("Terjadi kesalahan koneksi. Coba lagi.");
-    console.error(err);
-  }
+ try {
+
+const response = await fetch(APPS_SCRIPT_URL, {
+
+method: "POST",
+
+headers: {
+
+"Content-Type": "application/json"
+
+},
+
+body: JSON.stringify({
+
+prompt: hasil.value
+
+})
+
+});
+
+const text = await response.text();
+
+const data = JSON.parse(text);
+
+if(data.result){
+
+hasilGemini.innerText = data.result;
+
+hasilGeminiBox.style.display = "block";
+
+} else {
+
+alert(text);
+
+}
+
+}
+catch(error){
+
+alert("ERROR:\n" + error);
+
+}
   btn.disabled=false;
   btn.innerHTML='🚀 Generate di Sini (Gemini AI)';
 }

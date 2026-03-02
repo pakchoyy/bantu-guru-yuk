@@ -399,17 +399,7 @@ async function generateDiSini(){
   hasilGemini.innerText="";
  try {
 
-const response = await fetch(APPS_SCRIPT_URL, {
-
-method: "POST",
-
-mode: "cors",
-
-redirect: "follow",
-
-body: new URLSearchParams({
-prompt: hasil.value
-})
+const response = await fetch(APPS_SCRIPT_URL+"?prompt="+encodeURIComponent(hasil.value))
 
 });
 

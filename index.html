@@ -41,7 +41,7 @@ button{width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;col
 #hasilGemini{white-space:pre-wrap;font-size:14px;line-height:1.7;color:#333;}
 .copy-gemini{background:#6741d9;margin-top:10px;}
 #previewRefBox{display:none;margin-top:10px;background:#fff8e1;border:2px solid #f59f00;border-radius:10px;padding:12px;text-align:center;}
-#previewRefBox img{max-width:100%;max-height:200px;border-radius:8px;margin-top:8px;}
+#previewRefBox img{width:160px;height:160px;object-fit:cover;border-radius:10px;border:2px solid #f59f00;display:block;margin:10px auto 0;}
 #previewRefBox p{margin:8px 0 0;font-size:13px;color:#e67700;font-weight:bold;}
 #jenisBox{display:none;}
 #modeBox{display:none;}
@@ -353,11 +353,11 @@ function generatePrompt(){
   }
 
   let prompt="";
-  prompt+="Buatkan "+media.value+" pembelajaran dalam Bahasa Indonesia.";
-  prompt+="\nKelas: "+kelas.value;
-  prompt+="\nMata Pelajaran: "+mapel.value;
-  prompt+="\nMateri: "+materi.value;
-  prompt+="\nGaya Ilustrasi: "+gaya.value;
+prompt+="Create a "+media.value+" educational material.";
+prompt+="\nClass: "+kelas.value;
+prompt+="\nSubject: "+mapel.value;
+prompt+="\nTopic: "+materi.value;
+prompt+="\nIllustration style: "+gaya.value;
   prompt+=extraMedia;
   prompt+=extraLKPD;
   prompt+=refRule;

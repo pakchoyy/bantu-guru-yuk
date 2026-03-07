@@ -353,7 +353,11 @@ let refRule="";
 if(gaya.value.startsWith("Referensi gambar:")){refRule="\n\n=== REFERENCE IMAGE RULES ===\nUse the attached reference image as a guide for illustration style.\nFollow the illustration style, colors, and character design from the reference.\nDO NOT copy any text or content from the reference.\nCreate original content based on the topic.";}
 let prompt="";
 prompt+="Create a "+media.value+" educational material.";
-prompt+="\nClass: "+kelas.value;
+if(media.value=="LKPD"){
+  prompt+="\nClass: "+kelas.value;
+} else {
+  prompt+="\nTarget student level: "+kelas.value;
+}
 prompt+="\nSubject: "+mapel.value;
 prompt+="\nTopic: "+materi.value;
 prompt+="\nIllustration style: "+gaya.value;

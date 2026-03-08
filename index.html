@@ -389,19 +389,23 @@ function copyGemini(){
 }
 
 async function generateDiSini(){
-  if(hasil.value.trim()==""){
-    alert("Generate prompt dulu sebelum Generate di Sini!");
-    return;
-  }
-  
-  const btn=document.getElementById("btnGeminiGenerate");
-  btn.disabled=true;
-  btn.innerHTML='<span class="spinner"></span> Generating...';
-  const hasilGeminiBox=document.getElementById("hasilGeminiBox");
-  const hasilGemini=document.getElementById("hasilGemini");
-  hasilGeminiBox.style.display="none";
-  hasilGemini.innerText="";
- try {
+
+if(hasil.value.trim()==""){
+alert("Generate prompt dulu sebelum Generate di Sini!");
+return;
+}
+
+const btn=document.getElementById("btnGeminiGenerate");
+btn.disabled=true;
+btn.innerHTML='<span class="spinner"></span> Generating...';
+
+const hasilGeminiBox=document.getElementById("hasilGeminiBox");
+const hasilGemini=document.getElementById("hasilGemini");
+
+hasilGeminiBox.style.display="none";
+hasilGemini.innerText="";
+
+try{
 
 const response = await fetch(
 APPS_SCRIPT_URL + "?prompt=" + encodeURIComponent(hasil.value)
@@ -409,28 +413,19 @@ APPS_SCRIPT_URL + "?prompt=" + encodeURIComponent(hasil.value)
 
 const text = await response.text();
 
-const data = JSON.parse(text);
-
-if(data.result){
-
-hasilGemini.innerText = data.result;
+hasilGemini.innerText = text;
 
 hasilGeminiBox.style.display = "block";
 
-} else {
-
-alert(text);
-
-}
-
-}
-catch(error){
+}catch(error){
 
 alert("ERROR:\n" + error);
 
 }
-  btn.disabled=false;
-  btn.innerHTML='🚀 Generate di Sini (Gemini AI)';
+
+btn.disabled=false;
+btn.innerHTML='🚀 Generate di Sini';
+
 }
 
 function handleGayaUpload(){

@@ -390,11 +390,6 @@ function copyPrompt(){
   setTimeout(()=>notif.style.display="none",2000);
 }
 
-function copyGemini(){
-  const text=document.getElementById("hasilGemini").innerText;
-  navigator.clipboard.writeText(text).then(()=>{ alert("Hasil berhasil disalin!"); });
-}
-
 async function generateDiSini(){
 
 if(hasil.value.trim()==""){
@@ -405,12 +400,6 @@ return;
 const btn=document.getElementById("btnGeminiGenerate");
 btn.disabled=true;
 btn.innerHTML='<span class="spinner"></span> Generating...';
-
-const hasilGeminiBox=document.getElementById("hasilGeminiBox");
-const hasilGemini=document.getElementById("hasilGemini");
-
-hasilGeminiBox.style.display="none";
-hasilGemini.innerText="";
 
 try{
 
@@ -426,10 +415,25 @@ const img = document.getElementById("hasilImage");
 
 img.src = "data:image/png;base64," + data.image;
 
-document.getElementById("hasilImageBox").style.display = "block";
+document.getElementById("hasilImageBox").style.display="block";
 
 document.getElementById("downloadBtn").href =
 "data:image/png;base64," + data.image;
+
+}else{
+
+alert("Gambar tidak ditemukan dari AI");
+
+}
+
+}catch(error){
+
+alert("ERROR:\n"+error);
+
+}
+
+btn.disabled=false;
+btn.innerHTML="🚀 Generate di Sini";
 
 }
 

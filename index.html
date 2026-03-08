@@ -176,10 +176,17 @@ Disarankan menggunakan ChatGPT untuk hasil paling akurat
 Salin prompt → buka ChatGPT / Gemini → pilih <b>Buat Gambar</b> → tempel → kirim
 </div>
 
-<div id="hasilGeminiBox">
-<h4>🎯 Hasil Generate Gemini AI:</h4>
-<div id="hasilGemini"></div>
-<button class="copy-gemini" onclick="copyGemini()">📋 Salin Hasil</button>
+<div id="hasilImageBox" style="display:none;margin-top:16px;text-align:center;background:#fff;border:2px solid #9775fa;border-radius:10px;padding:16px;">
+<h4>🖼️ Hasil Gambar AI</h4>
+
+<img id="hasilImage" style="max-width:100%;border-radius:10px;margin-top:10px;">
+
+<br><br>
+
+<a id="downloadBtn" download="media-ajar-ai.png">
+<button style="background:#2f9e44">⬇️ Download Gambar</button>
+</a>
+
 </div>
 
   <div style="margin-top:20px;">
@@ -411,20 +418,18 @@ const response = await fetch(
 APPS_SCRIPT_URL + "?prompt=" + encodeURIComponent(hasil.value)
 );
 
-const text = await response.text();
+const data = await response.json();
 
-hasilGemini.innerText = text;
+if(data.image){
 
-hasilGeminiBox.style.display = "block";
+const img = document.getElementById("hasilImage");
 
-}catch(error){
+img.src = "data:image/png;base64," + data.image;
 
-alert("ERROR:\n" + error);
+document.getElementById("hasilImageBox").style.display = "block";
 
-}
-
-btn.disabled=false;
-btn.innerHTML='🚀 Generate di Sini';
+document.getElementById("downloadBtn").href =
+"data:image/png;base64," + data.image;
 
 }
 
